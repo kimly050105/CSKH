@@ -10,10 +10,8 @@
     <link rel="stylesheet" href="{% static 'TK/style.css' %}">
 </head>
 <body>
-
     <div class="auth-box">
         <h4>ĐĂNG KÝ TÀI KHOẢN</h4>
-
         <form method="POST" action="">
             {% csrf_token %}
 
@@ -21,7 +19,7 @@
             <div class="mb-3">
                 <div class="input-group">
                     <span class="input-group-text bg-white border-0">
-                        <i class="fa fa-user text-danger"></i>
+                        <i class="fa fa-user "></i>
                     </span>
                     <input type="text" name="username" class="form-control" placeholder="Họ tên" required>
                 </div>
@@ -31,7 +29,7 @@
             <div class="mb-3">
                 <div class="input-group">
                     <span class="input-group-text bg-white border-0">
-                        <i class="fa fa-envelope text-danger"></i>
+                        <i class="fa fa-envelope"></i>
                     </span>
                     <input type="email" name="email" class="form-control" placeholder="Email" required>
                 </div>
@@ -44,7 +42,7 @@
             <div class="mb-3">
                 <div class="input-group">
                     <span class="input-group-text bg-white border-0">
-                        <i class="fa fa-lock text-danger"></i>
+                        <i class="fa fa-lock"></i>
                     </span>
                     <input type="password" name="password1" id="password" class="form-control" placeholder="Mật khẩu" required>
                     <span class="input-group-text bg-white border-0" onclick="togglePassword('password', this)">
@@ -57,7 +55,7 @@
             <div class="mb-3">
                 <div class="input-group">
                     <span class="input-group-text bg-white border-0">
-                        <i class="fa fa-lock text-danger"></i>
+                        <i class="fa fa-lock"></i>
                     </span>
                     <input type="password" name="password2" id="repassword" class="form-control" placeholder="Nhập lại mật khẩu" required>
                     <span class="input-group-text bg-white border-0" onclick="togglePassword('repassword', this)">
