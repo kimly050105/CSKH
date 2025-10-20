@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import CreateUserForm
+from .forms import DangKyForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
 def dangky(request):
     if request.method == 'POST':
-        form = CreateUserForm(request.POST)
+        form = DangKyForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, "Đăng ký thành công! Hãy đăng nhập.")
@@ -14,7 +14,7 @@ def dangky(request):
         else:
             messages.error(request, "Đăng ký thất bại, vui lòng kiểm tra lại.")
     else:
-        form = CreateUserForm()
+        form = DangKyForm()
     return render(request, 'TK/dang_ky.html', {'form': form})
 
 def dangnhap(request):
