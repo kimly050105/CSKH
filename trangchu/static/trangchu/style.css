@@ -424,3 +424,58 @@ nav a:hover {
     text-align: center;
     line-height: 1.4;
 }
+.notify-box {
+  position: relative;
+  display: inline-block;
+}
+
+.notify-icon {
+  font-size: 22px;
+  color: #ff5c8d;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.notify-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 25px;
+  width: 250px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  z-index: 999;
+  padding: 10px;
+}
+
+.notify-box:hover .notify-content {
+  display: block;
+}
+
+.notify-item {
+  border-bottom: 1px solid #eee;
+  padding: 6px;
+}
+
+.notify-item:hover {
+  background: #fff5f8;
+}
+
+.view-all {
+  display: block;
+  text-align: center;
+  color: #ff5c8d;
+  text-decoration: none;
+  padding: 8px;
+}
+
+.btn {
+  background: #ff5c8d;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  margin: 4px;
+}
+

@@ -15,17 +15,42 @@
         </div>
         <div class="right">
           {% if user.is_authenticated %}
-    <!-- Nếu đã đăng nhập -->
+            <!-- Nếu đã đăng nhập -->
+            <div class="notify-box">
+              <span class="notify-icon">🔔</span>
+              <div class="notify-content">
+                {% for tb in thong_baos_moi %}
+                  <div class="notify-item">
+                    <strong>{{ tb.tieu_de }}</strong><br>
+                    <small>{{ tb.ngay_tao|date:"d/m/Y H:i" }}</small>
+                  </div>
+                {% empty %}
+                  <p>Không có thông báo mới.</p>
+                {% endfor %}
+                <a href="{% url 'danh_sach_thong_bao' %}" class="view-all">Xem tất cả</a>
+              </div>
+            </div>
             <span class="user-info">
-              <i class="fa fa-user"></i> {{ user.username }}
+              {{ user.username }}
               <a href="{% url 'dangxuat' %}" class="logout-link">(Đăng xuất)</a>
             </span>
           {% else %}
-    <!-- Nếu chưa đăng nhập -->
+            <!-- Nếu chưa đăng nhập -->
+            <div class="notify-box">
+              <span class="notify-icon">🔔</span>
+              <div class="notify-content">
+                <div style="text-align:center; padding:15px;">
+                  <p>Đăng nhập để xem thông báo</p>
+                  <a href="{% url 'dangnhap' %}" class="btn">Đăng nhập</a>
+                  <a href="{% url 'dangky' %}" class="btn">Đăng ký</a>
+                </div>
+              </div>
+            </div>
             <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
             <a href="{% url 'dangky' %}">Đăng ký</a>
           {% endif %}
         </div>
+
     </div>
 
     <!-- 🔹 Thanh điều hướng -->
