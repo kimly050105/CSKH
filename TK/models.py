@@ -53,22 +53,7 @@ class DichVu(models.Model):
         return f"{self.ten_dichvu} - {self.gia} VND"
 
 
-class LichHen(models.Model):
-    khach_hang = models.ForeignKey(KhachHang, on_delete=models.CASCADE)
-    thu_cung = models.ForeignKey(ThuCung, on_delete=models.CASCADE)
-    nhan_vien = models.ForeignKey(NhanVien, on_delete=models.SET_NULL, null=True, blank=True)
-    ngay_gio = models.DateTimeField()
-    trang_thai = models.CharField(max_length=50, choices=[
-        ('Chờ xác nhận', 'Chờ xác nhận'),
-        ('Đã xác nhận', 'Đã xác nhận'),
-        ('Hoàn thành', 'Hoàn thành'),
-        ('Hủy', 'Hủy'),
-    ])
-    ghi_chu = models.TextField(blank=True)
-    dich_vu = models.ManyToManyField(DichVu, through='ChiTietLichHen')
 
-    def __str__(self):
-        return f"Lịch hẹn #{self.id} - {self.khach_hang.user.username}"
 
 
 class ChiTietLichHen(models.Model):
