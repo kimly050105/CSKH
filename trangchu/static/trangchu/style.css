@@ -424,58 +424,116 @@ nav a:hover {
     text-align: center;
     line-height: 1.4;
 }
-.notify-box {
-  position: relative;
-  display: inline-block;
+
+
+/* 🌸 TOPBAR USER MENU GỌN GÀNG */
+.topbar .right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    justify-content: flex-end;
 }
 
-.notify-icon {
-  font-size: 22px;
-  color: #ff5c8d;
-  cursor: pointer;
-  margin-right: 10px;
+/* 🌸 Nút user (tên người dùng) */
+.user-menu {
+    position: relative;
 }
 
-.notify-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 25px;
-  width: 250px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
-  z-index: 999;
-  padding: 10px;
+.user-btn {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    transition: all 0.3s ease;
 }
 
-.notify-box:hover .notify-content {
-  display: block;
+.user-btn:hover {
+    background-color: #ffe6eb;
+    border-color: #f06277;
+    color: #d6336c;
 }
 
-.notify-item {
-  border-bottom: 1px solid #eee;
-  padding: 6px;
+/* 🌸 Menu xổ xuống */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    min-width: 200px;
 }
 
-.notify-item:hover {
-  background: #fff5f8;
+.dropdown-menu.show {
+    display: block;
 }
 
-.view-all {
-  display: block;
-  text-align: center;
-  color: #ff5c8d;
-  text-decoration: none;
-  padding: 8px;
+.dropdown-menu a {
+    display: block;
+    color: #333;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid #f3f3f3;
+    transition: 0.2s;
 }
 
-.btn {
-  background: #ff5c8d;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 6px;
-  text-decoration: none;
-  margin: 4px;
+.dropdown-menu a i {
+    color: #f06277;
+    margin-right: 8px;
 }
 
+.dropdown-menu a:hover {
+    background-color: #ffeef2;
+    color: #d6336c;
+}
+
+/* 🌸 Link trong topbar */
+.topbar a {
+    text-decoration: none;
+    color: #d6336c;
+    font-weight: 500;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.topbar a:hover {
+    color: #a01940;
+    text-decoration: underline;
+}
+
+/* 🌸 Làm icon và chữ có khoảng cách đều nhau */
+.dropdown-menu a i,
+.topbar i {
+    vertical-align: middle;
+}
+
+/* 🌸 Fix màu icon toàn khu tài khoản */
+.topbar .fa,
+.dropdown-menu .fa {
+    color: #f06277;
+}
+/* 🌸 Chỉ đổi màu chữ trong menu tài khoản thành đen */
+.dropdown-menu a {
+    color: #000 !important;  /* chữ đen */
+}
+
+.dropdown-menu a:hover {
+    background-color: #ffeef2;
+    color: #000 !important;
+}
+
+/* 🌸 Giữ icon hồng như cũ */
+.dropdown-menu a i {
+    color: #f06277;
+}

@@ -3,14 +3,17 @@ from django.db import models
 
 class KhachHang(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    ho_ten = models.CharField(max_length=100, blank=True)
     so_dien_thoai = models.CharField(max_length=15)
     dia_chi = models.CharField(max_length=255)
     gioi_tinh = models.CharField(max_length=1, choices=[('M', 'Nam'), ('F', 'Nữ')])
     ngay_sinh = models.DateField(null=True, blank=True)
+    email = models.EmailField(max_length=255, blank=True)
     ngay_tham_gia = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.user.get_full_name() or self.user.username
+
 
 
 class NhanVien(models.Model):

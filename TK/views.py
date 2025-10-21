@@ -1,16 +1,23 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import DangKyForm
+from .forms import DangKyForm, KhachHangForm
+from .models import KhachHang
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 
 def dangky(request):
     if request.method == 'POST':
         form = DangKyForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()  # Tạo tài khoản user
+            # 👉 Tự động tạo bản ghi KhachHang
+            KhachHang.objects.create(user=user, ho_ten=user.username,
+                # hoặc nếu form có field họ_tên thì thay user.username bằng form.cleaned_data['ho_ten']
+                email=user.email,
+            )
             messages.success(request, "Đăng ký thành công! Hãy đăng nhập.")
             return redirect('dangnhap')
         else:
@@ -52,6 +59,33 @@ def quenmatkhau(request):
 def dangxuat(request):
     logout(request)
     return redirect('home')
+
+@login_required
+def thongtintaikhoan(request):
+    khach, created = KhachHang.objects.get_or_create(user=request.user)
+
+    # 🔹 Nếu khách mới tạo hoặc chưa có email, tự gán email từ tài khoản user
+    if not khach.email:
+        khach.email = request.user.email
+        khach.save()
+
+    if request.method == 'POST':
+        form = KhachHangForm(request.POST, instance=khach)
+        if form.is_valid():
+            kh = form.save(commit=False)
+            # Nếu người dùng sửa email → cập nhật cả User.email luôn
+            request.user.email = kh.email
+            request.user.save()
+            kh.save()
+            messages.success(request, "Thông tin đã được cập nhật thành công!")
+            return redirect('thongtintaikhoan')
+    else:
+        form = KhachHangForm(instance=khach)
+
+    return render(request, 'TK/thongtintaikhoan.html', {
+        'form': form,
+        'user': request.user,
+    })
 
 
 

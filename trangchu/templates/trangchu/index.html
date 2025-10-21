@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Punky Spa</title>
     <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -13,43 +14,32 @@
         <div class="left">
             🕘 Giờ làm việc: Từ 09h00 đến 21h00
         </div>
+
         <div class="right">
-          {% if user.is_authenticated %}
-            <!-- Nếu đã đăng nhập -->
-            <div class="notify-box">
-              <span class="notify-icon">🔔</span>
-              <div class="notify-content">
-                {% for tb in thong_baos_moi %}
-                  <div class="notify-item">
-                    <strong>{{ tb.tieu_de }}</strong><br>
-                    <small>{{ tb.ngay_tao|date:"d/m/Y H:i" }}</small>
-                  </div>
-                {% empty %}
-                  <p>Không có thông báo mới.</p>
-                {% endfor %}
-                <a href="{% url 'danh_sach_thong_bao' %}" class="view-all">Xem tất cả</a>
-              </div>
-            </div>
-            <span class="user-info">
-              {{ user.username }}
-              <a href="{% url 'dangxuat' %}" class="logout-link">(Đăng xuất)</a>
-            </span>
-          {% else %}
-            <!-- Nếu chưa đăng nhập -->
-            <div class="notify-box">
-              <span class="notify-icon">🔔</span>
-              <div class="notify-content">
-                <div style="text-align:center; padding:15px;">
-                  <p>Đăng nhập để xem thông báo</p>
-                  <a href="{% url 'dangnhap' %}" class="btn">Đăng nhập</a>
-                  <a href="{% url 'dangky' %}" class="btn">Đăng ký</a>
-                </div>
-              </div>
-            </div>
-            <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
-            <a href="{% url 'dangky' %}">Đăng ký</a>
-          {% endif %}
-        </div>
+  {% if user.is_authenticated %}
+  <!-- 🔹 Khi người dùng đã đăng nhập -->
+  <div class="user-menu">
+      <button class="user-btn">
+          <i class="fa fa-user"></i> {{ user.username }}
+          <i class="fa fa-caret-down"></i>
+      </button>
+
+      <div class="dropdown-menu">
+          <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-user-circle"></i> Tài khoản</a>
+          <a href="#"><i class="fa fa-star"></i> Tích điểm</a>
+          <a href="#"><i class="fa fa-ticket"></i> Mã ưu đãi</a>
+          <a href="#"><i class="fa fa-calendar"></i> Lịch hẹn</a>
+          <a href="#"><i class="fa fa-comments"></i> Khiếu nại</a>
+          <a href="{% url 'dangxuat' %}"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+      </div>
+  </div>
+  {% else %}
+  <!-- 🔹 Khi chưa đăng nhập -->
+  <a href="{% url 'dangnhap' %}" class="auth-link">Đăng nhập</a> |
+  <a href="{% url 'dangky' %}" class="auth-link">Đăng ký</a>
+  {% endif %}
+</div>
+
 
     </div>
 
@@ -61,7 +51,7 @@
         </div>
 
         <nav>
-            <a href="#" class="active">Trang chủ</a>
+            <a href="{% url 'home' %}" class="active">Trang chủ</a>
             <a href="#">Dịch vụ</a>
             <a href="#">Khuyến mãi</a>
         </nav>
@@ -72,11 +62,10 @@
         </div>
     </header>
 
-        <!-- 🔹 Banner toàn màn hình -->
+    <!-- 🔹 Banner toàn màn hình -->
     <section class="banner-full">
         <img src="{% static 'trangchu/banner.png' %}" alt="Banner Punky Spa">
     </section>
-
 
     <!-- 🔹 Phần giới thiệu -->
     <section class="intro">
@@ -87,6 +76,7 @@
             <img src="{% static 'trangchu/cat3.png' %}" alt="">
         </div>
     </section>
+
     {% block content %}{% endblock %}
 
     <!-- 🔹 FOOTER -->
@@ -113,6 +103,25 @@
             </div>
         </div>
     </footer>
+
+    <script>
+    // 🔽 Hiển thị menu khi click vào tên người dùng
+    document.addEventListener("DOMContentLoaded", function() {
+      const userBtn = document.querySelector(".user-btn");
+      const dropdown = document.querySelector(".dropdown-menu");
+
+      if (userBtn) {
+        userBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdown.classList.toggle("show");
+        });
+
+        document.addEventListener("click", () => {
+          dropdown.classList.remove("show");
+        });
+      }
+    });
+    </script>
 
 </body>
 </html>
