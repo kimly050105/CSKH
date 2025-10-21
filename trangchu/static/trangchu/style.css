@@ -619,3 +619,13 @@ nav a:hover {
     .view-all:hover {
         text-decoration: underline;
     }
+    .notify-image {
+      width: 90px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      background-color: #ffe6ec; /* nền hồng pastel nhẹ */
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(255, 92, 141, 0.2);
+    }
