@@ -244,6 +244,7 @@ body {
     color: #a01940;
     margin-bottom: 20px;
 }
+}
 
 /* Nhóm input */
 .input-group {
@@ -267,6 +268,7 @@ body {
     margin-right: 8px;
     color: #a01940;
 }
+
 
 .toggle {
     color: #a01940;
@@ -334,3 +336,5 @@ body {
     border-radius: 8px;
     display: inline-block;
 }
+
+

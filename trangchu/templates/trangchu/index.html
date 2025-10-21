@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Punky Spa</title>
     <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -13,17 +14,30 @@
         <div class="left">
             🕘 Giờ làm việc: Từ 09h00 đến 21h00
         </div>
+
         <div class="right">
           {% if user.is_authenticated %}
-    <!-- Nếu đã đăng nhập -->
-            <span class="user-info">
-              <i class="fa fa-user"></i> {{ user.username }}
-              <a href="{% url 'dangxuat' %}" class="logout-link">(Đăng xuất)</a>
-            </span>
+          <!-- 🔸 Khi người dùng đã đăng nhập -->
+          <div class="user-menu">
+              <button class="user-btn">
+                  <i class="fa fa-user"></i> {{ user.username }}
+                  <i class="fa fa-caret-down"></i>
+              </button>
+
+              <div class="dropdown-menu">
+                  <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-user-circle"></i> Tài khoản</a>
+                  <a href="#"><i class="fa fa-star"></i> Tích điểm</a>
+                  <a href="#"><i class="fa fa-ticket"></i> Mã ưu đãi</a>
+                  <a href="#"><i class="fa fa-calendar"></i> Lịch hẹn</a>
+                  <a href="#"><i class="fa fa-comments"></i> Khiếu nại</a>
+                  <a href="{% url 'dangxuat' %}"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+                  <a href="#"><i class="fa fa-trash"></i> Xóa tài khoản</a>
+              </div>
+          </div>
           {% else %}
-    <!-- Nếu chưa đăng nhập -->
-            <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
-            <a href="{% url 'dangky' %}">Đăng ký</a>
+          <!-- 🔸 Khi chưa đăng nhập -->
+          <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
+          <a href="{% url 'dangky' %}">Đăng ký</a>
           {% endif %}
         </div>
     </div>
@@ -36,7 +50,7 @@
         </div>
 
         <nav>
-            <a href="#" class="active">Trang chủ</a>
+            <a href="{% url 'home' %}" class="active">Trang chủ</a>
             <a href="#">Dịch vụ</a>
             <a href="#">Khuyến mãi</a>
         </nav>
@@ -47,11 +61,10 @@
         </div>
     </header>
 
-        <!-- 🔹 Banner toàn màn hình -->
+    <!-- 🔹 Banner toàn màn hình -->
     <section class="banner-full">
         <img src="{% static 'trangchu/banner.png' %}" alt="Banner Punky Spa">
     </section>
-
 
     <!-- 🔹 Phần giới thiệu -->
     <section class="intro">
@@ -62,6 +75,7 @@
             <img src="{% static 'trangchu/cat3.png' %}" alt="">
         </div>
     </section>
+
     {% block content %}{% endblock %}
 
     <!-- 🔹 FOOTER -->
@@ -88,6 +102,25 @@
             </div>
         </div>
     </footer>
+
+    <script>
+    // 🔽 Hiển thị menu khi click vào tên người dùng
+    document.addEventListener("DOMContentLoaded", function() {
+      const userBtn = document.querySelector(".user-btn");
+      const dropdown = document.querySelector(".dropdown-menu");
+
+      if (userBtn) {
+        userBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdown.classList.toggle("show");
+        });
+
+        document.addEventListener("click", () => {
+          dropdown.classList.remove("show");
+        });
+      }
+    });
+    </script>
 
 </body>
 </html>

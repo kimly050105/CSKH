@@ -1,0 +1,84 @@
+{% extends 'trangchu/index.html' %}
+{% load static %}
+
+{% block title %}Thông tin tài khoản{% endblock %}
+
+{% block content %}
+<script>
+  setTimeout(() => {
+    const msg = document.querySelector('.message-container');
+    if (msg) {
+      msg.style.animation = 'fadeOut 0.5s ease-in-out forwards';
+    }
+  }, 3000);
+</script>
+<div class="profile-overlay">
+  <div class="profile-box">
+    <button class="close-btn" onclick="window.location.href='/'">&times;</button>
+
+    <div class="profile-header">
+      <div class="avatar"><i class="fa fa-user-circle"></i></div>
+      <div>
+        <h2>{{ user.username }}</h2>
+        <p>{{ user.email }}</p>
+      </div>
+    </div>
+
+    {% if messages %}
+      <div class="message-container">
+         {% for message in messages %}
+           <div class="alert alert-success">
+            <i class="fa fa-check-circle"></i> {{ message }}
+           </div>
+         {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="profile-content">
+        <div class="row">
+          <div class="col">
+            <label>Tên</label>
+            {{ form.ho_ten }}
+          </div>
+          <div class="col">
+            <label>Giới tính</label>
+            {{ form.gioi_tinh }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label>Điện thoại</label>
+            {{ form.so_dien_thoai }}
+          </div>
+          <div class="col">
+            <label>Ngày sinh</label>
+            {{ form.ngay_sinh }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label>Địa chỉ</label>
+            {{ form.dia_chi }}
+          </div>
+          <div class="col">
+            <label>Email</label>
+             {{ form.email }}
+          </div>
+        </div>
+
+        <div class="update-container">
+          <button type="submit" class="update-btn">
+            <i class="fa fa-pen"></i> Cập nhật
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<link rel="stylesheet" href="{% static 'TK/profile.css' %}">
+{% endblock %}
