@@ -1,0 +1,9 @@
+{% extends "index.html" %}
+{% block content %}
+<div style="max-width:700px;margin:40px auto;background:white;border-radius:15px;padding:25px;box-shadow:0 0 10px rgba(0,0,0,0.1);">
+  <h2 style="color:#ff5c8d;">{{ tb.tieu_de }}</h2>
+  <p style="margin-top:15px;">{{ tb.noi_dung|linebreaks }}</p>
+  <p style="margin-top:15px;color:#777;">📅 {{ tb.ngay_tao|date:"d/m/Y H:i" }}</p>
+  <a href="{% url 'danh_sach_thong_bao' %}" style="background:#ff5c8d;color:white;padding:8px 15px;border-radius:6px;text-decoration:none;">← Quay lại</a>
+</div>
+{% endblock %}

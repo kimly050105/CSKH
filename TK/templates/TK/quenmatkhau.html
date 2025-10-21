@@ -1,68 +1,63 @@
-<!DOCTYPE html>
+{% extends 'trangchu/index.html' %}
 {% load static %}
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Quên mật khẩu - Punky Spa</title>
-    <link rel="stylesheet" href="{% static 'TK/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-<div class="auth-box">
+
+{% block title %}Quên mật khẩu - Punky Spa{% endblock %}
+
+{% block content %}
+<!-- 🌸 Overlay nền mờ -->
+<div class="auth-overlay">
+  <div class="auth-box">
     <h2>QUÊN MẬT KHẨU</h2>
+
     {% if messages %}
-        {% for message in messages %}
-            <p style="color:red;">{{ message }}</p>
-        {% endfor %}
+        <div class="messages">
+            {% for message in messages %}
+                <p class="text-danger">{{ message }}</p>
+            {% endfor %}
+        </div>
     {% endif %}
 
-    <form method="POST">
+    <form method="POST" action="">
         {% csrf_token %}
+
         <!-- Email -->
-        <div class="mb-3">
-            <div class="input-group">
-                <span class="input-group-text bg-white border-0">
-                    <i class="fa fa-envelope text-danger"></i>
-                </span>
-                <input type="email" name="email" class="form-control" placeholder="Email" required>
-            </div>
+        <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+            <input type="email" name="email" placeholder="Email" required>
         </div>
 
         <!-- Mật khẩu mới -->
-        <div class="mb-3">
-            <div class="input-group">
-                <span class="input-group-text bg-white border-0">
-                    <i class="fa fa-lock text-danger"></i>
-                </span>
-                <input type="password" name="mat_khau_moi" id="password" class="form-control" placeholder="Mật khẩu mới" required>
-                <span class="input-group-text bg-white border-0" onclick="togglePassword('password', this)">
-                    <i class="fa fa-eye-slash text-secondary"></i>
-                </span>
-            </div>
+        <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            <input type="password" name="new_password" id="new_password" placeholder="Mật khẩu mới" required>
+            <i class="fa fa-eye-slash toggle" onclick="togglePassword('new_password', this)"></i>
         </div>
 
         <button type="submit" class="btn-main">LẤY LẠI MẬT KHẨU</button>
 
-        <p class="form-text mt-3">
-            Đã có tài khoản? <a href="{% url 'dangnhap' %}">Đăng nhập</a>
-        </p>
+        <div class="auth-options">
+            <p>Đã có tài khoản? <a href="{% url 'dangnhap' %}">Đăng nhập</a></p>
+        </div>
     </form>
+  </div>
 </div>
 
+<!-- 🌸 Script ẩn/hiện mật khẩu -->
 <script>
-function togglePassword(id, element) {
+function togglePassword(id, icon) {
     const input = document.getElementById(id);
-    const icon = element.querySelector('i');
     if (input.type === "password") {
         input.type = "text";
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
     } else {
         input.type = "password";
-        icon.classList.add('fa-eye-slash');
-        icon.classList.remove('fa-eye');
+        icon.classList.add("fa-eye-slash");
+        icon.classList.remove("fa-eye");
     }
 }
 </script>
-</body>
-</html>
+
+<!-- FontAwesome cho icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+{% endblock %}
