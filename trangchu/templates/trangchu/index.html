@@ -16,30 +16,31 @@
         </div>
 
         <div class="right">
-          {% if user.is_authenticated %}
-          <!-- 🔸 Khi người dùng đã đăng nhập -->
-          <div class="user-menu">
-              <button class="user-btn">
-                  <i class="fa fa-user"></i> {{ user.username }}
-                  <i class="fa fa-caret-down"></i>
-              </button>
+  {% if user.is_authenticated %}
+  <!-- 🔹 Khi người dùng đã đăng nhập -->
+  <div class="user-menu">
+      <button class="user-btn">
+          <i class="fa fa-user"></i> {{ user.username }}
+          <i class="fa fa-caret-down"></i>
+      </button>
 
-              <div class="dropdown-menu">
-                  <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-user-circle"></i> Tài khoản</a>
-                  <a href="#"><i class="fa fa-star"></i> Tích điểm</a>
-                  <a href="#"><i class="fa fa-ticket"></i> Mã ưu đãi</a>
-                  <a href="#"><i class="fa fa-calendar"></i> Lịch hẹn</a>
-                  <a href="#"><i class="fa fa-comments"></i> Khiếu nại</a>
-                  <a href="{% url 'dangxuat' %}"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
-                  <a href="#"><i class="fa fa-trash"></i> Xóa tài khoản</a>
-              </div>
-          </div>
-          {% else %}
-          <!-- 🔸 Khi chưa đăng nhập -->
-          <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
-          <a href="{% url 'dangky' %}">Đăng ký</a>
-          {% endif %}
-        </div>
+      <div class="dropdown-menu">
+          <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-user-circle"></i> Tài khoản</a>
+          <a href="#"><i class="fa fa-star"></i> Tích điểm</a>
+          <a href="#"><i class="fa fa-ticket"></i> Mã ưu đãi</a>
+          <a href="#"><i class="fa fa-calendar"></i> Lịch hẹn</a>
+          <a href="#"><i class="fa fa-comments"></i> Khiếu nại</a>
+          <a href="{% url 'dangxuat' %}"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+      </div>
+  </div>
+  {% else %}
+  <!-- 🔹 Khi chưa đăng nhập -->
+  <a href="{% url 'dangnhap' %}" class="auth-link">Đăng nhập</a> |
+  <a href="{% url 'dangky' %}" class="auth-link">Đăng ký</a>
+  {% endif %}
+</div>
+
+
     </div>
 
     <!-- 🔹 Thanh điều hướng -->
