@@ -537,3 +537,64 @@ nav a:hover {
 .dropdown-menu a i {
     color: #f06277;
 }
+
+
+
+/* 🌸 Nút đăng nhập/đăng ký trong popup thông báo */
+.notify-content .btn {
+    background-color: #fff;       /* nền trắng */
+    color: #000;                  /* chữ đen */
+    border: 1px solid #ffb6c1;    /* viền hồng nhạt */
+    border-radius: 8px;
+    padding: 7px 14px;
+    margin: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.notify-content .btn:hover {
+    background-color: #ffe6eb;    /* hồng pastel nhẹ khi hover */
+    border-color: #ff8da1;
+    transform: translateY(-1px);
+}
+
+
+/* 🌸 Hiệu ứng mượt khi hiện */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.notify-box:hover .notify-content {
+    display: block;
+}
+
+/* 🌸 Dòng thông báo */
+.notify-item {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.25s ease;
+    border-radius: 6px;
+}
+
+
+
+/* 🌸 Nút xem tất cả */
+.view-all {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #ff5c8d;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.view-all:hover {
+    color: #a01940;
+    text-decoration: underline;
+}
+
+
