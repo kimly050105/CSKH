@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Lịch hẹn sắp tới - Punky Spa</title>
+    {% load static %}
+  <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <!-- 🔹 Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="{% static 'trangchu/logo.png' %}" alt="Punky Spa">
+        <h2><span class="pink">Punky</span> Spa</h2>
+      </div>
+
+      <div class="user-info">
+        <i class="fa fa-user"></i> Vanila Nguyễn
+      </div>
+
+      <nav>
+        <a href="#">Trang chủ</a>
+        <div class="dropdown">
+          <button class="drop-btn">Lịch hẹn</button>
+          <div class="dropdown-content">
+            <a href="{% url 'lich_hen_sap_toi' %}" class="active">Lịch hẹn sắp tới</a>
+            <a href="{% url 'lich_su_lich_hen' %}">Lịch sử lịch hẹn</a>
+            <a href="{% url 'lich_da_huy' %}">Lịch đã hủy</a>
+          </div>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- 🔹 Main content -->
+    <main class="main-content">
+      <h2>Lịch hẹn sắp tới</h2>
+      <a href="{% url 'them_lich_hen' %}" class="add-btn">Thêm lịch hẹn +</a>
+
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>Thời gian</th>
+            <th>Tên khách hàng</th>
+            <th>SDT</th>
+            <th>Tên thú cưng</th>
+            <th>Loài</th>
+            <th>Cân nặng</th>
+            <th>Dịch vụ</th>
+            <th>Nhân viên</th>
+            <th>Ghi chú</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lh in lich_hens %}
+          <tr>
+            <td>{{ lh.thoi_gian|date:"H:i d/m/Y" }}</td>
+            <td>{{ lh.khach_hang.ho_ten }}</td>
+            <td>{{ lh.khach_hang.so_dien_thoai }}</td>
+            <td>{{ lh.thu_cung.ten_thucung }}</td>
+            <td>{{ lh.thu_cung.loai }}</td>
+            <td>{{ lh.thu_cung.can_nang }}</td>
+            <td>{{ lh.dich_vu }}</td>
+            <td>{{ lh.nhan_vien.user.get_full_name }}</td>
+            <td>{{ lh.ghi_chu }}</td>
+            <td>
+              <a href="{% url 'sua_lich_hen' lh.id %}" class="edit-btn">✏️</a>
+              <a href="{% url 'xoa_lich_hen' lh.id %}" class="delete-btn">🗑️</a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="10">Không có lịch hẹn nào sắp tới.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

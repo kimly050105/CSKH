@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
-from TK.models import KhachHang, ThuCung, NhanVien, DichVu
+from TK.models import KhachHang, ThuCung, NhanVien
+
 
 class LichHen(models.Model):
     TRANG_THAI_CHOICES = [
@@ -10,39 +11,30 @@ class LichHen(models.Model):
     ]
 
     khach_hang = models.ForeignKey(
-        KhachHang, on_delete=models.CASCADE, related_name='lich_hen',
-        verbose_name="Khách hàng"
+        KhachHang,
+        on_delete=models.CASCADE,
+        help_text="Khách hàng đặt lịch hẹn."
     )
     thu_cung = models.ForeignKey(
-        ThuCung, on_delete=models.CASCADE, related_name='lich_hen',
-        verbose_name="Thú cưng"
-    )
-    dich_vu = models.ForeignKey(
-        DichVu, on_delete=models.SET_NULL, null=True, blank=True,
-        related_name='lich_hen', verbose_name="Dịch vụ"
+        ThuCung,
+        on_delete=models.CASCADE,
+        help_text="Thú cưng được chăm sóc."
     )
     nhan_vien = models.ForeignKey(
-        NhanVien, on_delete=models.SET_NULL, null=True, blank=True,
-        related_name='lich_hen', verbose_name="Nhân viên phụ trách"
+        NhanVien,
+        on_delete=models.SET_NULL,
+        null=True, blank=True,
+        help_text="Nhân viên phụ trách dịch vụ."
     )
 
-    # 🔹 Thông tin bổ sung cho bảng hiển thị
-    so_dien_thoai = models.CharField(max_length=15, blank=True, null=True)
-    can_nang = models.CharField(max_length=20, blank=True, null=True)
-    ghi_chu = models.TextField(blank=True, null=True)
-
-    # 🔹 Dành riêng cho trang "Lịch sử lịch hẹn"
-    danh_gia = models.CharField(max_length=255, blank=True, null=True)
-    khieu_nai = models.TextField(blank=True, null=True)
-
-    thoi_gian = models.DateTimeField(verbose_name="Thời gian hẹn")
-    trang_thai = models.CharField(
-        max_length=20, choices=TRANG_THAI_CHOICES, default='sap_toi'
-    )
+    thoi_gian = models.DateTimeField(help_text="Thời gian thực hiện dịch vụ.")
+    dich_vu = models.CharField(max_length=200, help_text="Tên dịch vụ thực hiện.")
+    can_nang = models.CharField(max_length=50, blank=True, help_text="Cân nặng thú cưng (nếu có).")
+    ghi_chu = models.TextField(blank=True, help_text="Ghi chú đặc biệt của khách hàng.")
+    trang_thai = models.CharField(max_length=20, choices=TRANG_THAI_CHOICES, default='sap_toi')
+    danh_gia = models.CharField(max_length=255, blank=True, help_text="Đánh giá sau dịch vụ (nếu có).")
+    khieu_nai = models.TextField(blank=True, help_text="Khiếu nại của khách hàng (nếu có).")
     ngay_tao = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.thu_cung.ten_thucung} - {self.khach_hang.user.username} ({self.trang_thai})"
-from django.db import models
-
-# Create your models here.
+        return f"{self.khach_hang.ho_ten} - {self.thu_cung.ten_thucung}"
