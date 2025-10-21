@@ -56,14 +56,6 @@ class DichVu(models.Model):
 
 
 
-class ChiTietLichHen(models.Model):
-    lich_hen = models.ForeignKey(LichHen, on_delete=models.CASCADE)
-    dich_vu = models.ForeignKey(DichVu, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"Lịch {self.lich_hen.id} - {self.dich_vu.ten_dichvu}"
-
-
 class KhieuNaiPhanHoi(models.Model):
     khach_hang = models.ForeignKey(KhachHang, on_delete=models.CASCADE)
     nhan_vien = models.ForeignKey(NhanVien, on_delete=models.SET_NULL, null=True, blank=True)
