@@ -3,6 +3,8 @@ from django.contrib import messages
 from .forms import DangKyForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
+
 
 def dangky(request):
     if request.method == 'POST':
@@ -25,7 +27,7 @@ def dangnhap(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('trangchu')
+            return redirect('home')
         else:
             messages.error(request, "Sai tên đăng nhập hoặc mật khẩu!")
 
@@ -35,7 +37,7 @@ def dangnhap(request):
 def quenmatkhau(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        new_password = request.POST.get('mat_khau_moi')
+        new_password = request.POST.get('new_password')
         try:
             user = User.objects.get(email=email)
             user.set_password(new_password)
@@ -46,6 +48,10 @@ def quenmatkhau(request):
             messages.error(request, "Không tìm thấy tài khoản với email này.")
 
     return render(request, 'TK/quenmatkhau.html')
+
+def dangxuat(request):
+    logout(request)
+    return redirect('home')
 
 
 

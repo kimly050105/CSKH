@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Punky Spa</title>
+    <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
+</head>
+
+<body>
+    <!-- 🔹 Thanh trên cùng -->
+    <div class="topbar">
+        <div class="left">
+            🕘 Giờ làm việc: Từ 09h00 đến 21h00
+        </div>
+        <div class="right">
+          {% if user.is_authenticated %}
+    <!-- Nếu đã đăng nhập -->
+            <span class="user-info">
+              <i class="fa fa-user"></i> {{ user.username }}
+              <a href="{% url 'dangxuat' %}" class="logout-link">(Đăng xuất)</a>
+            </span>
+          {% else %}
+    <!-- Nếu chưa đăng nhập -->
+            <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
+            <a href="{% url 'dangky' %}">Đăng ký</a>
+          {% endif %}
+        </div>
+    </div>
+
+    <!-- 🔹 Thanh điều hướng -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{% static 'trangchu/logo.png' %}" alt="Logo Punky Spa">
+            <h1><span class="pink">Punky</span> Spa</h1>
+        </div>
+
+        <nav>
+            <a href="#" class="active">Trang chủ</a>
+            <a href="#">Dịch vụ</a>
+            <a href="#">Khuyến mãi</a>
+        </nav>
+
+        <div class="search">
+            <input type="text" placeholder="Tìm kiếm...">
+            <button>🔍</button>
+        </div>
+    </header>
+
+        <!-- 🔹 Banner toàn màn hình -->
+    <section class="banner-full">
+        <img src="{% static 'trangchu/banner.png' %}" alt="Banner Punky Spa">
+    </section>
+
+
+    <!-- 🔹 Phần giới thiệu -->
+    <section class="intro">
+        <h2>Giới thiệu</h2>
+        <div class="gallery">
+            <img src="{% static 'trangchu/cat1.png' %}" alt="">
+            <img src="{% static 'trangchu/cat2.png' %}" alt="">
+            <img src="{% static 'trangchu/cat3.png' %}" alt="">
+        </div>
+    </section>
+    {% block content %}{% endblock %}
+
+    <!-- 🔹 FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Liên lạc</h4>
+                <p>Hotline: 1900 6750</p>
+                <p>Địa chỉ: 627 Ngô Quyền, An Hải Bắc,<br>Đà Nẵng, Việt Nam</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Chính sách</h4>
+                <p>Chính sách bảo mật</p>
+                <p>Quy định sử dụng</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Tổng đài hỗ trợ</h4>
+                <p>Tư vấn dịch vụ: 1800 6750</p>
+                <p>Hỗ trợ sử dụng: 1900 6750</p>
+                <p>Email: punkyspa@gmail.vn</p>
+                <p>Từ 7h00 – 20h00 các ngày từ thứ 2 đến Chủ nhật.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

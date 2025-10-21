@@ -1,17 +1,14 @@
-
-<!DOCTYPE html>
+{% extends 'trangchu/index.html' %}
 {% load static %}
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Đăng nhập tài khoản - Punky Spa</title>
-    <link rel="stylesheet" href="{% static 'TK/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
 
-<div class="auth-box">
+{% block title %}Đăng nhập tài khoản - Punky Spa{% endblock %}
+
+{% block content %}
+<!-- 🌸 Overlay (nền mờ + form đăng nhập nổi giữa trang chủ) -->
+<div class="auth-overlay">
+  <div class="auth-box">
     <h2>ĐĂNG NHẬP TÀI KHOẢN</h2>
+
     {% if messages %}
         <div class="messages">
             {% for message in messages %}
@@ -23,10 +20,10 @@
     <form method="POST" action="">
         {% csrf_token %}
 
-        <!-- Họ tên -->
+        <!-- Tên đăng nhập -->
         <div class="input-group">
             <span class="input-group-text"><i class="fa fa-user"></i></span>
-            <input type="text" name="username" placeholder="Họ tên" required>
+            <input type="text" name="username" placeholder="Họ Tên" required>
         </div>
 
         <!-- Mật khẩu -->
@@ -36,22 +33,24 @@
             <i class="fa fa-eye-slash toggle" onclick="togglePassword()"></i>
         </div>
 
-        <div class="auth-options">
+        <div class="auth-options login-options">
           <p>Chưa có tài khoản? <a href="{% url 'dangky' %}">Đăng ký</a></p>
           <p><a href="{% url 'quenmatkhau' %}">Quên mật khẩu?</a></p>
         </div>
 
         <button type="submit" class="btn-main">ĐĂNG NHẬP</button>
 
-        <div class=" divider ">Tiếp tục với</div>
+        <div class="divider">Tiếp tục với</div>
 
         <div class="social-login">
             <a href="#" class="social-btn fb"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="social-btn gg"><i class="fab fa-google"></i></a>
         </div>
     </form>
+  </div>
 </div>
 
+<!-- Script toggle ẩn/hiện mật khẩu -->
 <script>
 function togglePassword() {
     const input = document.getElementById("password");
@@ -68,5 +67,6 @@ function togglePassword() {
 }
 </script>
 
-</body>
-</html>
+<!-- FontAwesome cho icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+{% endblock %}
