@@ -1,98 +1,90 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Đăng ký tài khoản - Punky Spa</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'TK/style.css' %}">
-</head>
-<body>
-    <div class="auth-box">
-        <h4>ĐĂNG KÝ TÀI KHOẢN</h4>
-        <form method="POST" action="">
-            {% csrf_token %}
+{% extends 'trangchu/index.html' %}
+{% load static %}
 
-            <!-- Username -->
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text bg-white border-0">
-                        <i class="fa fa-user "></i>
-                    </span>
-                    <input type="text" name="username" class="form-control" placeholder="Họ tên" required>
-                </div>
-            </div>
+{% block title %}Đăng ký tài khoản - Punky Spa{% endblock %}
 
-            <!-- Email -->
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text bg-white border-0">
-                        <i class="fa fa-envelope"></i>
-                    </span>
-                    <input type="email" name="email" class="form-control" placeholder="Email" required>
-                </div>
-                {% if form.email.errors %}
-                   <p style="color:red; font-size:14px; margin-top:4px;">{{ form.email.errors.0 }}</p>
-                {% endif %}
-            </div>
-
-            <!-- Password1 -->
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text bg-white border-0">
-                        <i class="fa fa-lock"></i>
-                    </span>
-                    <input type="password" name="password1" id="password" class="form-control" placeholder="Mật khẩu" required>
-                    <span class="input-group-text bg-white border-0" onclick="togglePassword('password', this)">
-                        <i class="fa fa-eye-slash text-secondary"></i>
-                    </span>
-                </div>
-            </div>
-
-            <!-- Password2 -->
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text bg-white border-0">
-                        <i class="fa fa-lock"></i>
-                    </span>
-                    <input type="password" name="password2" id="repassword" class="form-control" placeholder="Nhập lại mật khẩu" required>
-                    <span class="input-group-text bg-white border-0" onclick="togglePassword('repassword', this)">
-                        <i class="fa fa-eye-slash text-secondary"></i>
-                    </span>
-                </div>
-            </div>
-
-            <button type="submit" class="btn-main">ĐĂNG KÝ</button>
-            <p class="form-text mt-3">
-                Đã có tài khoản? <a href="{% url 'dangnhap' %}">Đăng nhập</a>
-            </p>
-
-            <div class="divider">Tiếp tục với</div>
-
-            <div>
-                <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="social-btn"><i class="fab fa-google"></i></a>
-            </div>
-        </form>
+{% block content %}
+<!-- 🌸 Overlay (nền mờ + form đăng ký nổi giữa trang chủ) -->
+<div class="auth-overlay">
+  <div class="auth-box">
+    <h2>ĐĂNG KÝ TÀI KHOẢN</h2>
+    {% if form.errors %}
+    <div class="form-errors">
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                <p class="error-text">{{ error }}</p>
+            {% endfor %}
+        {% endfor %}
     </div>
+    {% endif %}
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p class="text-danger">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    <script>
-        function togglePassword(id, element) {
-            const input = document.getElementById(id);
-            const icon = element.querySelector('i');
-            if (input.type === "password") {
-                input.type = "text";
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            } else {
-                input.type = "password";
-                icon.classList.add('fa-eye-slash');
-                icon.classList.remove('fa-eye');
-            }
-        }
-    </script>
+    <form method="POST" action="">
+        {% csrf_token %}
 
-</body>
-</html>
+        <!-- Họ tên -->
+        <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+            <input type="text" name="username" placeholder="Họ tên" required>
+        </div>
+
+        <!-- Email -->
+        <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+            <input type="email" name="email" placeholder="Email" required>
+        </div>
+
+        <!-- Mật khẩu -->
+        <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            <input type="password" name="password1" id="password1" placeholder="Mật khẩu" required>
+            <i class="fa fa-eye-slash toggle" onclick="togglePassword('password1', this)"></i>
+        </div>
+
+        <!-- Nhập lại mật khẩu -->
+        <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            <input type="password" name="password2" id="password2" placeholder="Nhập lại mật khẩu" required>
+            <i class="fa fa-eye-slash toggle" onclick="togglePassword('password2', this)"></i>
+        </div>
+
+        <button type="submit" class="btn-main">ĐĂNG KÝ</button>
+        <div class="auth-options">
+          <p>Đã có tài khoản? <a href="{% url 'dangnhap' %}">Đăng nhập</a></p>
+        </div>
+
+        <div class="divider">Tiếp tục với</div>
+
+        <div class="social-login">
+            <a href="#" class="social-btn fb"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-btn gg"><i class="fab fa-google"></i></a>
+        </div>
+    </form>
+  </div>
+</div>
+
+<!-- Script toggle hiển thị mật khẩu -->
+<script>
+function togglePassword(id, icon) {
+    const input = document.getElementById(id);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    } else {
+        input.type = "password";
+        icon.classList.add("fa-eye-slash");
+        icon.classList.remove("fa-eye");
+    }
+}
+</script>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+{% endblock %}

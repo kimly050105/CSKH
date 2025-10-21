@@ -1,0 +1,426 @@
+body { background-color: yellow; }
+
+/* 🌸 Cài đặt tổng thể */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+/* 🌸 Thanh topbar (dòng giờ làm việc) */
+.topbar {
+    background-color: #ffd6de;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 🌸 Header chính (logo, menu, tìm kiếm) */
+header.navbar {
+    background-color: #ffeef2; /* nền hồng phủ toàn vùng header */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* 🌸 Logo Punky Spa */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 45px;
+    height: 45px;
+    border-radius: 6px;
+    margin-right: 8px;
+}
+
+.logo h1 {
+    font-size: 24px;
+    color: #5a5a5a;
+    margin: 0;
+}
+
+.logo .pink {
+    color: #f06277;
+    font-weight: bold;
+}
+
+/* 🌸 Menu điều hướng */
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+    transition: color 0.2s;
+}
+
+nav a.active,
+nav a:hover {
+    color: #f06277;
+}
+
+/* 🌸 Ô tìm kiếm */
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.search input {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 6px 12px;
+    outline: none;
+}
+
+.search button {
+    background-color: #f06277;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 50%;
+    margin-left: 6px;
+    cursor: pointer;
+}
+
+/* 🌸 Banner toàn màn hình */
+.banner-full {
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.banner-full img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* 🌸 Phần Giới thiệu */
+.intro {
+    background-color: #fff5f7; /* nền hồng nhạt toàn vùng */
+    padding: 50px 0;
+    text-align: center;
+}
+
+/* 🌸 Tiêu đề Giới thiệu có nền hồng */
+.intro h2 {
+    display: inline-block;
+    background-color: #ffd6de;
+    padding: 10px 30px;
+    border-radius: 10px;
+    color: #000;
+    font-size: 26px;
+    margin-bottom: 35px;
+}
+
+/* 🌸 Bộ sưu tập ảnh thú cưng */
+.gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* khoảng cách giữa các ảnh */
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
+
+/* 🌸 Ảnh thú cưng */
+.gallery img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover; /* giữ tỷ lệ không méo */
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* 🌸 Hiệu ứng khi rê chuột vào ảnh */
+.gallery img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* 🌸 Tùy chọn responsive cho màn nhỏ */
+@media (max-width: 768px) {
+    header.navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .gallery img {
+        width: 90%;
+        height: auto;
+    }
+}
+
+/* 🌸 FOOTER Chuẩn 3 cột nền hồng */
+.footer {
+    background-color: #f8aebc; /* nền hồng đậm bên ngoài */
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-container {
+    background-color: #ffd6de; /* nền hồng sáng bên trong */
+    width: 90%;
+    max-width: 1100px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 25px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 250px;
+    margin: 10px 20px;
+}
+
+.footer-column h4 {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.footer-column p {
+    margin: 5px 0;
+    color: #222;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* 🌸 Khi thu nhỏ màn hình, các cột xếp dọc */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: left;
+    }
+}
+/* 🌸 Popup chỉ hiển thị form, không có nền trắng phủ */
+.modal {
+    display: none; /* Ẩn mặc định */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 80px;
+
+    /* 🔹 Không có màu nền */
+    background: transparent !important;
+    backdrop-filter: none !important;
+    pointer-events: none; /* Cho phép click vào nền phía sau */
+}
+
+/* 🌸 Hộp nội dung form (hiển thị) */
+.modal-content {
+    background: #fddce2;
+    border-radius: 20px;
+    padding: 30px;
+    width: 400px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    position: relative;
+    animation: popup 0.3s ease-out;
+    z-index: 1000;
+    pointer-events: all; /* Cho phép click trong form */
+}
+
+/* 🌸 Hiệu ứng bật popup */
+@keyframes popup {
+    from { transform: translateY(-15px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* 🌸 Dấu X đóng form */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #000;
+    transition: 0.3s;
+}
+.close:hover {
+    color: #a01940;
+}
+/* 🌸 Form đăng nhập overlay */
+.auth-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* 🌸 Khung form */
+.auth-box {
+    background: #fddce2;
+    border-radius: 20px;
+    padding: 40px 45px;
+    width: 420px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    text-align: center;
+    animation: popup 0.3s ease-out;
+}
+
+@keyframes popup {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.auth-box h2 {
+    color: #a01940;
+    margin-bottom: 20px;
+}
+
+/* 🌸 Input */
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+}
+
+.input-group input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 15px;
+}
+
+.input-group-text {
+    margin-right: 8px;
+    color: #a01940;
+}
+
+.toggle {
+    color: #a01940;
+    cursor: pointer;
+}
+
+.btn-main {
+    background: #a01940;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    width: 100%;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-main:hover {
+    background: #801332;
+}
+
+.divider {
+    margin: 15px 0;
+    font-size: 14px;
+    color: #444;
+}
+
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.social-btn.fb { background: #3b5998; }
+.social-btn.gg { background: #db4a39; }
+
+/* 🌸 Trang Đăng nhập */
+/* 🌸 Dạng mặc định: căn giữa (dùng cho đăng ký và quên mật khẩu) */
+.auth-options {
+    display: flex;
+    justify-content: center; /* Căn giữa mặc định */
+    align-items: center;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.auth-options p {
+    margin: 0;
+}
+
+.auth-options a {
+    color: #a01940;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.auth-options a:hover {
+    text-decoration: underline;
+}
+
+/* 🌸 Dạng riêng cho trang Đăng nhập */
+.login-options {
+    justify-content: space-between; /* Căn 2 bên */
+    padding: 0 15px;                /* Thêm khoảng cách 2 bên */
+    margin-bottom: 10px;            /* Cách nhẹ với nút Đăng nhập */
+}
+
+.login-options p {
+    margin: 0;
+    flex: 1;                        /* Giúp căn đều */
+}
+
+.login-options p:first-child {
+    text-align: left;
+}
+
+.login-options p:last-child {
+    text-align: right;
+}
+
+
+
+/* 🌸 Thông báo chú thích trong form quên mật khẩu */
+.note {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 15px;
+    text-align: center;
+    line-height: 1.4;
+}
