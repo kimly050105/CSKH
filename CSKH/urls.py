@@ -22,5 +22,6 @@ urlpatterns = [
     path('', include('TK.urls')),
     path('', include('trangchu.urls')),
     path('thongbao/', include('TB.urls')),
+    path('lich-hen/', include('LichHen.urls')),
 
 ]
