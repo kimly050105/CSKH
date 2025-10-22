@@ -123,4 +123,26 @@
 }
 
 
+.alert-success {
+    background-color: #ffedf3;
+    border: 1px solid #ffb8c6;
+    color: #a01940;
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 500;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-5px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes fadeOut {
+    to {opacity: 0; transform: translateY(-5px); display: none;}
+}
+
+
 

@@ -45,7 +45,16 @@
                 </button>
 
                 <div class="dropdown-menu">
-                    <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-user-circle"></i> Tài khoản</a>
+                    <div class="submenu">
+                        <a href="#" class="submenu-toggle">
+                           <i class="fa fa-user-circle"></i> Tài khoản <i class="fa fa-caret-down"></i>
+                        </a>
+                    <div class="submenu-items">
+                           <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-id-card"></i> Thông tin cá nhân</a>
+                           <a href="{% url 'thongtinthucung' %}"><i class="fa fa-paw"></i> Thông tin thú cưng</a>
+                    </div>
+                </div>
+
                     <a href="#"><i class="fa fa-star"></i> Tích điểm</a>
                     <a href="#"><i class="fa fa-ticket"></i> Mã ưu đãi</a>
                     <a href="{% url 'lich_hen_sap_toi' %}"><i class="fa fa-calendar"></i> Lịch hẹn</a>
@@ -241,23 +250,74 @@
         return "Cảm ơn bạn đã liên hệ 💗! Bạn chờ một chút shop sẽ phản hồi ngay nhé";
     }
     </script>
-        <!-- 🌸 SCRIPT DROPDOWN MENU NGƯỜI DÙNG -->
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const userBtn = document.querySelector(".user-btn");
-        const dropdown = document.querySelector(".dropdown-menu");
+ <!-- 🌸 SCRIPT DROPDOWN MENU NGƯỜI DÙNG -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 🔹 Toggle dropdown chính (menu lyly)
+    const userBtn = document.querySelector(".user-btn");
+    const dropdown = document.querySelector(".dropdown-menu");
+    if (userBtn) {
+        userBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle("show");
+        });
 
-        if (userBtn) {
-            userBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                dropdown.classList.toggle("show");
-            });
-
-            document.addEventListener("click", () => {
+        // 🔹 Bấm ra ngoài thì đóng dropdown (trừ khi đang trong dropdown)
+        document.addEventListener("click", (event) => {
+            if (!dropdown.contains(event.target) && !userBtn.contains(event.target)) {
                 dropdown.classList.remove("show");
-            });
-        }
-    });
-    </script>
+            }
+        });
+    }
+
+    // 🔹 Toggle submenu tài khoản (nội dung cá nhân + thú cưng)
+    const submenuToggle = document.querySelector(".submenu-toggle");
+    const submenuItems = document.querySelector(".submenu-items");
+
+    if (submenuToggle && submenuItems) {
+        submenuToggle.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation(); // 👈 NGĂN không cho đóng dropdown cha
+            submenuItems.classList.toggle("show");
+            submenuToggle.classList.toggle("active");
+        });
+    }
+});
+</script>
+
+<!-- 🌸 STYLE BỔ SUNG -->
+<style>
+/* 🌸 Ẩn submenu mặc định */
+.submenu-items {
+  display: none;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 6px;
+  margin-top: 5px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+/* 🌸 Hiện submenu khi nhấn */
+.submenu-items.show {
+  display: flex !important;
+}
+
+/* 🌸 Hiệu ứng mũi tên xoay xuống/up */
+.submenu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.submenu-toggle i.fa-caret-down {
+  transition: transform 0.3s ease;
+}
+
+.submenu-toggle.active i.fa-caret-down {
+  transform: rotate(180deg);
+}
+</style>
+
 </body>
 </html>

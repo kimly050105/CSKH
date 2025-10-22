@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import DangKyForm, KhachHangForm
-from .models import KhachHang
+from .forms import DangKyForm, KhachHangForm, ThuCungForm
+from .models import KhachHang, ThuCung
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
@@ -87,6 +87,24 @@ def thongtintaikhoan(request):
         'user': request.user,
     })
 
+@login_required
+def thongtinthucung(request):
+    khach_hang = KhachHang.objects.get(user=request.user)
+    thu_cung = ThuCung.objects.filter(khach_hang=khach_hang).first()
 
+    if request.method == 'POST':
+        form = ThuCungForm(request.POST, instance=thu_cung)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.khach_hang = khach_hang
+            obj.save()
+            messages.success(request, "Thông tin thú cưng đã được cập nhật thành công!")
+            return redirect('thongtinthucung')
+    else:
+        form = ThuCungForm(instance=thu_cung)
 
+    return render(request, 'TK/thongtinthucung.html', {
+        'form': form,
+        'user': request.user,
+    })
 # Create your views here.
