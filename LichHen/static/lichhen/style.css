@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #fdeff4;
+}
+
+/* 🔹 Container chia layout */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* 🔸 Sidebar trái */
+.sidebar {
+  width: 250px;
+  background-color: #fbd1df;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo img {
+  width: 60px;
+  height: 60px;
+}
+.logo h2 {
+  color: #444;
+  margin-top: 5px;
+}
+.logo .pink {
+  color: #ff5c8d;
+}
+
+.user-info {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+nav {
+  width: 100%;
+  margin-top: 20px;
+}
+nav a, .drop-btn {
+  display: block;
+  padding: 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+  text-decoration: none;
+}
+nav a:hover, .drop-btn:hover {
+  background-color: #ffccd5;
+  border-radius: 5px;
+}
+
+.dropdown-content {
+  display: block;
+  margin-left: 10px;
+}
+.dropdown-content a {
+  padding: 8px 10px;
+  font-size: 14px;
+  display: block;
+  color: #333;
+}
+.dropdown-content a.active {
+  background-color: #ff5c8d;
+  color: white;
+  border-radius: 5px;
+}
+
+/* 🔸 Main content */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background-color: #fff7fa;
+}
+
+.main-content h2 {
+  color: #ff5c8d;
+  margin-bottom: 10px;
+}
+
+.add-btn {
+  float: right;
+  background-color: white;
+  color: #ff5c8d;
+  border: 1px solid #ff5c8d;
+  padding: 5px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+   margin-bottom: 15px;
+
+}
+.add-btn:hover {
+  background-color: #ff5c8d;
+  color: white;
+}
+
+/* 🔸 Bảng lịch hẹn */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.schedule-table th {
+  background-color: #ffb6c1;
+  color: #333;
+  padding: 10px;
+  font-weight: bold;
+}
+.schedule-table td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.schedule-table tr:nth-child(even) {
+  background-color: #fff2f5;
+}
+
+/* 🔸 Nút thao tác */
+.edit-btn, .delete-btn {
+  text-decoration: none;
+  font-size: 18px;
+  margin: 0 4px;
+}
+.edit-btn {
+  color: #007bff;
+}
+.delete-btn {
+  color: #dc3545;
+}
