@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from TK.models import KhachHang, ThuCung, NhanVien
+from DV.models import DichVu
 
 
 class LichHen(models.Model):
@@ -28,8 +29,7 @@ class LichHen(models.Model):
     )
 
     thoi_gian = models.DateTimeField(help_text="Thời gian thực hiện dịch vụ.")
-    dich_vu = models.CharField(max_length=200, help_text="Tên dịch vụ thực hiện.")
-    can_nang = models.CharField(max_length=50, blank=True, help_text="Cân nặng thú cưng (nếu có).")
+    dich_vu = models.ManyToManyField('DV.DichVu', through='DV_LichHen')
     ghi_chu = models.TextField(blank=True, help_text="Ghi chú đặc biệt của khách hàng.")
     trang_thai = models.CharField(max_length=20, choices=TRANG_THAI_CHOICES, default='sap_toi')
     danh_gia = models.CharField(max_length=255, blank=True, help_text="Đánh giá sau dịch vụ (nếu có).")
@@ -38,3 +38,8 @@ class LichHen(models.Model):
 
     def __str__(self):
         return f"{self.khach_hang.ho_ten} - {self.thu_cung.ten_thucung}"
+class DV_LichHen(models.Model):
+    lich_hen = models.ForeignKey(LichHen, on_delete=models.CASCADE)
+    dich_vu = models.ForeignKey(DichVu, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.dich_vu.ten_dich_vu} trong {self.lich_hen}"

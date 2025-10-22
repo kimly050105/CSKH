@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'TK',
     'trangchu',
     'TB',
+    'LichHen',
+    'DV',
 ]
 
 MIDDLEWARE = [
@@ -138,5 +140,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+LOGIN_URL = '/dangnhap/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đặt lịch hẹn - Punky Spa</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🐾 Đặt lịch hẹn mới</h1>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label>Khách hàng:</label>
+            <input type="text" value="{{ request.user.khachhang.ho_ten }}" disabled>
+
+            <label>Thú cưng:</label>
+            {{ form.thu_cung }}
+
+            <label>Dịch vụ:</label>
+            <div class="checkbox-group">
+                {{ form.dich_vu }}
+            </div>
+
+            <label>Thời gian hẹn:</label>
+            {{ form.thoi_gian }}
+
+            <label>Ghi chú:</label>
+            {{ form.ghi_chu }}
+
+            <button type="submit">💖 Lưu lịch hẹn</button>
+            <a href="{% url 'lich_hen_sap_toi' %}" class="back-link">⬅ Quay lại</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,7 +1,7 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import LichHen
+from .models import LichHen,DV_LichHen
 from .forms import LichHenForm
+from django.contrib.auth.decorators import login_required
 
 # 🧾 Hiển thị lịch hẹn sắp tới + nút thêm/sửa/xóa
 def lich_hen_sap_toi(request):
@@ -9,15 +9,41 @@ def lich_hen_sap_toi(request):
     return render(request, 'lichhen/lich_hen_sap_toi.html', {'lich_hens': lich_hens})
 
 # ➕ Thêm lịch hẹn mới
-def them_lich_hen(request):
+@login_required
+def tao_lich_hen(request):
+    # ✅ Lấy thông tin khách hàng hiện tại (dựa trên tài khoản đăng nhập)
+    khach_hang = request.user.khachhang
+
     if request.method == 'POST':
-        form = LichHenForm(request.POST)
+        # ✅ Truyền tham số 'khach_hang' vào form để lọc thú cưng
+        form = LichHenForm(request.POST, khach_hang=khach_hang)
+
+        # ✅ Kiểm tra dữ liệu form hợp lệ
         if form.is_valid():
-            form.save()
+            # 🧩 Tạo đối tượng Lịch hẹn nhưng chưa lưu (commit=False)
+            lich_hen = form.save(commit=False)
+            lich_hen.khach_hang = khach_hang  # gán khách hàng hiện tại
+            lich_hen.trang_thai = 'sap_toi'   # trạng thái mặc định
+            lich_hen.save()  # Lưu vào DB
+
+            # 🧾 Lưu các dịch vụ được chọn vào bảng trung gian DV_LichHen
+            for dv in form.cleaned_data['dich_vu']:
+                DV_LichHen.objects.create(
+                    lich_hen=lich_hen,   # khóa ngoại đến lịch hẹn
+                    dich_vu=dv,          # khóa ngoại đến dịch vụ
+                )
+
+            # ✅ Sau khi tạo thành công, chuyển về trang danh sách lịch hẹn sắp tới
             return redirect('lich_hen_sap_toi')
+
     else:
-        form = LichHenForm()
-    return render(request, 'lichhen/them_lich_hen.html', {'form': form})
+        # 🧠 Nếu request là GET (truy cập form lần đầu), khởi tạo form trống
+        form = LichHenForm(khach_hang=khach_hang)
+
+    # 🪄 Render giao diện thêm lịch hẹn
+    return render(request, 'lichhen/tao_lich_hen.html', {'form': form})
+
+
 
 # ✏️ Sửa lịch hẹn
 def sua_lich_hen(request, id):
