@@ -39,8 +39,25 @@
                 </div>
             </div>
             {% else %}
+
             <a href="{% url 'dangnhap' %}"><i class="fa fa-user"></i> Đăng nhập</a> |
             <a href="{% url 'dangky' %}"><i class="fa fa-pen"></i> Đăng ký</a>
+
+            <!-- 🔹 Nếu chưa đăng nhập -->
+            <div class="notify-box">
+                <span class="notify-icon">🔔</span>
+                <div class="notify-content">
+                    <div style="text-align:center; padding:15px;">
+                        <img src="{% static 'trangchu/notify-cat .png' %}" alt="Mèo dễ thương" class="notify-image">
+                        <p>Đăng nhập để xem thông báo</p>
+                        <a href="{% url 'dangnhap' %}" class="btn">Đăng nhập</a>
+                        <a href="{% url 'dangky' %}" class="btn">Đăng ký</a>
+                    </div>
+                </div>
+            </div>
+            <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
+            <a href="{% url 'dangky' %}">Đăng ký</a>
+
             {% endif %}
         </div>
     </div>
