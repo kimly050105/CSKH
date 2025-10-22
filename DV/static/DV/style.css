@@ -1,4 +1,4 @@
-
+body { background-color: yellow; }
 
 /* 🌸 Cài đặt tổng thể */
 body {
@@ -8,62 +8,16 @@ body {
     background-color: #fff;
 }
 
-/* 🌸 Thanh topbar mới (Giờ làm việc + Chuông + Đăng nhập/Đăng ký) */
+/* 🌸 Thanh topbar (dòng giờ làm việc) */
 .topbar {
-    background-color: #f8aebc; /* Hồng đậm toàn thanh */
-    color: #222;
+    background-color: #ffd6de;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 50px;      /* tăng padding để cao hơn một chút */
-    font-size: 18px;         /* 💥 chữ to hơn */
-    font-weight: 600;        /* 💥 chữ đậm hơn */
-}
-
-/* 🌸 Bên trái: Giờ làm việc */
-.topbar-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.topbar-left i {
+    padding: 6px 20px;
+    font-size: 14px;
     color: #333;
-    font-size: 20px;          /* icon to hơn chút cho cân */
 }
-
-.topbar-left strong {
-    font-weight: 700;
-    color: #000;
-    font-size: 18px;          /* 💥 chữ “Giờ làm việc” to và nổi bật */
-}
-
-/* 🌸 Bên phải: Chuông + Đăng nhập/Đăng ký */
-.topbar-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.topbar-right a {
-    color: #000;
-    font-weight: 600;
-    font-size: 17px;          /* 💥 chữ Đăng nhập/Đăng ký to đều */
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.topbar-right a:hover {
-    color: #ff5c8d;
-}
-
-/* 🌸 Icon chuông thông báo */
-.notify-icon {
-    font-size: 22px;          /* 💥 chuông to cho cân chữ */
-    cursor: pointer;
-    color: #a01940;
-}
-
 
 /* 🌸 Header chính (logo, menu, tìm kiếm) */
 header.navbar {
@@ -101,20 +55,17 @@ header.navbar {
 
 /* 🌸 Menu điều hướng */
 nav a {
-    margin: 0 20px;              /* tăng khoảng cách giữa các mục */
+    margin: 0 15px;
     text-decoration: none;
-    font-weight: 700;            /* chữ đậm hơn */
+    font-weight: bold;
     color: #333;
-    font-size: 18px;             /* 💥 chữ to hơn */
-    transition: color 0.2s, transform 0.2s;
+    transition: color 0.2s;
 }
 
 nav a.active,
 nav a:hover {
     color: #f06277;
-    transform: scale(1.05);      /* 💫 hiệu ứng phóng nhẹ khi hover */
 }
-
 
 /* 🌸 Ô tìm kiếm */
 .search {
@@ -239,21 +190,19 @@ nav a:hover {
     margin: 10px 20px;
 }
 
-/* 🌸 FOOTER CHỮ TO RÕ HƠN */
 .footer-column h4 {
-    font-size: 18px;          /* 💥 Tăng tiêu đề cột */
-    font-weight: 700;
-    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
     color: #000;
 }
 
 .footer-column p {
-    margin: 6px 0;
+    margin: 5px 0;
     color: #222;
-    line-height: 1.7;
-    font-size: 16px;          /* 💥 Tăng cỡ chữ nội dung */
+    line-height: 1.6;
+    font-size: 14px;
 }
-
 
 /* 🌸 Khi thu nhỏ màn hình, các cột xếp dọc */
 @media (max-width: 768px) {
@@ -670,287 +619,132 @@ nav a:hover {
     .view-all:hover {
         text-decoration: underline;
     }
-    
+/* 🌸 TRANG DỊCH VỤ (DV/danhsachdichvu.html) */
+/* Giữ nguyên tone hồng pastel, nhưng làm mềm hơn một chút */
 
-
-/* 🌸 Nút gọi và chat nổi */
-.floating-icons {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 12px;
-    z-index: 999;
+.banner-dichvu {
+    position: relative;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.phone-icon, .chat-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #ff5c8d;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 22px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: transform 0.3s;
+.banner-dichvu img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    filter: brightness(0.9);
+    border-bottom: 5px solid #f8aebc;
 }
 
-.phone-icon:hover, .chat-icon:hover {
-    transform: scale(1.1);
+/* 🌸 Chữ “DỊCH VỤ THÚ CƯNG” đỏ đậm có viền trắng */
+.banner-dichvu .banner-text {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 58px;
+    color: #a61028; /* 🔹 Màu đỏ đậm theo Canva */
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    /* 🔹 Viền trắng xung quanh chữ */
+    -webkit-text-stroke: 2px #ffffff;  /* đường viền trắng dày */
+    text-stroke: 2px #ffffff;          /* hỗ trợ cho trình duyệt mới */
+    text-shadow:
+        2px 2px 4px rgba(255, 255, 255, 0.6),  /* ánh sáng trắng mờ */
+        -1px -1px 2px rgba(255, 255, 255, 0.8);
 }
 
-/* 🌸 Icon chat là hình logo nhỏ */
-.chat-icon img {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-}
 
-/* 🌸 Hộp chat */
-.chatbox {
-    display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 25px;
-    width: 330px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    overflow: hidden;
-    z-index: 1000;
-    animation: popIn 0.3s ease-out;
-}
-
-/* 🌸 Header chat */
-.chat-header {
-    background-color: #ffd6de;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 15px;
-}
-
-.chat-header img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.chat-header h4 {
-    flex: 1;
-    margin: 0;
+/* 🌸 Tiêu đề lớn “Các dịch vụ cho bé nhà bạn” */
+.title-dv {
+    text-align: center;
     color: #a01940;
-    font-size: 15px;
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: bold;
 }
 
-.chat-header span {
-    cursor: pointer;
-    color: #333;
-    font-size: 18px;
-}
-
-/* 🌸 Nội dung chat */
-.chat-body {
-    padding: 10px 15px;
-    max-height: 350px;
-    overflow-y: auto;
-}
-
-.message {
-    margin: 10px 0;
-    padding: 10px 14px;
-    border-radius: 15px;
-    line-height: 1.4;
-    font-size: 14px;
-}
-
-.message.bot {
-    background: #ffeef2;
-    color: #333;
-    align-self: flex-start;
-}
-
-.message.user {
-    background: #f8aebc;
-    color: #fff;
-    align-self: flex-end;
-    text-align: right;
-}
-
-/* 🌸 Nút lựa chọn */
-.options {
-    margin-top: 10px;
+/* 🌸 Container các dịch vụ */
+.dv-container {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px auto 60px;
+    max-width: 1100px;
 }
 
-.options button {
-    border: none;
+/* 🌸 Mỗi thẻ dịch vụ */
+.dv-card {
     background: #fff;
     border-radius: 20px;
-    padding: 6px 10px;
+    width: 230px;
+    text-align: center;
+    padding: 25px 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #ffd6de;
+}
+
+.dv-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 🌸 Ảnh dịch vụ */
+.dv-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+/* 🌸 Tên dịch vụ */
+.dv-card h3 {
+    color: #a01940;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+/* 🌸 Mô tả ngắn */
+.dv-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+    margin: 3px 0;
+}
+
+/* 🌸 Giá tiền */
+.dv-card .price {
+    font-weight: bold;
+    color: #e94e77;
+    margin-top: 5px;
+}
+
+/* 🌸 Nút đặt ngay */
+.dv-card .btn-datngay {
+    margin-top: 10px;
+    background: #a01940;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 14px;
     cursor: pointer;
-    font-size: 13px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     transition: 0.2s;
 }
-
-.options button:hover {
-    background: #ffd6de;
+.dv-card .btn-datngay:hover {
+    background: #f06277;
 }
 
-@keyframes popIn {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-/* 🌸 Ô nhập chat */
-.chat-input {
-    display: flex;
-    border-top: 1px solid #eee;
-    background: #fff;
-    padding: 8px 10px;
-}
-
-.chat-input input {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 8px 10px;
-    border-radius: 20px;
-    background: #f7f7f7;
-    font-size: 14px;
-}
-
-.chat-input button {
-    background-color: #f06277;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 15px;
-    margin-left: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.chat-input button:hover {
-    background-color: #d94c66;
-}
-
-/* 🌸 Ô nhập tin nhắn */
-.chat-input {
-  display: flex;
-  border-top: 1px solid #eee;
-  background: #fff;
-  padding: 10px;
-  align-items: center;
-}
-
-.chat-input input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: #f7f7f7;
-  border-radius: 20px;
-  padding: 8px 12px;
-  font-size: 14px;
-}
-
-.chat-input button {
-  background-color: #f06277;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  margin-left: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.chat-input button:hover {
-  background-color: #d94c66;
-}
-
-/* 🌸 Bổ sung cho chat-body để khung tin nhắn tự dãn chiều cao đẹp hơn */
-.chat-body {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding-bottom: 60px; /* tránh bị che bởi ô nhập */
-}
-
-/* 🌸 Tin nhắn người dùng (căn phải) */
-.message.user {
-  background-color: #f06277;
-  color: #fff;
-  align-self: flex-end;
-  border-bottom-right-radius: 4px;
-  text-align: right;
-  max-width: 80%;
-  word-wrap: break-word;
-}
-
-/* 🌸 Tin nhắn bot (căn trái) */
-.message.bot {
-  background-color: #ffeef2;
-  color: #333;
-  align-self: flex-start;
-  border-bottom-left-radius: 4px;
-  max-width: 80%;
-  word-wrap: break-word;
-}
-
-/* 🌸 Làm phần input gửi chat cân đối hơn */
-.chat-input-area {
-  display: flex;
-  align-items: center;
-  border-top: 1px solid #eee;
-  background: #fff;
-  padding: 8px 10px;
-}
-
-.chat-input-area input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: #f7f7f7;
-  border-radius: 20px;
-  padding: 8px 12px;
-  font-size: 14px;
-}
-
-.chat-input-area button {
-  background-color: #f06277;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  margin-left: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.chat-input-area button:hover {
-  background-color: #d6336c;
-}
-
-    .notify-image {
-      width: 90px;
-      height: auto;
-      display: block;
-      margin: 0 auto 10px;
-      border-radius: 50%;
-      background-color: #ffe6ec; /* nền hồng pastel nhẹ */
-      padding: 10px;
-      box-shadow: 0 2px 8px rgba(255, 92, 141, 0.2);
+/* 🌸 Responsive */
+@media (max-width: 768px) {
+    .dv-card {
+        width: 90%;
     }
-
+    .banner-dichvu img {
+        height: 250px;
+    }
+}
