@@ -7,106 +7,239 @@
     <title>{{ dich_vu.ten_dich_vu }} - Punky Spa</title>
     <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff5f7;
+            margin: 0;
+        }
+
+        /* 🌸 Banner */
+        .banner-dichvu {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .banner-dichvu img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .banner-text {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #a01940;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 12px 30px;
+            border-radius: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 🌸 Tiêu đề giữa banner và khung */
+        .title-dv {
+            text-align: center;
+            color: #a01940;
+            font-size: 26px;
+            font-weight: bold;
+            margin: 40px 0 10px;
+            text-transform: uppercase;
+        }
+
+        /* 🌸 Container phần chi tiết */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto 80px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(255, 92, 141, 0.15);
+            padding: 50px 60px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 60px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dv-detail img {
+            width: 360px;
+            height: 360px;
+            border-radius: 25px;
+            object-fit: cover;
+            background: #fffafc;
+            border: 3px solid #ffd6de;
+            box-shadow: 0 6px 16px rgba(255, 92, 141, 0.25);
+            transition: transform 0.3s ease;
+        }
+
+        .dv-detail img:hover {
+            transform: scale(1.05);
+        }
+
+        .info {
+            max-width: 500px;
+            text-align: left;
+        }
+
+        .info h2 {
+            font-size: 30px;
+            color: #a01940;
+            margin-bottom: 10px;
+        }
+
+        .gia {
+            font-size: 22px;
+            font-weight: bold;
+            color: #e94e77;
+            margin-bottom: 20px;
+        }
+
+        .mo-ta {
+            color: #444;
+            line-height: 1.6;
+            font-size: 16px;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        /* 🌸 Nút hành động */
+        .btn-datngay {
+            background: #ff5c8d;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-datngay:hover {
+            background: #d6336c;
+            transform: scale(1.05);
+        }
+
+        .btn-back {
+            display: block; /* 👈 xuống hàng */
+            margin-top: 15px;
+            color: #ff5c8d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-back:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                padding: 30px;
+            }
+
+            .dv-detail img {
+                width: 260px;
+                height: 260px;
+            }
+
+            .info {
+                text-align: center;
+            }
+
+            .title-dv {
+                margin: 30px 0 0;
+            }
+        }
+    </style>
 </head>
 
-<body style="background-color:#fff5f7;">
-    <div class="container">
-        <div class="dv-detail">
-            {% if dich_vu.hinh_anh %}
-                <img src="{% static 'DV/' %}{{ dich_vu.hinh_anh }}" alt="{{ dich_vu.ten_dich_vu }}">
-            {% else %}
-                <img src="{% static 'DV/noimage.png' %}" alt="Không có ảnh">
-            {% endif %}
-
-            <div class="info">
-                <h2>{{ dich_vu.ten_dich_vu }}</h2>
-                <p class="mo-ta">{{ dich_vu.mo_ta }}</p>
-                <p class="gia">{{ dich_vu.gia|floatformat:0|intcomma }} VND</p>
-                <button class="btn-datngay">Đặt ngay</button>
-                <a href="{% url 'danh_sach_dich_vu' %}" class="btn-back">← Quay lại</a>
-            </div>
+<body>
+    <!-- 🔹 HEADER -->
+    <div class="topbar">
+        <div class="left">
+            🕘 Giờ làm việc: Từ 09h00 đến 21h00
+        </div>
+        <div class="right">
+            <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
+            <a href="{% url 'dangky' %}">Đăng ký</a>
         </div>
     </div>
 
-    <style>
-    body {
-        font-family: 'Segoe UI', sans-serif;
-        background-color: #fff5f7;
-        margin: 0;
-        padding: 0;
-    }
+    <header class="navbar">
+        <div class="logo">
+            <img src="{% static 'trangchu/logo.png' %}" alt="Logo Punky Spa">
+            <h1><span class="pink">Punky</span> Spa</h1>
+        </div>
 
-    .dv-detail {
-        display: flex;
-        flex-wrap: wrap;              /* giúp tự xuống hàng nếu màn hình nhỏ */
-        justify-content: center;
-        align-items: center;
-        max-width: 900px;
-        margin: 60px auto;
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        gap: 40px;                    /* khoảng cách giữa ảnh và phần mô tả */
-    }
+        <nav>
+            <a href="{% url 'home' %}">Trang chủ</a>
+            <a href="{% url 'danh_sach_dich_vu' %}" class="active">Dịch vụ</a>
+            <a href="#">Khuyến mãi</a>
+        </nav>
 
-    .dv-detail img {
-        width: 320px;
-        height: 320px;
-        border-radius: 20px;
-        object-fit: cover;
-    }
+        <div class="search">
+            <input type="text" placeholder="Tìm kiếm...">
+            <button>🔍</button>
+        </div>
+    </header>
 
-    .info {
-        max-width: 400px;
-        text-align: left;
-    }
+    <!-- 🌸 BANNER -->
+    <section class="banner-dichvu">
+        <img src="{% static 'DV/banner-dv.png' %}" alt="Banner Dịch vụ Punky Spa">
 
-    .info h2 {
-        color: #ff5c8d;
-        margin-bottom: 10px;
-        font-size: 28px;
-    }
+    </section>
 
-    .mo-ta {
-        color: #555;
-        line-height: 1.6;
-        margin-bottom: 20px;
-    }
+    <!-- 🌸 TIÊU ĐỀ NGAY DƯỚI BANNER -->
+    <h2 class="title-dv">Chi tiết dịch vụ</h2>
 
-    .gia {
-        font-size: 22px;
-        font-weight: bold;
-        color: #c2185b;
-        margin-bottom: 25px;
-    }
+    <!-- 🌸 PHẦN CHÍNH -->
+    <div class="container dv-detail">
+        {% if dich_vu.hinh_anh %}
+            <img src="{% static 'DV/' %}{{ dich_vu.hinh_anh }}" alt="{{ dich_vu.ten_dich_vu }}">
+        {% else %}
+            <img src="{% static 'DV/noimage.png' %}" alt="Không có ảnh">
+        {% endif %}
 
-    .btn-datngay {
-        background: #ff5c8d;
-        border: none;
-        padding: 10px 25px;
-        border-radius: 8px;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-    .btn-datngay:hover {
-        background: #d6336c;
-        transform: scale(1.05);
-    }
+        <div class="info">
+            <h2>{{ dich_vu.ten_dich_vu }}</h2>
+            <p class="gia">{{ dich_vu.gia|floatformat:0|intcomma }} VND</p>
+            <p class="mo-ta">{{ dich_vu.mo_ta }}</p>
 
-    .btn-back {
-        display: inline-block;
-        margin-left: 15px;
-        color: #ff5c8d;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .btn-back:hover {
-        text-decoration: underline;
-    }
-    </style>
+            <button class="btn-datngay">Đặt ngay</button>
+            <a href="{% url 'danh_sach_dich_vu' %}" class="btn-back">← Quay lại</a>
+        </div>
+    </div>
 
+    <!-- 🌸 FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Liên lạc</h4>
+                <p>Hotline: 1900 6750</p>
+                <p>Địa chỉ: 627 Ngô Quyền, An Hải Bắc, Đà Nẵng</p>
+            </div>
+            <div class="footer-column">
+                <h4>Chính sách</h4>
+                <p>Chính sách bảo mật</p>
+                <p>Quy định sử dụng</p>
+            </div>
+            <div class="footer-column">
+                <h4>Tổng đài hỗ trợ</h4>
+                <p>Tư vấn dịch vụ: 1800 6750</p>
+                <p>Hỗ trợ sử dụng: 1900 6750</p>
+                <p>Email: punkyspa@gmail.vn</p>
+                <p>Từ 7h00 – 20h00 các ngày từ thứ 2 đến Chủ nhật.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

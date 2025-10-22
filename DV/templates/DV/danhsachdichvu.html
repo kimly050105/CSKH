@@ -8,14 +8,87 @@
     <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
     <link rel="stylesheet" href="{% static 'DV/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* 🌸 Container hiển thị 3 dịch vụ mỗi hàng */
+        .dv-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            justify-items: center;
+            align-items: stretch;
+            max-width: 1000px;
+            margin: 40px auto 60px;
+        }
+
+        /* 🌸 Thẻ dịch vụ nhỏ gọn */
+        .dv-card {
+            background: #fff;
+            border-radius: 18px;
+            text-align: center;
+            padding: 20px 10px;
+            width: 90%;
+            box-shadow: 0 5px 10px rgba(255, 92, 141, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #ffd6de;
+        }
+
+        .dv-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 18px rgba(255, 92, 141, 0.25);
+        }
+
+        /* 🌸 Ảnh tròn nhỏ nằm giữa */
+        .dv-card img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #ffe6ec;
+            border: 3px solid #ffd6de;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .dv-card:hover img {
+            transform: scale(1.07);
+        }
+
+        /* 🌸 Tên dịch vụ */
+        .dv-card h3 {
+            color: #a01940;
+            font-size: 17px;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* 🌸 Link bỏ gạch chân */
+        .dv-link {
+            text-decoration: none !important;
+            color: inherit;
+            display: block;
+        }
+
+        /* 🌸 Responsive cho màn nhỏ */
+        @media (max-width: 900px) {
+            .dv-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .dv-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body style="background-color:#fff5f7;">
     <!-- 🔹 HEADER -->
     <div class="topbar">
-        <div class="left">
-            🕘 Giờ làm việc: Từ 09h00 đến 21h00
-        </div>
+        <div class="left">🕘 Giờ làm việc: Từ 09h00 đến 21h00</div>
         <div class="right">
             <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
             <a href="{% url 'dangky' %}">Đăng ký</a>
@@ -60,8 +133,6 @@
                     <img src="{% static 'DV/noimage.png' %}" alt="Không có ảnh">
                 {% endif %}
                 <h3>{{ dv.ten_dich_vu }}</h3>
-                <p>{{ dv.mo_ta|truncatechars:60 }}</p>
-                <p class="price">{{ dv.gia|floatformat:0|intcomma }} VND</p>
             </a>
         </div>
         {% empty %}
@@ -91,52 +162,5 @@
             </div>
         </div>
     </footer>
-
-    <style>
-        .dv-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 40px auto;
-        }
-        .dv-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            text-align: center;
-            padding: 20px;
-        }
-        .dv-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(255, 92, 141, 0.3);
-        }
-        .dv-card img {
-            width: 120px;
-            height: 120px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            object-fit: cover;
-        }
-        .dv-card h3 {
-            color: #ff5c8d;
-            margin-bottom: 8px;
-        }
-        .dv-card p {
-            color: #555;
-            font-size: 14px;
-        }
-        .price {
-            color: #c2185b;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-        .dv-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-    </style>
 </body>
 </html>
