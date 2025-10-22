@@ -48,7 +48,7 @@
                     <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-user-circle"></i> Tài khoản</a>
                     <a href="#"><i class="fa fa-star"></i> Tích điểm</a>
                     <a href="#"><i class="fa fa-ticket"></i> Mã ưu đãi</a>
-                    <a href="#"><i class="fa fa-calendar"></i> Lịch hẹn</a>
+                    <a href="{% url 'lich_hen_sap_toi' %}"><i class="fa fa-calendar"></i> Lịch hẹn</a>
                     <a href="#"><i class="fa fa-comments"></i> Khiếu nại</a>
                     <a href="{% url 'dangxuat' %}"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
                     <a href="#"><i class="fa fa-trash"></i> Xóa tài khoản</a>
@@ -83,7 +83,7 @@
 
         <nav>
             <a href="{% url 'home' %}" class="active">Trang chủ</a>
-            <a href="#">Dịch vụ</a>
+            <a href="{% url 'danh_sach_dich_vu' %}">Dịch vụ</a>
             <a href="#">Khuyến mãi</a>
         </nav>
 
