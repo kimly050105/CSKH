@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'TK',
     'trangchu',
     'TB',
+    'DV',
+    'LichHen',
 ]
 
 MIDDLEWARE = [
