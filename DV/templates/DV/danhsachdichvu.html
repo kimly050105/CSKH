@@ -1,6 +1,6 @@
+<!DOCTYPE html>
 {% load static %}
 {% load humanize %}
-<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -124,7 +124,7 @@
 
     <!-- 🌸 DANH SÁCH DỊCH VỤ -->
     <div class="dv-container">
-        {% for dv in dich_vus %}
+        {% for dv in dich_vu %}
         <div class="dv-card">
             <a href="{% url 'chi_tiet_dich_vu' dv.id %}" class="dv-link">
                 {% if dv.hinh_anh %}
