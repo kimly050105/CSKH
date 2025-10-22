@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import LichHen,DV_LichHen
 from .forms import LichHenForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # 🧾 Hiển thị lịch hẹn sắp tới + nút thêm/sửa/xóa
 def lich_hen_sap_toi(request):
@@ -11,36 +12,31 @@ def lich_hen_sap_toi(request):
 # ➕ Thêm lịch hẹn mới
 @login_required
 def tao_lich_hen(request):
-    # ✅ Lấy thông tin khách hàng hiện tại (dựa trên tài khoản đăng nhập)
-    khach_hang = request.user.khachhang
+    khach_hang = request.user.khachhang  # ✅ Lấy khách hàng hiện tại
 
     if request.method == 'POST':
-        # ✅ Truyền tham số 'khach_hang' vào form để lọc thú cưng
         form = LichHenForm(request.POST, khach_hang=khach_hang)
 
-        # ✅ Kiểm tra dữ liệu form hợp lệ
         if form.is_valid():
-            # 🧩 Tạo đối tượng Lịch hẹn nhưng chưa lưu (commit=False)
+            # ✅ Lưu lịch hẹn vào DB
             lich_hen = form.save(commit=False)
-            lich_hen.khach_hang = khach_hang  # gán khách hàng hiện tại
-            lich_hen.trang_thai = 'sap_toi'   # trạng thái mặc định
-            lich_hen.save()  # Lưu vào DB
+            lich_hen.khach_hang = khach_hang
+            lich_hen.trang_thai = 'sap_toi'
+            lich_hen.save()
 
-            # 🧾 Lưu các dịch vụ được chọn vào bảng trung gian DV_LichHen
+            # ✅ Lưu các dịch vụ đã chọn
             for dv in form.cleaned_data['dich_vu']:
-                DV_LichHen.objects.create(
-                    lich_hen=lich_hen,   # khóa ngoại đến lịch hẹn
-                    dich_vu=dv,          # khóa ngoại đến dịch vụ
-                )
+                DV_LichHen.objects.create(lich_hen=lich_hen, dich_vu=dv)
 
-            # ✅ Sau khi tạo thành công, chuyển về trang danh sách lịch hẹn sắp tới
-            return redirect('lich_hen_sap_toi')
-
+            # ✅ Thông báo thành công
+            messages.success(request, "🎉 Lịch hẹn của bạn đã được tạo thành công!")
+            return redirect('lich_hen_sap_toi')  # 👉 chuyển sang trang lịch hẹn sắp tới
+        else:
+            # ✅ Nếu form thiếu dữ liệu -> thông báo lỗi
+            messages.error(request, "⚠️ Vui lòng điền đầy đủ thông tin trước khi lưu!")
     else:
-        # 🧠 Nếu request là GET (truy cập form lần đầu), khởi tạo form trống
         form = LichHenForm(khach_hang=khach_hang)
 
-    # 🪄 Render giao diện thêm lịch hẹn
     return render(request, 'lichhen/tao_lich_hen.html', {'form': form})
 
 

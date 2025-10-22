@@ -3,11 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <title>Đặt lịch hẹn - Punky Spa</title>
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fdeff4;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🧭 Khung chính */
+.container {
+    max-width: 420px;                /* 👈 thu nhỏ chiều ngang hơn */
+    margin: 25px auto;               /* 👈 rút ngắn khoảng cách trên/dưới */
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px 25px;              /* 👈 giảm padding trong */
+}
+
+/* 🩷 Tiêu đề */
+h1 {
+    text-align: center;
+    color: #ff5c8d;
+    font-weight: bold;
+    margin-bottom: 15px;             /* 👈 giảm khoảng cách */
+    font-size: 22px;
+}
+
+/* 🧾 Thông báo (success/error) */
+.alert {
+    text-align: center;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.alert-success {
+    background-color: #eafbea;
+    color: #0b8a0b;
+}
+.alert-error {
+    background-color: #fde2e2;
+    color: #c71f1f;
+}
+
+/* 🏷️ Label */
+label {
+    font-weight: 600;
+    color: #444;
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+/* 📋 Input / Textarea / Select */
+input[type="text"],
+input[type="datetime-local"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background-color: #fffafc;
+    font-size: 14px;
+}
+
+/* ✍️ Ô ghi chú */
+textarea {
+    height: 70px;                    /* 👈 giảm bớt chiều cao */
+    resize: vertical;
+}
+
+/* ✅ Nhóm checkbox */
+.checkbox-group {
+    background-color: #fffafc;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 6px 10px;
+    margin-top: 5px;
+}
+.checkbox-group label {
+    font-weight: normal;
+    display: block;
+    margin: 2px 0;
+    font-size: 14px;
+}
+
+/* 💖 Nút lưu */
+button {
+    width: 100%;
+    background-color: #ff5c8d;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+button:hover {
+    background-color: #ff7ca8;
+}
+
+/* 🔙 Quay lại */
+.back-link {
+    display: inline-block;
+    text-align: center;
+    color: #555;
+    text-decoration: none;
+    margin-top: 6px;
+    font-size: 13px;
+}
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* 🧩 Dòng khách hàng + thú cưng */
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+.row > div {
+    flex: 1;
+}
+</style>
+
 </head>
 
 <body>
     <div class="container">
         <h1>🐾 Đặt lịch hẹn mới</h1>
+        {% if messages %}
+  <div style="text-align:center; margin-bottom:10px;">
+    {% for message in messages %}
+      <p style="
+        color: {% if message.tags == 'success' %}green{% else %}red{% endif %};
+        font-weight: bold;
+      ">
+        {{ message }}
+      </p>
+    {% endfor %}
+  </div>
+{% endif %}
+
 
         <form method="post">
             {% csrf_token %}

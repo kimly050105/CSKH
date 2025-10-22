@@ -8,19 +8,22 @@ class LichHenForm(forms.ModelForm):
     dich_vu = forms.ModelMultipleChoiceField(
         queryset=DichVu.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        label="Dịch vụ"
+        label="Dịch vụ",
+        required=True  # ✅ bắt buộc chọn ít nhất 1 dịch vụ
     )
 
     thoi_gian = forms.DateTimeField(
         widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-        label="Thời gian hẹn"
+        label="Thời gian hẹn",
+        required=True  # ✅ bắt buộc nhập thời gian
     )
 
     # Chọn 1 hoặc nhiều thú cưng thuộc khách hàng hiện tại
     thu_cung = forms.ModelMultipleChoiceField(
         queryset=ThuCung.objects.none(),
         widget=forms.CheckboxSelectMultiple,
-        label="Thú cưng"
+        label="Thú cưng",
+        required=True  # ✅ bắt buộc nhập thời gian
     )
 
     class Meta:
