@@ -4,41 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Punky Spa</title>
+
+    <!-- 🌸 Liên kết CSS -->
     <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
-    <!-- 🔹 Thanh trên cùng -->
+
+    <!-- 🌸 THANH TRÊN CÙNG -->
     <div class="topbar">
-        <div class="left">
-            🕘 Giờ làm việc: Từ 09h00 đến 21h00
+        <div class="topbar-left">
+            <i class="fa fa-calendar"></i>
+            <strong>Giờ làm việc:</strong> Từ 09h00 đến 21h00
         </div>
 
-        <div class="right">
-            {% if user.is_authenticated %}
-            <!-- 🔔 Nếu đã đăng nhập -->
-            <div class="notify-box">
-                <span class="notify-icon">🔔</span>
-                <div class="notify-content">
-                    {% for tb in thong_baos_moi %}
-                        <div class="notify-item">
-                            <strong>{{ tb.tieu_de }}</strong><br>
-                            <small>{{ tb.ngay_tao|date:"d/m/Y H:i" }}</small>
-                        </div>
-                    {% empty %}
-                        <p>Không có thông báo mới.</p>
-                    {% endfor %}
-                    <a href="{% url 'danh_sach_thong_bao' %}" class="view-all">Xem tất cả</a>
-                </div>
-            </div>
+        <div class="topbar-right">
+            <span class="notify-icon">🔔</span>
 
-            <!-- 🔹 Menu tài khoản -->
+            {% if user.is_authenticated %}
             <div class="user-menu">
                 <button class="user-btn">
                     <i class="fa fa-user"></i> {{ user.username }}
                     <i class="fa fa-caret-down"></i>
                 </button>
-
                 <div class="dropdown-menu">
                     <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-user-circle"></i> Tài khoản</a>
                     <a href="#"><i class="fa fa-star"></i> Tích điểm</a>
@@ -49,26 +38,14 @@
                     <a href="#"><i class="fa fa-trash"></i> Xóa tài khoản</a>
                 </div>
             </div>
-
             {% else %}
-            <!-- 🔹 Nếu chưa đăng nhập -->
-            <div class="notify-box">
-                <span class="notify-icon">🔔</span>
-                <div class="notify-content">
-                    <div style="text-align:center; padding:15px;">
-                        <p>Đăng nhập để xem thông báo</p>
-                        <a href="{% url 'dangnhap' %}" class="btn">Đăng nhập</a>
-                        <a href="{% url 'dangky' %}" class="btn">Đăng ký</a>
-                    </div>
-                </div>
-            </div>
-            <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
-            <a href="{% url 'dangky' %}">Đăng ký</a>
+            <a href="{% url 'dangnhap' %}"><i class="fa fa-user"></i> Đăng nhập</a> |
+            <a href="{% url 'dangky' %}"><i class="fa fa-pen"></i> Đăng ký</a>
             {% endif %}
         </div>
     </div>
 
-    <!-- 🔹 Thanh điều hướng -->
+    <!-- 🌸 HEADER CHÍNH -->
     <header class="navbar">
         <div class="logo">
             <img src="{% static 'trangchu/logo.png' %}" alt="Logo Punky Spa">
@@ -87,12 +64,12 @@
         </div>
     </header>
 
-    <!-- 🔹 Banner toàn màn hình -->
+    <!-- 🌸 BANNER -->
     <section class="banner-full">
         <img src="{% static 'trangchu/banner.png' %}" alt="Banner Punky Spa">
     </section>
 
-    <!-- 🔹 Phần giới thiệu -->
+    <!-- 🌸 GIỚI THIỆU -->
     <section class="intro">
         <h2>Giới thiệu</h2>
         <div class="gallery">
@@ -104,7 +81,7 @@
 
     {% block content %}{% endblock %}
 
-    <!-- 🔹 FOOTER -->
+    <!-- 🌸 FOOTER -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-column">
@@ -129,22 +106,112 @@
         </div>
     </footer>
 
+    <!-- 🌸 Nút gọi và Chat -->
+    <div class="floating-icons">
+        <a href="tel:19006750" class="phone-icon" title="Gọi ngay Punky Spa">
+            <i class="fa fa-phone"></i>
+        </a>
+        <div class="chat-icon" id="chatToggle">
+            <img src="{% static 'trangchu/logo.png' %}" alt="Chat Punky Spa">
+        </div>
+    </div>
+
+    <!-- 🌸 Chatbox -->
+    <div class="chatbox" id="chatBox">
+        <div class="chat-header">
+            <img src="{% static 'trangchu/logo.png' %}" alt="Logo">
+            <h4>Punky Spa hỗ trợ 🐾</h4>
+            <span id="closeChat">✖</span>
+        </div>
+
+        <div class="chat-body" id="chatBody">
+            <div class="message bot">
+                Xin chào 👋, chào mừng bạn đã đến với <b>Punky Spa</b>!
+                Bạn cần được hỗ trợ về dịch vụ nào ạ?
+                <div class="options">
+                    <button onclick="sendOption('Báo giá dịch vụ')">Báo giá dịch vụ</button>
+                    <button onclick="sendOption('Hỏi đáp nhanh (FAQ)')">Hỏi đáp nhanh</button>
+                    <button onclick="sendOption('Tư vấn trực tiếp')">Tư vấn trực tiếp</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🌸 Ô nhập tin nhắn -->
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Nhập tin nhắn của bạn..." />
+            <button id="chat-send"><i class="fa fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- 🌸 SCRIPT -->
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const userBtn = document.querySelector(".user-btn");
-        const dropdown = document.querySelector(".dropdown-menu");
+    const chatToggle = document.getElementById("chatToggle");
+    const chatBox = document.getElementById("chatBox");
+    const closeChat = document.getElementById("closeChat");
+    const chatBody = document.getElementById("chatBody");
+    const chatInput = document.getElementById("chat-input");
+    const chatSend = document.getElementById("chat-send");
 
-        if (userBtn) {
-            userBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                dropdown.classList.toggle("show");
-            });
+    chatToggle.addEventListener("click", () => chatBox.style.display = "block");
+    closeChat.addEventListener("click", () => chatBox.style.display = "none");
 
-            document.addEventListener("click", () => {
-                dropdown.classList.remove("show");
-            });
-        }
+    // 📨 Gửi tin nhắn
+    chatSend.addEventListener("click", sendMessage);
+    chatInput.addEventListener("keypress", e => {
+        if (e.key === "Enter") sendMessage();
     });
+
+    function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        appendMessage(text, "user");
+        chatInput.value = "";
+        setTimeout(() => appendMessage(getBotReply(text), "bot"), 700);
+    }
+
+    function appendMessage(content, sender) {
+        const msg = document.createElement("div");
+        msg.className = `message ${sender}`;
+        msg.innerHTML = content;
+        chatBody.appendChild(msg);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function sendOption(option) {
+        appendMessage(option, "user");
+        setTimeout(() => appendMessage(autoReply(option), "bot"), 600);
+    }
+
+    function autoReply(option) {
+        if (option === "Báo giá dịch vụ") {
+            return "Bạn muốn xem báo giá cho dịch vụ nào?<div class='options'>\
+                <button onclick='sendOption(\"Tắm rửa\")'>Tắm rửa</button>\
+                <button onclick='sendOption(\"Cắt tỉa lông\")'>Cắt tỉa lông</button>\
+                <button onclick='sendOption(\"Nhuộm\")'>Nhuộm</button>\
+                <button onclick='sendOption(\"Tiêm phòng\")'>Tiêm phòng</button>\
+                <button onclick='sendOption(\"Triệt sản\")'>Triệt sản</button></div>";
+        }
+        if (option === "Hỏi đáp nhanh (FAQ)") {
+            return "Bạn có thể hỏi tôi những câu như:<br>\
+            👉 'Có nhận spa cho mèo không?'<br>\
+            👉 'Tắm cho chó giá bao nhiêu?'<br>\
+            👉 'Có nhận khách ngoài giờ không?' 💕";
+        }
+        if (option === "Tư vấn trực tiếp") {
+            return "Bạn có thể gọi ngay <b>1900 6750</b> để được nhân viên hỗ trợ 📞";
+        }
+        return "Cảm ơn bạn đã quan tâm đến Punky Spa 💖";
+    }
+
+    function getBotReply(text) {
+        text = text.toLowerCase();
+        if (text.includes("tắm") && text.includes("giá")) return "Tắm rửa có giá từ <b>150.000đ - 300.000đ</b> tuỳ loại 🐶🐱";
+        if (text.includes("mèo")) return "Dạ có ạ 💕 Punky Spa phục vụ cả chó và mèo 😺";
+        if (text.includes("ngoài giờ")) return "Spa mở cửa 9h00 - 21h00. Ngoài giờ bạn có thể đặt lịch trước nhé 💕";
+        if (text.includes("cắt") || text.includes("lông")) return "Cắt tỉa lông giá khoảng <b>200.000đ - 400.000đ</b> 🐩";
+        return "Cảm ơn bạn đã liên hệ 💗! Bạn chờ một chút shop sẽ phản hồi ngay nhé";
+    }
     </script>
+
 </body>
 </html>
