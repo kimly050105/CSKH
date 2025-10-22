@@ -5,7 +5,7 @@ from .models import DichVu
 def danh_sach_dich_vu(request):
     dich_vus = DichVu.objects.all().order_by('id')  # sắp xếp để dễ nhìn
     return render(request, 'DV/danhsachdichvu.html', {
-        'dich_vus': dich_vus
+        'dich_vu': dich_vus
     })
 
 
