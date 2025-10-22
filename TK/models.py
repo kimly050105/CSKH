@@ -41,6 +41,7 @@ class ThuCung(models.Model):
     ten_thucung = models.CharField(max_length=100)
     loai = models.CharField(max_length=100)
     tuoi = models.IntegerField()
+    can_nang = models.FloatField(null=True, blank=True)
     ghi_chu = models.TextField(blank=True)
 
     def __str__(self):
