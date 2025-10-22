@@ -954,3 +954,50 @@ nav a:hover {
       box-shadow: 0 2px 8px rgba(255, 92, 141, 0.2);
     }
 
+/* 🌸 Submenu trong menu người dùng */
+.submenu {
+  position: relative;
+}
+
+.submenu-items {
+  display: none;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  margin-top: 5px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.submenu-items a {
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid #f2f2f2;
+  background-color: #fff;
+}
+
+.submenu-items a:hover {
+  background: #ffe6ec;
+  color: #a01940;
+}
+
+.submenu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.submenu-toggle i.fa-caret-down {
+  transition: transform 0.3s ease;
+}
+
+.submenu-toggle.active i.fa-caret-down {
+  transform: rotate(180deg);
+}
+
+/* Hiện submenu khi thêm class 'show' */
+.submenu-items.show {
+  display: flex !important;
+}
