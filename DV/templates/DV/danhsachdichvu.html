@@ -1,0 +1,142 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Dịch vụ thú cưng - Punky Spa</title>
+    <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
+    <link rel="stylesheet" href="{% static 'DV/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body style="background-color:#fff5f7;">
+    <!-- 🔹 HEADER -->
+    <div class="topbar">
+        <div class="left">
+            🕘 Giờ làm việc: Từ 09h00 đến 21h00
+        </div>
+        <div class="right">
+            <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
+            <a href="{% url 'dangky' %}">Đăng ký</a>
+        </div>
+    </div>
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="{% static 'trangchu/logo.png' %}" alt="Logo Punky Spa">
+            <h1><span class="pink">Punky</span> Spa</h1>
+        </div>
+
+        <nav>
+            <a href="{% url 'home' %}">Trang chủ</a>
+            <a href="#" class="active">Dịch vụ</a>
+            <a href="#">Khuyến mãi</a>
+        </nav>
+
+        <div class="search">
+            <input type="text" placeholder="Tìm kiếm...">
+            <button>🔍</button>
+        </div>
+    </header>
+
+    <!-- 🌸 BANNER -->
+    <section class="banner-dichvu">
+        <img src="{% static 'DV/banner-dv.png' %}" alt="Dịch vụ Punky Spa">
+        <h2 class="banner-text">DỊCH VỤ THÚ CƯNG</h2>
+    </section>
+
+    <!-- 🌸 TIÊU ĐỀ -->
+    <h2 class="title-dv">Các dịch vụ cho bé nhà bạn</h2>
+
+    <!-- 🌸 DANH SÁCH DỊCH VỤ -->
+    <div class="dv-container">
+        {% for dv in dich_vus %}
+        <div class="dv-card">
+            <a href="{% url 'chi_tiet_dich_vu' dv.id %}" class="dv-link">
+                {% if dv.hinh_anh %}
+                    <img src="{% static 'DV/' %}{{ dv.hinh_anh }}" alt="{{ dv.ten_dich_vu }}">
+                {% else %}
+                    <img src="{% static 'DV/noimage.png' %}" alt="Không có ảnh">
+                {% endif %}
+                <h3>{{ dv.ten_dich_vu }}</h3>
+                <p>{{ dv.mo_ta|truncatechars:60 }}</p>
+                <p class="price">{{ dv.gia|floatformat:0|intcomma }} VND</p>
+            </a>
+        </div>
+        {% empty %}
+            <p style="text-align:center;">Hiện chưa có dịch vụ nào.</p>
+        {% endfor %}
+    </div>
+
+    <!-- 🌸 FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Liên lạc</h4>
+                <p>Hotline: 1900 6750</p>
+                <p>Địa chỉ: 627 Ngô Quyền, An Hải Bắc, Đà Nẵng</p>
+            </div>
+            <div class="footer-column">
+                <h4>Chính sách</h4>
+                <p>Chính sách bảo mật</p>
+                <p>Quy định sử dụng</p>
+            </div>
+            <div class="footer-column">
+                <h4>Tổng đài hỗ trợ</h4>
+                <p>Tư vấn dịch vụ: 1800 6750</p>
+                <p>Hỗ trợ sử dụng: 1900 6750</p>
+                <p>Email: punkyspa@gmail.vn</p>
+                <p>Từ 7h00 – 20h00 các ngày từ thứ 2 đến Chủ nhật.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .dv-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+        .dv-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+            padding: 20px;
+        }
+        .dv-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 92, 141, 0.3);
+        }
+        .dv-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+        .dv-card h3 {
+            color: #ff5c8d;
+            margin-bottom: 8px;
+        }
+        .dv-card p {
+            color: #555;
+            font-size: 14px;
+        }
+        .price {
+            color: #c2185b;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .dv-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+    </style>
+</body>
+</html>

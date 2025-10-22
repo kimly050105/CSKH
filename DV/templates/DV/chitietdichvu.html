@@ -1,0 +1,112 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ dich_vu.ten_dich_vu }} - Punky Spa</title>
+    <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body style="background-color:#fff5f7;">
+    <div class="container">
+        <div class="dv-detail">
+            {% if dich_vu.hinh_anh %}
+                <img src="{% static 'DV/' %}{{ dich_vu.hinh_anh }}" alt="{{ dich_vu.ten_dich_vu }}">
+            {% else %}
+                <img src="{% static 'DV/noimage.png' %}" alt="Không có ảnh">
+            {% endif %}
+
+            <div class="info">
+                <h2>{{ dich_vu.ten_dich_vu }}</h2>
+                <p class="mo-ta">{{ dich_vu.mo_ta }}</p>
+                <p class="gia">{{ dich_vu.gia|floatformat:0|intcomma }} VND</p>
+                <button class="btn-datngay">Đặt ngay</button>
+                <a href="{% url 'danh_sach_dich_vu' %}" class="btn-back">← Quay lại</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #fff5f7;
+        margin: 0;
+        padding: 0;
+    }
+
+    .dv-detail {
+        display: flex;
+        flex-wrap: wrap;              /* giúp tự xuống hàng nếu màn hình nhỏ */
+        justify-content: center;
+        align-items: center;
+        max-width: 900px;
+        margin: 60px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        gap: 40px;                    /* khoảng cách giữa ảnh và phần mô tả */
+    }
+
+    .dv-detail img {
+        width: 320px;
+        height: 320px;
+        border-radius: 20px;
+        object-fit: cover;
+    }
+
+    .info {
+        max-width: 400px;
+        text-align: left;
+    }
+
+    .info h2 {
+        color: #ff5c8d;
+        margin-bottom: 10px;
+        font-size: 28px;
+    }
+
+    .mo-ta {
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .gia {
+        font-size: 22px;
+        font-weight: bold;
+        color: #c2185b;
+        margin-bottom: 25px;
+    }
+
+    .btn-datngay {
+        background: #ff5c8d;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-datngay:hover {
+        background: #d6336c;
+        transform: scale(1.05);
+    }
+
+    .btn-back {
+        display: inline-block;
+        margin-left: 15px;
+        color: #ff5c8d;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .btn-back:hover {
+        text-decoration: underline;
+    }
+    </style>
+
+</body>
+</html>
