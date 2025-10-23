@@ -1,0 +1,25 @@
+{% extends 'trangchu/index.html' %}
+{% load static %}
+
+{% block title %}Xóa tài khoản{% endblock %}
+
+{% block content %}
+<div class="delete-overlay">
+  <div class="delete-box">
+    <h2>🗑️ Xóa tài khoản</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+      <label for="ly_do">Lý do xóa tài khoản:</label>
+      <textarea name="ly_do" id="ly_do" rows="4" placeholder="Nhập lý do..." required></textarea>
+
+      <div class="btn-area">
+        <button type="submit" class="btn-delete">Xóa tài khoản</button>
+        <a href="{% url 'home' %}" class="btn-cancel">Hủy</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<link rel="stylesheet" href="{% static 'TK/delete.css' %}">
+{% endblock %}
