@@ -1,179 +1,250 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Đặt lịch hẹn - Punky Spa</title>
-<style>
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #fdeff4;
-    margin: 0;
-    padding: 0;
-}
+  <meta charset="UTF-8">
+  <title>Đặt lịch hẹn - Punky Spa</title>
+  <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #ffeef4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-/* 🧭 Khung chính */
-.container {
-    max-width: 420px;                /* 👈 thu nhỏ chiều ngang hơn */
-    margin: 25px auto;               /* 👈 rút ngắn khoảng cách trên/dưới */
-    background-color: #fff;
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    padding: 20px 25px;              /* 👈 giảm padding trong */
-}
+    .form-box {
+      width: 440px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+      animation: fadeIn 0.5s ease;
+    }
 
-/* 🩷 Tiêu đề */
-h1 {
-    text-align: center;
-    color: #ff5c8d;
-    font-weight: bold;
-    margin-bottom: 15px;             /* 👈 giảm khoảng cách */
-    font-size: 22px;
-}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-/* 🧾 Thông báo (success/error) */
-.alert {
-    text-align: center;
-    padding: 8px 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.alert-success {
-    background-color: #eafbea;
-    color: #0b8a0b;
-}
-.alert-error {
-    background-color: #fde2e2;
-    color: #c71f1f;
-}
+    .form-title {
+      text-align: center;
+      color: #e75480;
+      font-size: 22px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
 
-/* 🏷️ Label */
-label {
-    font-weight: 600;
-    color: #444;
-    display: block;
-    margin-top: 8px;
-    font-size: 14px;
-}
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+      color: #333;
+    }
 
-/* 📋 Input / Textarea / Select */
-input[type="text"],
-input[type="datetime-local"],
-textarea,
-select {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    background-color: #fffafc;
-    font-size: 14px;
-}
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
 
-/* ✍️ Ô ghi chú */
-textarea {
-    height: 70px;                    /* 👈 giảm bớt chiều cao */
-    resize: vertical;
-}
+    textarea {
+      height: 60px;
+      resize: none;
+    }
 
-/* ✅ Nhóm checkbox */
-.checkbox-group {
-    background-color: #fffafc;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    padding: 6px 10px;
-    margin-top: 5px;
-}
-.checkbox-group label {
-    font-weight: normal;
-    display: block;
-    margin: 2px 0;
-    font-size: 14px;
-}
+    .khachhang-input {
+      background-color: #fdf4f7;
+      color: #555;
+      font-weight: 500;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      text-align: center;
+    }
 
-/* 💖 Nút lưu */
-button {
-    width: 100%;
-    background-color: #ff5c8d;
-    color: white;
-    font-weight: bold;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    margin-top: 10px;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-button:hover {
-    background-color: #ff7ca8;
-}
+    /* 🌸 Dịch vụ dạng ô đẹp */
+    .service-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
 
-/* 🔙 Quay lại */
-.back-link {
-    display: inline-block;
-    text-align: center;
-    color: #555;
-    text-decoration: none;
-    margin-top: 6px;
-    font-size: 13px;
-}
-.back-link:hover {
-    text-decoration: underline;
-}
+    .service-item {
+      background: #fff8fa;
+      border: 1.5px solid #ffd1dc;
+      border-radius: 12px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: 0.25s;
+    }
 
-/* 🧩 Dòng khách hàng + thú cưng */
-.row {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-}
-.row > div {
-    flex: 1;
-}
-</style>
+    .service-item:hover {
+      background: #ffe6ed;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
 
+    .service-item input[type="checkbox"] {
+      accent-color: #e75480;
+      margin-right: 8px;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .service-item label {
+      margin: 0;
+      font-weight: 500;
+      color: #444;
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      background: #e75480;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 15px;
+      margin-top: 15px;
+      transition: 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: #d13e6d;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 12px;
+      color: #e75480;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .errorlist {
+      color: red;
+      list-style: none;
+      padding-left: 0;
+      font-size: 13px;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="container">
-        <h1>🐾 Đặt lịch hẹn mới</h1>
-        {% if messages %}
-  <div style="text-align:center; margin-bottom:10px;">
-    {% for message in messages %}
-      <p style="
-        color: {% if message.tags == 'success' %}green{% else %}red{% endif %};
-        font-weight: bold;
-      ">
-        {{ message }}
-      </p>
-    {% endfor %}
-  </div>
-{% endif %}
+  <div class="form-box">
 
-
-        <form method="post">
-            {% csrf_token %}
-
-            <label>Khách hàng:</label>
-            <input type="text" value="{{ request.user.khachhang.ho_ten }}" disabled>
-
-            <label>Thú cưng:</label>
-            {{ form.thu_cung }}
-
-            <label>Dịch vụ:</label>
-            <div class="checkbox-group">
-                {{ form.dich_vu }}
-            </div>
-
-            <label>Thời gian hẹn:</label>
-            {{ form.thoi_gian }}
-
-            <label>Ghi chú:</label>
-            {{ form.ghi_chu }}
-
-            <button type="submit">💖 Lưu lịch hẹn</button>
-            <a href="{% url 'lich_hen_sap_toi' %}" class="back-link">⬅ Quay lại</a>
-        </form>
+    <div class="form-title">
+      🐾 Đặt lịch hẹn mới
     </div>
+
+    {% if messages %}
+      {% for message in messages %}
+        <p style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %}; text-align:center;">
+          {{ message }}
+        </p>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      {% if user.is_authenticated %}
+        <label>Khách hàng:</label>
+        <input type="text" class="khachhang-input" value="{{ user.username }}" readonly>
+
+        <label for="id_so_dien_thoai">Số điện thoại:</label>
+        {{ form.so_dien_thoai }}
+        {% if form.so_dien_thoai.errors %}
+          <ul class="errorlist">{{ form.so_dien_thoai.errors }}</ul>
+        {% endif %}
+      {% endif %}
+
+      <label>Thú cưng hiện có:</label>
+      {{ form.thu_cung }}
+
+      <label>Dịch vụ:</label>
+      <div class="service-container">
+        {% for checkbox in form.dich_vu %}
+          <div class="service-item">
+            {{ checkbox.tag }}
+            <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+          </div>
+        {% endfor %}
+      </div>
+
+      <p><b>Hoặc thêm mới thú cưng:</b></p>
+      <label>Tên thú cưng mới:</label>
+      {{ form.ten_thu_cung_moi }}
+      <label>Loài:</label>
+      {{ form.loai }}
+      <label>Tuổi:</label>
+      {{ form.tuoi }}
+      <label>Cân nặng (kg):</label>
+      {{ form.can_nang }}
+
+      <label>Thời gian:</label>
+      {{ form.thoi_gian }}
+      <label>Ghi chú:</label>
+      {{ form.ghi_chu }}
+
+      <button type="submit" class="submit-btn">Lưu lịch hẹn</button>
+    </form>
+
+    <a href="{% url 'lich_hen_sap_toi' %}" class="back-link">
+      ← Quay lại danh sách lịch hẹn
+    </a>
+  </div>
+
+  <script>
+    const thuCungSelect = document.querySelector("#id_thu_cung");
+    const loai = document.querySelector("#id_loai");
+    const tuoi = document.querySelector("#id_tuoi");
+    const canNang = document.querySelector("#id_can_nang");
+    const tenMoiInput = document.querySelector("#id_ten_thu_cung_moi");
+
+    if (thuCungSelect) {
+      const opt = document.createElement("option");
+      opt.textContent = "➕ Thêm mới thú cưng";
+      opt.value = "";
+      thuCungSelect.appendChild(opt);
+
+      thuCungSelect.addEventListener("change", () => {
+        const petId = thuCungSelect.value;
+        if (petId) {
+          fetch(`/api/thu-cung/${petId}/`)
+            .then(res => res.json())
+            .then(data => {
+              if (!data.error) {
+                loai.value = data.loai;
+                tuoi.value = data.tuoi;
+                canNang.value = data.can_nang;
+              }
+            });
+          [loai, tuoi, canNang, tenMoiInput].forEach(el => el.disabled = true);
+        } else {
+          [loai, tuoi, canNang, tenMoiInput].forEach(el => {
+            el.disabled = false;
+            el.value = "";
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>

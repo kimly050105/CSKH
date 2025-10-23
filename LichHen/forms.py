@@ -1,51 +1,72 @@
 from django import forms
 from .models import LichHen
 from DV.models import DichVu
-from TK.models import ThuCung  # ✅ import model thú cưng
+from TK.models import ThuCung
 
 
 class LichHenForm(forms.ModelForm):
+    # 🐶 Chọn thú cưng hiện có
+    thu_cung = forms.ModelChoiceField(
+        queryset=ThuCung.objects.none(),
+        label="Thú cưng",
+        required=False
+    )
+
+    # 💅 Chọn dịch vụ (nhiều chọn)
     dich_vu = forms.ModelMultipleChoiceField(
         queryset=DichVu.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         label="Dịch vụ",
-        required=True  # ✅ bắt buộc chọn ít nhất 1 dịch vụ
+        required=True
     )
 
+    # 📞 Thêm số điện thoại bắt buộc 10 số
+    so_dien_thoai = forms.CharField(
+        label="Số điện thoại",
+        max_length=10,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Nhập số điện thoại 10 số',
+            'pattern': r'\d{10}',  # ✅ Regex HTML kiểm tra 10 chữ số
+            'title': 'Số điện thoại phải gồm đúng 10 chữ số',
+            'class': 'form-control'
+        })
+    )
+
+    # 🐾 Nếu người dùng thêm thú cưng mới
+    ten_thu_cung_moi = forms.CharField(max_length=100, required=False, label="Tên thú cưng mới")
+    loai = forms.CharField(max_length=100, required=False, label="Loài")
+    tuoi = forms.IntegerField(required=False, label="Tuổi")
+    can_nang = forms.FloatField(required=False, label="Cân nặng (kg)")
+
+    # ⏰ Thời gian và ghi chú
     thoi_gian = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         label="Thời gian hẹn",
-        required=True  # ✅ bắt buộc nhập thời gian
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'})
     )
-
-    # Chọn 1 hoặc nhiều thú cưng thuộc khách hàng hiện tại
-    thu_cung = forms.ModelMultipleChoiceField(
-        queryset=ThuCung.objects.none(),
-        widget=forms.CheckboxSelectMultiple,
-        label="Thú cưng",
-        required=True  # ✅ bắt buộc nhập thời gian
+    ghi_chu = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 2, 'placeholder': 'Ghi chú thêm (nếu có)...'}),
+        required=False,
+        label="Ghi chú"
     )
 
     class Meta:
         model = LichHen
-        fields = ['thu_cung', 'dich_vu', 'thoi_gian', 'ghi_chu']
-        labels = {
-            'thu_cung': 'Chọn thú cưng',
-            'ghi_chu': 'Ghi chú thêm'
-        }
+        fields = [
+            'thu_cung',
+            'ten_thu_cung_moi',
+            'loai',
+            'tuoi',
+            'can_nang',
+            'so_dien_thoai',
+            'dich_vu',
+            'thoi_gian',
+            'ghi_chu'
+        ]
 
     def __init__(self, *args, **kwargs):
-        # ✅ Lấy ra giá trị 'khach_hang' được truyền từ view (nếu có)
-        #   pop() ở đây sẽ đồng thời "lấy ra" và "xóa" tham số này khỏi kwargs,
-        #   để tránh Django ném lỗi “unexpected keyword argument”.
+        # ✅ Truyền tham số 'khach_hang' từ views
         khach_hang = kwargs.pop('khach_hang', None)
-
-        # ✅ Gọi hàm __init__ gốc của lớp cha (ModelForm)
-        #   để Django khởi tạo bình thường tất cả các field trong form.
         super().__init__(*args, **kwargs)
-
-        # ✅ Nếu có khách hàng được truyền vào (không phải None),
-        #   thì ta lọc danh sách thú cưng chỉ thuộc khách hàng đó.
         if khach_hang:
             self.fields['thu_cung'].queryset = ThuCung.objects.filter(khach_hang=khach_hang)
-
