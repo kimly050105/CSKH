@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Lịch hẹn sắp tới - Punky Spa</title>
-    {% load static %}
+  {% load static %}
   <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
 </head>
 <body>
@@ -53,7 +53,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for lh in lich_hen %}
+          {% for lh in lich_hens %}
           <tr>
             <td>{{ lh.thoi_gian|date:"H:i d/m/Y" }}</td>
             <td>{{ lh.khach_hang.ho_ten }}</td>
@@ -61,8 +61,12 @@
             <td>{{ lh.thu_cung.ten_thucung }}</td>
             <td>{{ lh.thu_cung.loai }}</td>
             <td>{{ lh.thu_cung.can_nang }}</td>
-            <td>{{ lh.dich_vu }}</td>
-            <td>{{ lh.nhan_vien.user.get_full_name }}</td>
+            <td>
+              {% for dv in lh.dv_lichhen_set.all %}
+                {{ dv.dich_vu.ten_dich_vu }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </td>
+            <td>{% if lh.nhan_vien %}{{ lh.nhan_vien.user.get_full_name }}{% else %}-{% endif %}</td>
             <td>{{ lh.ghi_chu }}</td>
             <td>
               <a href="{% url 'sua_lich_hen' lh.id %}" class="edit-btn">✏️</a>
