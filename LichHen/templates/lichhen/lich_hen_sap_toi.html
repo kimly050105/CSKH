@@ -5,7 +5,28 @@
   <title>Lịch hẹn sắp tới - Punky Spa</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .message {
+      text-align: center;
+      font-weight: 500;
+      padding: 8px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    .message.success {
+      background-color: #e6ffe9;
+      color: #1e7a1e;
+      border: 1px solid #8cd48c;
+    }
+    .message.error {
+      background-color: #ffe6e6;
+      color: #b91c1c;
+      border: 1px solid #f5b5b5;
+    }
+  </style>
 </head>
+
 <body>
   <div class="container">
     <!-- 🔹 Sidebar -->
@@ -16,7 +37,7 @@
       </div>
 
       <div class="user-info">
-        <i class="fa fa-user"></i> Vanila Nguyễn
+        <i class="fa fa-user"></i> {{ request.user.username }}
       </div>
 
       <nav>
@@ -37,6 +58,15 @@
       <h2>Lịch hẹn sắp tới</h2>
       <a href="{% url 'them_lich_hen' %}" class="add-btn">Thêm lịch hẹn +</a>
 
+      <!-- ✅ Hiển thị thông báo thành công hoặc lỗi -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="message {% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
       <table class="schedule-table">
         <thead>
           <tr>
@@ -52,12 +82,13 @@
             <th>Thao tác</th>
           </tr>
         </thead>
+
         <tbody>
-          {% for lh in lich_hen %}
+          {% for lh in lich_hens %}
           <tr>
             <td>{{ lh.thoi_gian|date:"H:i d/m/Y" }}</td>
             <td>{{ lh.khach_hang.ho_ten }}</td>
-            <td>{{ lh.khach_hang.so_dien_thoai }}</td>
+            <td>{{ lh.so_dien_thoai }}</td>
             <td>{{ lh.thu_cung.ten_thucung }}</td>
             <td>{{ lh.thu_cung.loai }}</td>
             <td>{{ lh.thu_cung.can_nang }}</td>
@@ -80,5 +111,12 @@
       </table>
     </main>
   </div>
+
+  <!-- 🕓 Tự ẩn message sau 4 giây -->
+  <script>
+    setTimeout(() => {
+      document.querySelectorAll('.message').forEach(el => el.remove());
+    }, 4000);
+  </script>
 </body>
 </html>

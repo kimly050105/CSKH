@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from django.utils import timezone
+from django.contrib.messages import get_messages
+
 
 from .models import LichHen, DV_LichHen
 from .forms import LichHenForm
@@ -12,28 +14,36 @@ from TK.models import KhachHang, ThuCung
 # 🧾 Hiển thị lịch hẹn sắp tới + nút thêm/sửa/xóa
 @login_required(login_url='/dangnhap/')
 def lich_hen_sap_toi(request):
+    # ✅ Tìm chính xác KhachHang theo user đang đăng nhập
     khach_hang = KhachHang.objects.filter(user=request.user).first()
+
+    # ⚠️ Nếu không tìm thấy khách hàng tương ứng, tránh lỗi None
+    if not khach_hang:
+        messages.error(request, "Tài khoản này chưa có thông tin khách hàng.")
+        return render(request, 'lichhen/lich_hen_sap_toi.html', {'lich_hens': []})
+
+    # ✅ Lọc tất cả lịch hẹn thuộc khách hàng đó, trạng thái 'sắp tới'
     lich_hens = LichHen.objects.filter(
-        khach_hang=khach_hang,
+        khach_hang_id=khach_hang.id,
         trang_thai='sap_toi'
-    ).order_by('thoi_gian')
+    ).select_related('thu_cung', 'khach_hang').order_by('thoi_gian')
+
     return render(request, 'lichhen/lich_hen_sap_toi.html', {'lich_hens': lich_hens})
 
 
 # ➕ Thêm lịch hẹn mới
 @login_required(login_url='/dangnhap/')
 def tao_lich_hen(request):
+    # ✅ Xóa message cũ mỗi khi mở form
+    storage = get_messages(request)
+    storage.used = True
+
     user = request.user
     try:
         khach_hang = KhachHang.objects.get(user=user)
     except KhachHang.DoesNotExist:
         messages.error(request, "Tài khoản này chưa có thông tin khách hàng.")
         return redirect('home')
-
-    # ✅ Xóa thông báo cũ mỗi khi load lại form
-    storage = messages.get_messages(request)
-    for _ in storage:
-        pass
 
     if request.method == 'POST':
         form = LichHenForm(request.POST, khach_hang=khach_hang)
@@ -55,7 +65,7 @@ def tao_lich_hen(request):
                 messages.error(request, "Vui lòng chọn hoặc thêm thú cưng hợp lệ.")
                 return render(request, 'lichhen/tao_lich_hen.html', {'form': form})
 
-            # ✅ Lưu lịch hẹn mới
+            # ✅ Lưu lịch hẹn
             lich_hen = form.save(commit=False)
             lich_hen.khach_hang = khach_hang
             lich_hen.thu_cung = thu_cung
@@ -63,7 +73,7 @@ def tao_lich_hen(request):
             lich_hen.so_dien_thoai = form.cleaned_data.get('so_dien_thoai')
             lich_hen.save()
 
-            # ✅ Thêm các dịch vụ nhiều chọn
+            # ✅ Thêm nhiều dịch vụ
             dich_vu_list = form.cleaned_data.get('dich_vu', [])
             for dv in dich_vu_list:
                 DV_LichHen.objects.create(lich_hen=lich_hen, dich_vu=dv)
@@ -73,13 +83,10 @@ def tao_lich_hen(request):
         else:
             messages.error(request, "Vui lòng nhập đầy đủ thông tin hợp lệ.")
     else:
-        # ✅ Form mặc định có số điện thoại sẵn nếu khách hàng đã có
         so_dien_thoai_mac_dinh = getattr(khach_hang, 'so_dien_thoai', '')
         form = LichHenForm(khach_hang=khach_hang, initial={'so_dien_thoai': so_dien_thoai_mac_dinh})
 
     return render(request, 'lichhen/tao_lich_hen.html', {'form': form})
-
-
 # 📘 API trả về thông tin thú cưng (AJAX)
 def thong_tin_thu_cung(request, pk):
     try:
