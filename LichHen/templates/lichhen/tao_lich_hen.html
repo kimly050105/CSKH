@@ -3,7 +3,9 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Đặt lịch hẹn - Punky Spa</title>
+  {% block title %}
+  <title>Đặt lịch hẹn mới - Punky Spa</title>
+  {% endblock %}
   <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -149,7 +151,10 @@
   <div class="form-box">
 
     <div class="form-title">
-      🐾 Đặt lịch hẹn mới
+        <!-- 🌸 Tiêu đề form -->
+    {% block form_title %}
+    <h2>🐾 Đặt lịch hẹn mới</h2>
+    {% endblock %}
     </div>
 
     {% if messages %}

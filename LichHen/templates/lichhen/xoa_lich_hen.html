@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Hủy lịch hẹn - Punky Spa</title>
+  <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="cancel-container">
+    <h2>Xác nhận hủy Lịch hẹn</h2>
+    <p>Bạn có chắc muốn hủy lịch hẹn của
+      <strong>{{ lich_hen.thu_cung.ten_thucung }}</strong>
+      vào lúc <strong>{{ lich_hen.thoi_gian|date:"H:i d/m/Y" }}</strong> không?</p>
+
+    <!-- 🌸 Form nhập lý do hủy -->
+    <form method="post">
+      {% csrf_token %}
+      <label><strong>Lý do hủy:</strong></label><br>
+      {{ form.ly_do_huy }}
+      <div>
+        <button type="submit" class="btn-confirm">Xác nhận hủy</button>
+        <a href="{% url 'lich_hen_sap_toi' %}" class="btn-cancel">Quay lại</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

@@ -70,3 +70,9 @@ class LichHenForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if khach_hang:
             self.fields['thu_cung'].queryset = ThuCung.objects.filter(khach_hang=khach_hang)
+class LyDoHuyForm(forms.Form):
+    ly_do_huy = forms.CharField(
+        label="Lý do hủy lịch hẹn",
+        widget=forms.Textarea(attrs={'rows': 4, 'placeholder': 'Vui lòng nhập lý do hủy...'}),
+        required=True
+    )

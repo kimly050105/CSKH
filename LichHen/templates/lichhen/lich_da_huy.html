@@ -47,22 +47,43 @@
           <th>Loài</th>
           <th>Dịch vụ</th>
           <th>Nhân viên</th>
-          <th>Lý do hủy</th>
+          <th>Ghi chú / Lý do hủy</th>
         </tr>
       </thead>
+
       <tbody>
-        {% for lh in lich_hen %}
+        {# ✅ Dùng đúng biến 'lich_hens' như view trả về, không phải 'lich_hen' #}
+        {% for lh in lich_hens %}
         <tr>
+          <!-- 🕒 Thời gian hiển thị theo định dạng giờ - ngày/tháng/năm -->
           <td>{{ lh.thoi_gian|date:"H:i d/m/Y" }}</td>
+
+          <!-- 👤 Tên khách hàng -->
           <td>{{ lh.khach_hang.ho_ten }}</td>
-          <td>{{ lh.khach_hang.so_dien_thoai }}</td>
+
+          <!-- ☎️ Số điện thoại (thuộc model LichHen, không phải KhachHang) -->
+          <td>{{ lh.so_dien_thoai }}</td>
+
+          <!-- 🐾 Tên & loài thú cưng -->
           <td>{{ lh.thu_cung.ten_thucung }}</td>
           <td>{{ lh.thu_cung.loai }}</td>
-          <td>{{ lh.dich_vu }}</td>
-          <td>{{ lh.nhan_vien.user.get_full_name }}</td>
-          <td>{{ lh.ly_do_huy|default:"Không có" }}</td>
+
+          <!-- 💅 Dịch vụ sử dụng (qua bảng trung gian DV_LichHen) -->
+          <td>
+            {% for dv in lh.dv_lichhen_set.all %}
+              {{ dv.dich_vu.ten_dich_vu }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </td>
+
+          <!-- 👩‍💼 Nhân viên phụ trách (nếu có) -->
+          <td>{{ lh.nhan_vien.user.get_full_name|default:"-" }}</td>
+
+          <!-- 📝 Ghi chú hoặc lý do hủy -->
+          <td>{{ lh.ghi_chu|default:"Không có" }}</td>
         </tr>
+
         {% empty %}
+        <!-- ⚠️ Hiện thông báo nếu danh sách rỗng -->
         <tr><td colspan="8">Không có lịch hẹn bị hủy.</td></tr>
         {% endfor %}
       </tbody>

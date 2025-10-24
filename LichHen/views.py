@@ -7,7 +7,7 @@ from django.contrib.messages import get_messages
 
 
 from .models import LichHen, DV_LichHen
-from .forms import LichHenForm
+from .forms import LichHenForm,LyDoHuyForm
 from TK.models import KhachHang, ThuCung
 
 
@@ -100,31 +100,72 @@ def thong_tin_thu_cung(request, pk):
     except ThuCung.DoesNotExist:
         return JsonResponse({'error': 'Không tìm thấy thú cưng.'}, status=404)
 
-
-# ✏️ Sửa lịch hẹn
+#sửa lịch hẹn
 @login_required(login_url='/dangnhap/')
 def sua_lich_hen(request, id):
     lich_hen = get_object_or_404(LichHen, id=id)
+    khach_hang = lich_hen.khach_hang  # ✅ lấy khách hàng tương ứng
+
     if request.method == 'POST':
-        form = LichHenForm(request.POST, instance=lich_hen)
+        form = LichHenForm(request.POST, instance=lich_hen, khach_hang=khach_hang)
         if form.is_valid():
-            form.save()
+            # ✅ Lưu thông tin chính của lịch hẹn
+            lich_hen = form.save(commit=False)
+            lich_hen.khach_hang = khach_hang
+            lich_hen.save()
+
+            # 🧩 Cập nhật dịch vụ trong bảng trung gian
+            from .models import DV_LichHen  # đảm bảo import model
+            # Xóa toàn bộ dịch vụ cũ
+            DV_LichHen.objects.filter(lich_hen=lich_hen).delete()
+
+            # Thêm lại danh sách dịch vụ mới
+            dich_vu_list = form.cleaned_data.get('dich_vu', [])
+            for dv in dich_vu_list:
+                DV_LichHen.objects.create(lich_hen=lich_hen, dich_vu=dv)
+
             messages.success(request, "Cập nhật lịch hẹn thành công!")
             return redirect('lich_hen_sap_toi')
+        else:
+            messages.error(request, "Vui lòng kiểm tra lại thông tin nhập.")
     else:
-        form = LichHenForm(instance=lich_hen)
-    return render(request, 'lichhen/sua_lich_hen.html', {'form': form})
+        form = LichHenForm(instance=lich_hen, khach_hang=khach_hang)
+
+    return render(request, 'lichhen/sua_lich_hen.html', {'form': form, 'lich_hen': lich_hen})
+
+
 
 
 # 🗑️ Xóa lịch hẹn
 @login_required(login_url='/dangnhap/')
 def xoa_lich_hen(request, id):
     lich_hen = get_object_or_404(LichHen, id=id)
+
     if request.method == 'POST':
-        lich_hen.delete()
-        messages.success(request, "Đã xóa lịch hẹn thành công.")
-        return redirect('lich_hen_sap_toi')
-    return render(request, 'lichhen/xoa_lich_hen.html', {'lich_hen': lich_hen})
+        form = LyDoHuyForm(request.POST)
+        if form.is_valid():
+            # ✅ Lưu lý do hủy và đổi trạng thái
+            lich_hen.trang_thai = 'huy'
+            lich_hen.ly_do_huy = form.cleaned_data['ly_do_huy']
+            lich_hen.save()
+            messages.success(request, "Lịch hẹn đã được hủy và chuyển vào mục 'Lịch đã hủy'.")
+            return redirect('lich_da_huy')
+    else:
+        form = LyDoHuyForm()
+
+    return render(request, 'lichhen/xoa_lich_hen.html', {'lich_hen': lich_hen, 'form': form})
+
+# 📋 Danh sách lịch đã hủy
+@login_required(login_url='/dangnhap/')
+def lich_da_huy(request):
+    khach_hang = KhachHang.objects.filter(user=request.user).first()
+    lich_hens = LichHen.objects.filter(
+        khach_hang=khach_hang,
+        trang_thai='huy'
+    ).order_by('-thoi_gian')
+
+    return render(request, 'lichhen/lich_da_huy.html', {'lich_hens': lich_hens})
+
 
 
 # 📘 Xem lịch sử lịch hẹn (hoàn thành)
