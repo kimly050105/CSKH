@@ -18,6 +18,8 @@ class KhachHang(models.Model):
 
 class NhanVien(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    ho_ten = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(max_length=255, blank=True)
     chuc_vu = models.CharField(max_length=100)
     so_dien_thoai = models.CharField(max_length=15)
     dia_chi = models.CharField(max_length=255)
@@ -29,6 +31,7 @@ class NhanVien(models.Model):
 
 class QuanTriVien(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    ho_ten = models.CharField(max_length=100, blank=True)
     quyen_han = models.CharField(max_length=100, default="Toàn quyền")
     ngay_tao_quyen = models.DateField(auto_now_add=True)
 
