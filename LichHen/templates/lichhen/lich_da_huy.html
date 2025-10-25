@@ -18,7 +18,7 @@
     </div>
 
     <div class="user-info">
-      <i class="fa fa-user"></i> Vanila Nguyễn
+      <i class="fa fa-user"></i>{{ request.user.username }}
     </div>
 
     <nav>
@@ -34,7 +34,7 @@
   <!-- 🔸 Main content -->
   <div class="main-content">
     <div class="header-row">
-      <h2 style="color:#ff5c8d;">❌ Lịch hẹn đã hủy</h2>
+      <h2 style="color:#ff5c8d;"> Lịch hẹn đã hủy</h2>
     </div>
 
     <table class="schedule-table">
@@ -47,7 +47,7 @@
           <th>Loài</th>
           <th>Dịch vụ</th>
           <th>Nhân viên</th>
-          <th>Ghi chú / Lý do hủy</th>
+          <th>Lý do hủy</th>
         </tr>
       </thead>
 
@@ -79,7 +79,7 @@
           <td>{{ lh.nhan_vien.user.get_full_name|default:"-" }}</td>
 
           <!-- 📝 Ghi chú hoặc lý do hủy -->
-          <td>{{ lh.ghi_chu|default:"Không có" }}</td>
+          <td>{{ lh.ly_do_huy|default:"Không có" }}</td>
         </tr>
 
         {% empty %}

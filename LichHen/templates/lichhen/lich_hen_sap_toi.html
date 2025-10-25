@@ -8,9 +8,8 @@
   <!-- 🌸 Liên kết file CSS -->
   <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
-    /* 🌸 Toàn trang */
+    /* 🌸 Chỉ giữ lại style cho phần main-content và table */
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #fff5f7;
@@ -23,56 +22,7 @@
       min-height: 100vh;
     }
 
-    /* 🌸 Sidebar */
-    .sidebar {
-      width: 250px;
-      background-color: #ffd6e0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .sidebar .logo img {
-      width: 100px;
-      height: auto;
-    }
-
-    .sidebar h2 {
-      color: #a61028;
-      margin-top: 10px;
-      font-size: 24px;
-    }
-
-    .sidebar .pink {
-      color: #ff5c8d;
-    }
-
-    .user-info {
-      margin: 20px 0;
-      font-weight: 600;
-      color: #333;
-    }
-
-    nav a {
-      display: block;
-      width: 100%;
-      padding: 10px 0;
-      text-align: center;
-      color: #333;
-      text-decoration: none;
-      border-radius: 10px;
-      margin: 5px 0;
-      transition: 0.3s;
-    }
-
-    nav a:hover,
-    nav .active {
-      background-color: #ff5c8d;
-      color: white;
-    }
-
-    /* 🌸 Phần nội dung chính */
+    /* 🌸 Nội dung chính */
     .main-content {
       flex: 1;
       padding: 40px;
@@ -86,7 +36,6 @@
       text-transform: uppercase;
     }
 
-    /* 🌸 Thông báo messages */
     .messages {
       position: absolute;
       top: 20px;
@@ -102,19 +51,17 @@
       animation: fadeOut 4s forwards;
     }
 
-    .messages .success { background-color: #4CAF50; } /* Xanh lá */
-    .messages .error { background-color: #f44336; }   /* Đỏ */
-    .messages .warning { background-color: #ff9800; } /* Cam */
-    .messages .info { background-color: #2196F3; }    /* Xanh dương */
+    .messages .success { background-color: #4CAF50; }
+    .messages .error { background-color: #f44336; }
+    .messages .warning { background-color: #ff9800; }
+    .messages .info { background-color: #2196F3; }
 
-    /* 🌸 Hiệu ứng ẩn sau 4s */
     @keyframes fadeOut {
       0% { opacity: 1; }
       80% { opacity: 1; }
       100% { opacity: 0; display: none; }
     }
 
-    /* 🌸 Nút thêm lịch hẹn */
     .btn-add {
       display: inline-block;
       background-color: #ff5c8d;
@@ -128,11 +75,8 @@
       transition: 0.2s;
     }
 
-    .btn-add:hover {
-      background-color: #ff7da6;
-    }
+    .btn-add:hover { background-color: #ff7da6; }
 
-    /* 🌸 Bảng hiển thị lịch hẹn */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -152,15 +96,9 @@
       color: #333;
     }
 
-    tbody tr:nth-child(even) {
-      background-color: #fff0f5;
-    }
+    tbody tr:nth-child(even) { background-color: #fff0f5; }
+    tbody tr:hover { background-color: #ffe4ed; }
 
-    tbody tr:hover {
-      background-color: #ffe4ed;
-    }
-
-    /* 🌸 Icon thao tác (sửa, xóa) */
     .action-icons i {
       cursor: pointer;
       margin: 0 5px;
@@ -169,13 +107,7 @@
       transition: 0.2s;
     }
 
-    .action-icons i:hover {
-      color: #ff5c8d;
-    }
-
-    .action-icons form {
-      display: inline;
-    }
+    .action-icons i:hover { color: #ff5c8d; }
 
     .no-data {
       text-align: center;
@@ -187,7 +119,7 @@
 
 <body>
 <div class="container">
-  <!-- 🔹 Sidebar -->
+  <!-- 🔹 Sidebar: chỉnh giống 2 trang còn lại -->
   <aside class="sidebar">
     <div class="logo">
       <img src="{% static 'trangchu/logo.png' %}" alt="Punky Spa">
@@ -200,21 +132,19 @@
 
     <nav>
       <a href="{% url 'home' %}">Trang chủ</a>
-      <a href="{% url 'lich_hen_sap_toi' %}" class="active">Lịch hẹn sắp tới</a>
-      <a href="{% url 'lich_su_lich_hen' %}">Lịch sử lịch hẹn</a>
-      <a href="{% url 'lich_da_huy' %}">Lịch đã hủy</a>
+      <div class="dropdown-content">
+        <a href="{% url 'lich_hen_sap_toi' %}" class="active">Lịch hẹn sắp tới</a>
+        <a href="{% url 'lich_su_lich_hen' %}">Lịch sử lịch hẹn</a>
+        <a href="{% url 'lich_da_huy' %}">Lịch đã hủy</a>
+      </div>
     </nav>
   </aside>
 
-  <!-- 🔸 Phần nội dung chính -->
+  <!-- 🔸 Phần nội dung chính (giữ nguyên y như bản đẹp của bạn) -->
   <div class="main-content">
-
-    <!-- 🌸 Tiêu đề và nút thêm -->
     <h2>Lịch hẹn sắp tới</h2>
     <a href="{% url 'them_lich_hen' %}" class="btn-add">Thêm lịch hẹn +</a>
 
-    <!-- 🌸 HIỂN THỊ THÔNG BÁO (MESSAGE DJANGO) -->
-    <!-- ✅ Đoạn này giúp hiện message (success / error) và tự ẩn sau 4s -->
     {% if messages %}
     <div class="messages" id="messages">
       {% for message in messages %}
@@ -223,7 +153,6 @@
     </div>
     {% endif %}
 
-    <!-- 🌸 Bảng hiển thị danh sách lịch hẹn -->
     <table>
       <thead>
         <tr>
@@ -239,7 +168,6 @@
           <th>Thao tác</th>
         </tr>
       </thead>
-
       <tbody>
         {% for lich in lich_hens %}
         <tr>
@@ -252,35 +180,15 @@
           <td>
             {% for dv in lich.dv_lichhen_set.all %}
               {{ dv.dich_vu.ten_dich_vu }}{% if not forloop.last %}, {% endif %}
-            {% empty %}
-              -
-            {% endfor %}
+            {% empty %}-{% endfor %}
           </td>
-          <td>
-            {% if lich.nhan_vien %}
-              {{ lich.nhan_vien.ho_ten }}
-            {% else %}
-              -
-            {% endif %}
-          </td>
+          <td>{% if lich.nhan_vien %}{{ lich.nhan_vien.ho_ten }}{% else %}-{% endif %}</td>
           <td>{{ lich.ghi_chu|default:"-" }}</td>
-
-          <!-- 🛠️ Cột thao tác -->
           <td class="action-icons">
-            <!-- ✏️ Chỉnh sửa -->
-            <a href="{% url 'sua_lich_hen' lich.id %}" title="Chỉnh sửa lịch hẹn">
-              <i class="fa fa-pencil"></i>
+            <a href="{% url 'sua_lich_hen' lich.id %}" title="Chỉnh sửa lịch hẹn"><i class="fa fa-pencil"></i></a>
+            <a href="{% url 'xoa_lich_hen' lich.id %}" title="Hủy lịch hẹn" style="text-decoration:none;color:#a61028;">
+              <i class="fa fa-trash"></i>
             </a>
-
-            <!-- 🗑️ Hủy lịch hẹn (POST an toàn) -->
-            <!-- 🗑️ Hủy lịch hẹn (hiển thị form xác nhận) -->
-            <a href="{% url 'xoa_lich_hen' lich.id %}"
-            title="Hủy lịch hẹn"
-            style="text-decoration:none;color:#a61028;">
-             <i class="fa fa-trash"></i>
-            </a>
-
-
           </td>
         </tr>
         {% empty %}
@@ -291,7 +199,7 @@
   </div>
 </div>
 
-<!-- 🌸 Script tự ẩn message sau 4 giây -->
+<!-- 🌸 Script tự ẩn message -->
 <script>
   setTimeout(function() {
     const msg = document.getElementById("messages");

@@ -42,8 +42,7 @@ class LichHen(models.Model):
     thoi_gian = models.DateTimeField(help_text="Thời gian thực hiện dịch vụ.")
     ghi_chu = models.TextField(blank=True, help_text="Ghi chú đặc biệt của khách hàng.")
     trang_thai = models.CharField(max_length=20, choices=TRANG_THAI_CHOICES, default='sap_toi')
-    danh_gia = models.CharField(max_length=255, blank=True, help_text="Đánh giá sau dịch vụ (nếu có).")
-    khieu_nai = models.TextField(blank=True, help_text="Khiếu nại của khách hàng (nếu có).")
+    ly_do_huy = models.TextField(blank=True, null=True)
     def __str__(self):
         return f"{self.khach_hang.ho_ten} - {self.thu_cung.ten_thucung}"
 class DV_LichHen(models.Model):
