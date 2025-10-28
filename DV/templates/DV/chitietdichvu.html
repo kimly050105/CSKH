@@ -305,8 +305,10 @@
       <a href="#">Khuyến mãi</a>
     </nav>
     <div class="search">
-      <input type="text" placeholder="Tìm kiếm...">
-      <button>🔍</button>
+      <form method="get" action="{% url 'danh_sach_dich_vu' %}">
+        <input type="text" name="q" placeholder="Tìm kiếm dịch vụ..." value="{{ request.GET.q }}">
+        <button type="submit">🔍</button>
+      </form>
     </div>
   </header>
 
@@ -323,7 +325,8 @@
       <h2>{{ dich_vu.ten_dich_vu }}</h2>
       <p class="gia">{{ dich_vu.gia|floatformat:0|intcomma }} VND</p>
       <p class="mo-ta">{{ dich_vu.mo_ta }}</p>
-      <button class="btn-datngay">Đặt ngay</button><br>
+      <button class="btn-datngay" onclick="window.location.href='http://127.0.0.1:8000/lich-hen/tao-lich-hen/'">Đặt ngay</button>
+<br>
       <a href="{% url 'danh_sach_dich_vu' %}" class="btn-back">← Quay lại</a>
     </div>
   </div>

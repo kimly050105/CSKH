@@ -190,8 +190,10 @@
     </nav>
 
     <div class="search">
-      <input type="text" placeholder="Tìm kiếm...">
-      <button>🔍</button>
+      <form method="get" action="{% url 'danh_sach_dich_vu' %}">
+        <input type="text" name="q" placeholder="Tìm kiếm dịch vụ..." value="{{ request.GET.q }}">
+        <button type="submit">🔍</button>
+      </form>
     </div>
   </header>
 
@@ -221,6 +223,12 @@
     <p style="text-align:center;">Hiện chưa có dịch vụ nào.</p>
     {% endfor %}
   </div>
+  {% if not dich_vu %}
+  <p style="text-align:center; color:#a61028; margin-top:20px;">
+    Không tìm thấy dịch vụ nào trùng với "{{ query }}".
+  </p>
+{% endif %}
+
 
   <!-- 🌸 FOOTER -->
   <footer class="footer">
