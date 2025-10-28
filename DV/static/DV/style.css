@@ -7,17 +7,34 @@ body {
     padding: 0;
     background-color: #fff;
 }
-
-/* 🌸 Thanh topbar (dòng giờ làm việc) */
+/* 🌸 Thanh topbar (dòng giờ làm việc) - Đồng bộ với Trang chủ */
 .topbar {
-    background-color: #ffd6de;
+    background-color: #f8aebc; /* 💖 Cùng màu với trang chủ */
+    color: #222;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 20px;
-    font-size: 14px;
-    color: #333;
+    padding: 10px 50px;       /* ✅ Giống padding của trang chủ */
+    font-size: 18px;          /* ✅ Kích thước chữ bằng trang chủ */
+    font-weight: 600;         /* Chữ đậm rõ */
+    box-sizing: border-box;
 }
+
+.topbar i {
+    color: #a01940;           /* Icon lịch hồng đậm */
+    margin-right: 8px;
+}
+
+.topbar strong {
+    color: #000;              /* Chữ “Giờ làm việc” màu đen nổi bật */
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
 
 /* 🌸 Header chính (logo, menu, tìm kiếm) */
 header.navbar {
@@ -747,4 +764,10 @@ nav a:hover {
     .banner-dichvu img {
         height: 250px;
     }
+}
+body .topbar {
+    background-color: #f8aebc !important;
+    padding: 10px 50px !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
 }
