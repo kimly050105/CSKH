@@ -1,1 +1,22 @@
+# ⛔ File database
 db.sqlite3
+db_backup.sqlite
+db_backup.sqlite3
+
+# 🧠 File cache Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 🧰 Virtual environment
+.venv/
+env/
+venv/
+
+# 🗂 VSCode / PyCharm configs
+.vscode/
+.idea/
+
+# 📂 Static & media files (nếu có)
+staticfiles/
+media/
