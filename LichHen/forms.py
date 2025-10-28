@@ -70,3 +70,20 @@ class LichHenForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if khach_hang:
             self.fields['thu_cung'].queryset = ThuCung.objects.filter(khach_hang=khach_hang)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        thu_cung = cleaned_data.get('thu_cung')
+        ten_moi = cleaned_data.get('ten_thu_cung_moi')
+
+        if thu_cung and ten_moi:
+            raise forms.ValidationError(
+                "Bạn chỉ được chọn thú cưng hiện có hoặc thêm mới, không được nhập cả hai."
+            )
+        return cleaned_data
+class LyDoHuyForm(forms.Form):
+    ly_do_huy = forms.CharField(
+        label="Lý do hủy lịch hẹn",
+        widget=forms.Textarea(attrs={'rows': 4, 'placeholder': 'Vui lòng nhập lý do hủy...'}),
+        required=True
+    )

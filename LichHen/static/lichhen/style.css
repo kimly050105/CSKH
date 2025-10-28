@@ -1,3 +1,21 @@
+/* 🌸 Tiêu đề form “Đặt lịch hẹn” / “Chỉnh sửa lịch hẹn” */
+.main-content h2 {
+  color: #ff5c8d;
+  text-align: center;
+  font-size: 26px;         /* giảm kích thước cho dịu hơn */
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;                /* tạo khoảng cách giữa icon và chữ */
+}
+
+.main-content h2 i {
+  color: #ff5c8d;
+  font-size: 20px;          /* icon nhỏ xinh, đồng bộ màu chữ */
+}
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
