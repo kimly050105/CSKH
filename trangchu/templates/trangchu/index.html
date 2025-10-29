@@ -9,6 +9,32 @@
     <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+<!-- 🐾 Hiệu ứng chân mèo rơi -->
+<div class="paw-fall"></div>
+
+<script>
+  const pawFallContainer = document.querySelector(".paw-fall");
+  const pawSrc = "{% static 'trangchu/chanmeo.png' %}"; // ảnh bạn đã gửi nha
+
+  function createPaw() {
+    const paw = document.createElement("img");
+    paw.src = pawSrc;
+    paw.classList.add("paw-item");
+
+    // vị trí & kích thước ngẫu nhiên
+    paw.style.left = Math.random() * 100 + "vw";
+    paw.style.width = 25 + Math.random() * 20 + "px";
+    paw.style.animationDuration = 5 + Math.random() * 4 + "s";
+    paw.style.opacity = 0.6 + Math.random() * 0.4;
+
+    pawFallContainer.appendChild(paw);
+
+    // xóa khi rơi xong
+    setTimeout(() => paw.remove(), 9000);
+  }
+
+  setInterval(createPaw, 500); // cứ 0.5s rơi 1 dấu chân
+</script>
 
 <body>
 
@@ -91,9 +117,11 @@
         </div>
 
         <nav>
-            <a href="{% url 'home' %}" class="active">Trang chủ</a>
-            <a href="{% url 'danh_sach_dich_vu' %}">Dịch vụ</a>
-            <a href="#">Khuyến mãi</a>
+            <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Trang chủ</a>
+            <a href="{% url 'danh_sach_dich_vu' %}" class="{% if request.resolver_match.url_name == 'danh_sach_dich_vu' %}active{% endif %}">Dịch vụ</a>
+            <a href="#" class="{% if request.resolver_match.url_name == 'khuyen_mai' %}active{% endif %}">Khuyến mãi</a>
+            <a href="{% url 'lien_he' %}" class="{% if request.resolver_match.url_name == 'lien_he' %}active{% endif %}">Liên hệ</a>
+
         </nav>
 
         <div class="search">
@@ -110,6 +138,10 @@
     <!-- 🌸 GIỚI THIỆU -->
     <section class="intro">
         <h2>Giới thiệu</h2>
+        <p style="text-align:center; font-size:18px; color:#555; margin-top:-15px; margin-bottom:15px;">
+          🌸 Chăm sóc tận tâm – Thấu hiểu từng bé yêu tại <strong>Punky Spa</strong> 🌸
+        </p>
+
         <div class="gallery">
             <img src="{% static 'trangchu/cat1.png' %}" alt="">
             <img src="{% static 'trangchu/cat2.png' %}" alt="">

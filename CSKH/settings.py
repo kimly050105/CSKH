@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'TB.context_processors.thong_bao_moi',
 
+
             ],
         },
     },

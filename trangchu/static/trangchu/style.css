@@ -153,13 +153,43 @@ nav a:hover {
     display: block;
     object-fit: cover;
 }
-
-/* 🌸 Phần Giới thiệu */
-.intro {
-    background-color: #fff5f7; /* nền hồng nhạt toàn vùng */
-    padding: 50px 0;
-    text-align: center;
+/* 🌸 Hiệu ứng nổi nhẹ cho banner */
+.banner-full {
+  position: relative;
+  overflow: hidden;
 }
+
+.banner-full img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+/* Khi rê chuột vào banner */
+.banner-full:hover img {
+  transform: scale(1.03); /* phóng nhẹ 3% */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.05); /* sáng hơn nhẹ */
+}
+
+
+
+
+/* 🌸 Phần Giới thiệu dính sát banner */
+.intro {
+  background-color: #fff5f7;
+  padding: 15px 0 45px; /* 🌸 giảm thêm khoảng trống phía trên */
+  margin-top: -70px;    /* 🌸 kéo lên sát banner hơn (tăng từ -40px lên -70px) */
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  border-radius: 25px 25px 0 0;
+  box-shadow: 0 -3px 8px rgba(255, 92, 141, 0.08);
+}
+
+
 
 /* 🌸 Tiêu đề Giới thiệu có nền hồng */
 .intro h2 {
@@ -211,6 +241,8 @@ nav a:hover {
         height: auto;
     }
 }
+
+
 
 /* 🌸 FOOTER Chuẩn 3 cột nền hồng */
 .footer {
@@ -1001,3 +1033,31 @@ nav a:hover {
 .submenu-items.show {
   display: flex !important;
 }
+
+/* 🌸 Hiệu ứng chân mèo rơi */
+.paw-fall {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* để không chặn click */
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.paw-item {
+  position: absolute;
+  top: -50px;
+  animation: paw-fall linear forwards;
+}
+
+@keyframes paw-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
