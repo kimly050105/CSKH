@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'TB',
     'LichHen',
     'DV',
+    'KhieunaiDanhgia',
 ]
 
 MIDDLEWARE = [
@@ -143,6 +144,9 @@ STATICFILES_DIRS = [
 LOGIN_URL = '/dangnhap/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 
 JAZZMIN_SETTINGS = {
