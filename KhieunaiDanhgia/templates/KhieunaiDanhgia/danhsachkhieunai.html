@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Lịch sử khiếu nại - Punky Spa</title>
+
+  <!-- 💖 CSS dùng chung -->
+  <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* 🌸 Hiệu ứng thông báo */
+    .message-box {
+      background: #ffe4ec;
+      color: #a01940;
+      padding: 12px 16px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(255, 92, 141, 0.25);
+      margin-bottom: 20px;
+      animation: fadeOut 4s forwards;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- 🔹 Sidebar (bản mới) -->
+    <div class="sidebar">
+      <div class="logo">
+        <img src="{% static 'trangchu/logo.png' %}" alt="Logo Punky Spa">
+        <h2><span class="pink">Punky</span> Spa</h2>
+      </div>
+
+      <div class="user-info">
+        <i class="fa-solid fa-user"></i> {{ request.user.username }}
+      </div>
+
+      <nav>
+        <!-- MỤC LỊCH HẸN -->
+        <button class="drop-btn">Lịch hẹn</button>
+        <div class="dropdown-content">
+          <a href="{% url 'lich_hen_sap_toi' %}"
+             class="{% if request.path == '/lich-hen/sap-toi/' %}active{% endif %}">Lịch hẹn sắp tới</a>
+          <a href="{% url 'lich_su_lich_hen' %}"
+             class="{% if request.path == '/lich-hen/lich-su/' %}active{% endif %}">Lịch sử lịch hẹn</a>
+          <a href="{% url 'lich_da_huy' %}"
+             class="{% if request.path == '/lich-hen/da-huy/' %}active{% endif %}">Lịch đã hủy</a>
+        </div>
+
+        <!-- MỤC KHIẾU NẠI -->
+        <button class="drop-btn">Khiếu nại</button>
+        <div class="dropdown-content">
+          <a href="{% url 'danh_sach_khieu_nai' %}"
+             class="{% if request.path == '/khieu-nai/danh-sach/' %}active{% endif %}">
+             Lịch sử khiếu nại
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- 🔸 Nội dung chính -->
+    <div class="main-content">
+      <h2>Lịch sử khiếu nại</h2>
+
+      <!-- ✅ Hiển thị thông báo -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="message-box">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      {% if khieu_nai_list %}
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>Thời gian</th>
+
+            {% if request.user.is_staff or request.user.is_superuser %}
+              <th>Tên khách hàng</th>
+              <th>SĐT</th>
+            {% endif %}
+
+            <th>Tên thú cưng</th>
+            <th>Dịch vụ</th>
+            <th>Nhân viên phụ trách</th>
+            <th>Lý do khiếu nại</th>
+            <th>Trạng thái</th>
+              <th>Phản hồi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for k in khieu_nai_list %}
+          <tr>
+            <td>{{ k.lich_hen.thoi_gian|date:"H:i d/m/Y" }}</td>
+
+            {% if request.user.is_staff or request.user.is_superuser %}
+              <td>{{ k.lich_hen.khach_hang.ho_ten }}</td>
+              <td>{{ k.lich_hen.so_dien_thoai }}</td>
+            {% endif %}
+
+            <td>{{ k.lich_hen.thu_cung.ten_thucung }}</td>
+
+            <td>
+              {% for dv_lh in k.lich_hen.dv_lichhen_set.all %}
+                {{ dv_lh.dich_vu.ten_dich_vu }}{% if not forloop.last %}, {% endif %}
+              {% empty %}
+                <em>Không có</em>
+              {% endfor %}
+            </td>
+
+            <td>
+              {% if k.lich_hen.nhan_vien %}
+                {{ k.lich_hen.nhan_vien.ho_ten }}
+              {% else %}
+                <em>Chưa phân công</em>
+              {% endif %}
+            </td>
+
+            <td>{{ k.noi_dung }}</td>
+
+            <td>
+              {% if k.trang_thai == "Chờ xử lý" %}
+                <span style="color:#c25e00; font-weight:600;">🕓 {{ k.trang_thai }}</span>
+              {% elif k.trang_thai == "Đang xử lý" %}
+                <span style="color:#c2185b; font-weight:600;">🔴 {{ k.trang_thai }}</span>
+              {% else %}
+                <span style="color:#2e7d32; font-weight:600;">✅ {{ k.trang_thai }}</span>
+              {% endif %}
+            </td>
+              <td>
+              {% if k.phan_hoi %}
+                {{ k.phan_hoi }}
+              {% else %}
+                <em>Chưa có phản hồi</em>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% else %}
+      <p style="text-align:center; color:#777;">Hiện tại bạn chưa có khiếu nại nào.</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

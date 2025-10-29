@@ -24,4 +24,6 @@ urlpatterns = [
     path('thongbao/', include('TB.urls')),
     path('dichvu/', include('DV.urls')),
     path('lich-hen/', include('LichHen.urls')),
+    path('khieu-nai/', include('KhieunaiDanhgia.urls')),
+
 ]
