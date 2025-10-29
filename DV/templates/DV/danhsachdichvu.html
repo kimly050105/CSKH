@@ -3,164 +3,384 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Dịch vụ thú cưng - Punky Spa</title>
-    <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
-    <link rel="stylesheet" href="{% static 'DV/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <meta charset="UTF-8">
+  <title>Dịch vụ thú cưng - Punky Spa</title>
+  <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
+  <link rel="stylesheet" href="{% static 'DV/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* 🌸 Container hiển thị 3 dịch vụ mỗi hàng */
-        .dv-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 35px;
-            justify-items: center;
-            align-items: stretch;
-            max-width: 1000px;
-            margin: 40px auto 60px;
-        }
+/* 🌸 Thanh trên cùng (topbar) nổi bật hơn */
+.topbar {
+  background-color: #ffb6c1;
+  padding: 14px 40px;
+  font-size: 17px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(255, 92, 141, 0.15);
+}
 
-        /* 🌸 Thẻ dịch vụ nhỏ gọn */
-        .dv-card {
-            background: #fff;
-            border-radius: 18px;
-            text-align: center;
-            padding: 20px 10px;
-            width: 90%;
-            box-shadow: 0 5px 10px rgba(255, 92, 141, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #ffd6de;
-        }
+.topbar-left i {
+  color: #a61028;
+  margin-right: 6px;
+}
 
-        .dv-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 18px rgba(255, 92, 141, 0.25);
-        }
+/* 🌸 Tên dịch vụ – bỏ gạch chân */
+.dv-card h3 {
+  text-decoration: none !important;
+  color: #a61028;
+  font-size: 18px;
+  margin-top: 10px;
+}
 
-        /* 🌸 Ảnh tròn nhỏ nằm giữa */
-        .dv-card img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #ffe6ec;
-            border: 3px solid #ffd6de;
-            margin-bottom: 10px;
-            transition: transform 0.3s ease;
-        }
+.dv-card a {
+  text-decoration: none !important;
+}
 
-        .dv-card:hover img {
-            transform: scale(1.07);
-        }
+.dv-card a:hover h3 {
+  color: #e94e77;
+}
 
-        /* 🌸 Tên dịch vụ */
-        .dv-card h3 {
-            color: #a01940;
-            font-size: 17px;
-            font-weight: bold;
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
+/* 🌸 Ảnh dịch vụ trong vòng tròn */
+.dv-card img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #fff;
+  border: 3px solid #ffd6de;
+  box-shadow: 0 4px 10px rgba(255, 92, 141, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-        /* 🌸 Link bỏ gạch chân */
-        .dv-link {
-            text-decoration: none !important;
-            color: inherit;
-            display: block;
-        }
+.dv-card img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(255, 92, 141, 0.35);
+}
+/* 🌸 Footer vừa thoáng, cân và đẹp hơn */
+.footer {
+  background-color: #f9a6b0; /* hồng nền nhẹ */
+  padding: 45px 0; /* 🌸 cao hơn một chút */
+  color: #4a2c2c;
+}
 
-        /* 🌸 Responsive cho màn nhỏ */
-        @media (max-width: 900px) {
-            .dv-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  background-color: #ffd6de;
+  border-radius: 20px;
+  padding: 35px 50px; /* 🌸 tăng nhẹ padding để khung cao hơn */
+  box-shadow: 0 4px 14px rgba(255, 92, 141, 0.25);
+  border: 1px solid #ffb6c1; /* viền hồng nhẹ tạo tách nền */
+}
 
-        @media (max-width: 600px) {
-            .dv-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+.footer-column {
+  flex: 1;
+  min-width: 230px;
+  margin: 10px 18px;
+}
+
+.footer-column h4 {
+  font-size: 18.5px;       /* nhỉnh hơn 1 chút cho cân khung */
+  color: #a61028;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.footer-column p {
+  font-size: 16px;
+  line-height: 1.7;        /* giãn dòng nhẹ */
+  color: #333;
+  margin-bottom: 8px;
+}
+
+
+</style>
 </head>
 
-<body style="background-color:#fff5f7;">
-    <!-- 🔹 HEADER -->
-    <div class="topbar">
-        <div class="left">🕘 Giờ làm việc: Từ 09h00 đến 21h00</div>
-        <div class="right">
-            <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
-            <a href="{% url 'dangky' %}">Đăng ký</a>
-        </div>
+<body>
+
+  <!-- 🌸 THANH TRÊN CÙNG -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <i class="fa fa-calendar"></i>
+      <strong>Giờ làm việc:</strong> Từ 09h00 đến 21h00
     </div>
 
-    <header class="navbar">
-        <div class="logo">
-            <img src="{% static 'trangchu/logo.png' %}" alt="Logo Punky Spa">
-            <h1><span class="pink">Punky</span> Spa</h1>
+    <div class="right">
+      {% if user.is_authenticated %}
+      <!-- 🔔 Nếu đã đăng nhập -->
+      <div class="notify-box">
+        <span class="notify-icon">🔔</span>
+        <div class="notify-content">
+          {% for tb in thong_baos_moi %}
+          <div class="notify-item">
+            <strong>{{ tb.tieu_de }}</strong><br>
+            <small>{{ tb.ngay_tao|date:"d/m/Y H:i" }}</small>
+          </div>
+          {% empty %}
+          <p>Không có thông báo mới.</p>
+          {% endfor %}
+          <a href="{% url 'danh_sach_thong_bao' %}" class="view-all">Xem tất cả</a>
         </div>
+      </div>
 
-        <nav>
-            <a href="{% url 'home' %}">Trang chủ</a>
-            <a href="#" class="active">Dịch vụ</a>
-            <a href="#">Khuyến mãi</a>
-        </nav>
+      <!-- MENU TÀI KHOẢN -->
+      <div class="user-menu">
+        <button class="user-btn">
+          <i class="fa fa-user"></i> {{ user.username }}
+          <i class="fa fa-caret-down"></i>
+        </button>
 
-        <div class="search">
-            <input type="text" placeholder="Tìm kiếm...">
-            <button>🔍</button>
-        </div>
-    </header>
-
-    <!-- 🌸 BANNER -->
-    <section class="banner-dichvu">
-        <img src="{% static 'DV/banner-dv.png' %}" alt="Dịch vụ Punky Spa">
-        <h2 class="banner-text">DỊCH VỤ THÚ CƯNG</h2>
-    </section>
-
-    <!-- 🌸 TIÊU ĐỀ -->
-    <h2 class="title-dv">Các dịch vụ cho bé nhà bạn</h2>
-
-    <!-- 🌸 DANH SÁCH DỊCH VỤ -->
-    <div class="dv-container">
-        {% for dv in dich_vu %}
-        <div class="dv-card">
-            <a href="{% url 'chi_tiet_dich_vu' dv.id %}" class="dv-link">
-                {% if dv.hinh_anh %}
-                    <img src="{% static 'DV/' %}{{ dv.hinh_anh }}" alt="{{ dv.ten_dich_vu }}">
-                {% else %}
-                    <img src="{% static 'DV/noimage.png' %}" alt="Không có ảnh">
-                {% endif %}
-                <h3>{{ dv.ten_dich_vu }}</h3>
+        <div class="dropdown-menu">
+          <div class="submenu">
+            <a href="#" class="submenu-toggle">
+              <i class="fa fa-user-circle"></i> Tài khoản <i class="fa fa-caret-down"></i>
             </a>
+            <div class="submenu-items">
+              <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-id-card"></i> Thông tin cá nhân</a>
+              <a href="{% url 'thongtinthucung' %}"><i class="fa fa-paw"></i> Thông tin thú cưng</a>
+            </div>
         </div>
-        {% empty %}
-            <p style="text-align:center;">Hiện chưa có dịch vụ nào.</p>
-        {% endfor %}
+
+        <a href="#"><i class="fa fa-star"></i> Tích điểm</a>
+        <a href="#"><i class="fa fa-ticket"></i> Mã ưu đãi</a>
+        <a href="{% url 'lich_hen_sap_toi' %}"><i class="fa fa-calendar"></i> Lịch hẹn</a>
+        <a href="#"><i class="fa fa-comments"></i> Khiếu nại</a>
+        <a href="{% url 'dangxuat' %}"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+            <a href="#"><i class="fa fa-trash"></i> Xóa tài khoản</a>
+    </div>
+      </div>
+
+      {% else %}
+      <!-- 🔹 Nếu chưa đăng nhập -->
+      <div class="notify-box">
+        <span class="notify-icon">🔔</span>
+        <div class="notify-content">
+          <div style="text-align:center; padding:15px;">
+            <img src="{% static 'trangchu/notify-cat .png' %}" alt="Mèo dễ thương" class="notify-image">
+            <p>Đăng nhập để xem thông báo</p>
+            <a href="{% url 'dangnhap' %}" class="btn">Đăng nhập</a>
+            <a href="{% url 'dangky' %}" class="btn">Đăng ký</a>
+          </div>
+        </div>
+      </div>
+      <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
+      <a href="{% url 'dangky' %}">Đăng ký</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- 🌸 HEADER -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="{% static 'trangchu/logo.png' %}" alt="Logo Punky Spa">
+      <h1><span class="pink">Punky</span> Spa</h1>
     </div>
 
-    <!-- 🌸 FOOTER -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-column">
-                <h4>Liên lạc</h4>
-                <p>Hotline: 1900 6750</p>
-                <p>Địa chỉ: 627 Ngô Quyền, An Hải Bắc, Đà Nẵng</p>
-            </div>
-            <div class="footer-column">
-                <h4>Chính sách</h4>
-                <p>Chính sách bảo mật</p>
-                <p>Quy định sử dụng</p>
-            </div>
-            <div class="footer-column">
-                <h4>Tổng đài hỗ trợ</h4>
-                <p>Tư vấn dịch vụ: 1800 6750</p>
-                <p>Hỗ trợ sử dụng: 1900 6750</p>
-                <p>Email: punkyspa@gmail.vn</p>
-                <p>Từ 7h00 – 20h00 các ngày từ thứ 2 đến Chủ nhật.</p>
-            </div>
+    <nav>
+      <a href="{% url 'home' %}">Trang chủ</a>
+      <a href="{% url 'danh_sach_dich_vu' %}" class="active">Dịch vụ</a>
+      <a href="#">Khuyến mãi</a>
+    </nav>
+
+    <div class="search">
+      <form method="get" action="{% url 'danh_sach_dich_vu' %}">
+        <input type="text" name="q" placeholder="Tìm kiếm dịch vụ..." value="{{ request.GET.q }}">
+        <button type="submit">🔍</button>
+      </form>
+    </div>
+  </header>
+
+  <!-- 🌸 BANNER -->
+  <section class="banner-dichvu">
+    <img src="{% static 'DV/banner-dv.png' %}" alt="Dịch vụ Punky Spa">
+    <h2 class="banner-text">DỊCH VỤ THÚ CƯNG</h2>
+  </section>
+
+  <!-- 🌸 TIÊU ĐỀ -->
+  <h2 class="title-dv">Các dịch vụ cho bé nhà bạn</h2>
+
+  <!-- 🌸 DANH SÁCH DỊCH VỤ -->
+  <div class="dv-container">
+    {% for dv in dich_vu %}
+    <div class="dv-card">
+      <a href="{% url 'chi_tiet_dich_vu' dv.id %}" class="dv-link">
+        {% if dv.hinh_anh %}
+        <img src="{% static 'DV/' %}{{ dv.hinh_anh }}" alt="{{ dv.ten_dich_vu }}">
+        {% else %}
+        <img src="{% static 'DV/noimage.png' %}" alt="Không có ảnh">
+        {% endif %}
+        <h3>{{ dv.ten_dich_vu }}</h3>
+      </a>
+    </div>
+    {% empty %}
+    <p style="text-align:center;">Hiện chưa có dịch vụ nào.</p>
+    {% endfor %}
+  </div>
+  {% if not dich_vu %}
+  <p style="text-align:center; color:#a61028; margin-top:20px;">
+    Không tìm thấy dịch vụ nào trùng với "{{ query }}".
+  </p>
+{% endif %}
+
+
+  <!-- 🌸 FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h4>Liên lạc</h4>
+        <p>Hotline: 1900 6750</p>
+        <p>Địa chỉ: 627 Ngô Quyền, An Hải Bắc,<br>Đà Nẵng, Việt Nam</p>
+      </div>
+      <div class="footer-column">
+        <h4>Chính sách</h4>
+        <p>Chính sách bảo mật</p>
+        <p>Quy định sử dụng</p>
+      </div>
+      <div class="footer-column">
+        <h4>Tổng đài hỗ trợ</h4>
+        <p>Tư vấn dịch vụ: 1800 6750</p>
+        <p>Hỗ trợ sử dụng: 1900 6750</p>
+        <p>Email: punkyspa@gmail.vn</p>
+        <p>Từ 7h00 – 21h00 các ngày từ thứ 2 đến Chủ nhật.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 🌸 Floating icons + Chatbox -->
+  <div class="floating-icons">
+    <a href="tel:19006750" class="phone-icon" title="Gọi ngay Punky Spa">
+      <i class="fa fa-phone"></i>
+    </a>
+    <div class="chat-icon" id="chatToggle">
+      <img src="{% static 'trangchu/logo.png' %}" alt="Chat Punky Spa">
+    </div>
+  </div>
+
+  <div class="chatbox" id="chatBox">
+    <div class="chat-header">
+      <img src="{% static 'trangchu/logo.png' %}" alt="Logo">
+      <h4>Punky Spa hỗ trợ 🐾</h4>
+      <span id="closeChat">✖</span>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="message bot">
+        Xin chào 👋, chào mừng bạn đã đến với <b>Punky Spa</b>!
+        Bạn cần được hỗ trợ về dịch vụ nào ạ?
+        <div class="options">
+          <button onclick="sendOption('Báo giá dịch vụ')">Báo giá dịch vụ</button>
+          <button onclick="sendOption('Hỏi đáp nhanh (FAQ)')">Hỏi đáp nhanh</button>
+          <button onclick="sendOption('Tư vấn trực tiếp')">Tư vấn trực tiếp</button>
         </div>
-    </footer>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Nhập tin nhắn của bạn..." />
+      <button id="chat-send"><i class="fa fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- 🌸 Scripts (Dropdown + Chat + Submenu) -->
+  <script>
+    // Chatbox logic
+    const chatToggle = document.getElementById("chatToggle");
+    const chatBox = document.getElementById("chatBox");
+    const closeChat = document.getElementById("closeChat");
+    const chatBody = document.getElementById("chatBody");
+    const chatInput = document.getElementById("chat-input");
+    const chatSend = document.getElementById("chat-send");
+
+    chatToggle.addEventListener("click", () => chatBox.style.display = "block");
+    closeChat.addEventListener("click", () => chatBox.style.display = "none");
+
+    chatSend.addEventListener("click", sendMessage);
+    chatInput.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
+
+    function sendMessage() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      appendMessage(text, "user");
+      chatInput.value = "";
+      setTimeout(() => appendMessage(getBotReply(text), "bot"), 700);
+    }
+
+    function appendMessage(content, sender) {
+      const msg = document.createElement("div");
+      msg.className = `message ${sender}`;
+      msg.innerHTML = content;
+      chatBody.appendChild(msg);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function sendOption(option) {
+      appendMessage(option, "user");
+      setTimeout(() => appendMessage(autoReply(option), "bot"), 600);
+    }
+
+    function autoReply(option) {
+      if (option === "Báo giá dịch vụ") {
+        return "Bạn muốn xem báo giá cho dịch vụ nào?<div class='options'>\
+          <button onclick='sendOption(\"Tắm rửa\")'>Tắm rửa</button>\
+          <button onclick='sendOption(\"Cắt tỉa lông\")'>Cắt tỉa lông</button>\
+          <button onclick='sendOption(\"Nhuộm\")'>Nhuộm</button>\
+          <button onclick='sendOption(\"Tiêm phòng\")'>Tiêm phòng</button>\
+          <button onclick='sendOption(\"Triệt sản\")'>Triệt sản</button></div>";
+      }
+      if (option === "Hỏi đáp nhanh (FAQ)") {
+        return "Bạn có thể hỏi tôi những câu như:<br>👉 'Có nhận spa cho mèo không?'<br>👉 'Tắm cho chó giá bao nhiêu?'<br>👉 'Có nhận khách ngoài giờ không?' 💕";
+      }
+      if (option === "Tư vấn trực tiếp") {
+        return "Bạn có thể gọi ngay <b>1900 6750</b> để được nhân viên hỗ trợ 📞";
+      }
+      return "Cảm ơn bạn đã quan tâm đến Punky Spa 💖";
+    }
+
+    function getBotReply(text) {
+      text = text.toLowerCase();
+      if (text.includes("tắm") && text.includes("giá")) return "Tắm rửa có giá từ <b>150.000đ - 300.000đ</b> tuỳ loại 🐶🐱";
+      if (text.includes("mèo")) return "Dạ có ạ 💕 Punky Spa phục vụ cả chó và mèo 😺";
+      if (text.includes("ngoài giờ")) return "Spa mở cửa 9h00 - 21h00. Ngoài giờ bạn có thể đặt lịch trước nhé 💕";
+      if (text.includes("cắt") || text.includes("lông")) return "Cắt tỉa lông giá khoảng <b>200.000đ - 400.000đ</b> 🐩";
+      return "Cảm ơn bạn đã liên hệ 💗! Bạn chờ một chút shop sẽ phản hồi ngay nhé";
+    }
+
+    // Dropdown menu
+    document.addEventListener("DOMContentLoaded", function() {
+      const userBtn = document.querySelector(".user-btn");
+      const dropdown = document.querySelector(".dropdown-menu");
+      if (userBtn) {
+        userBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdown.classList.toggle("show");
+        });
+
+        document.addEventListener("click", (event) => {
+          if (!dropdown.contains(event.target) && !userBtn.contains(event.target)) {
+            dropdown.classList.remove("show");
+          }
+        });
+      }
+
+      const submenuToggle = document.querySelector(".submenu-toggle");
+      const submenuItems = document.querySelector(".submenu-items");
+
+      if (submenuToggle && submenuItems) {
+        submenuToggle.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          submenuItems.classList.toggle("show");
+          submenuToggle.classList.toggle("active");
+        });
+      }
+    });
+  </script>
 </body>
 </html>

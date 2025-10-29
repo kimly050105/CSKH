@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,8 +42,8 @@ INSTALLED_APPS = [
     'TK',
     'trangchu',
     'TB',
-    'DV',
     'LichHen',
+    'DV',
 ]
 
 MIDDLEWARE = [
@@ -127,9 +128,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 import os
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "trangchu", "static"),
-]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
@@ -142,4 +140,38 @@ STATICFILES_DIRS = [
 ]
 
 
+LOGIN_URL = '/dangnhap/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Punky Spa",
+    "site_header": "Punky Spa",
+    "site_brand": "🐾 Punky Spa",
+    "welcome_sign": "Welcome to Punky Spa Admin Dashboard",
+    "site_logo": "trangchu/logo.png",
+    "copyright": "© 2025 Punky Spa Team",
+    "show_ui_builder": False,
+    "custom_css": "admin_custom.css",
+}
+
+
+# 🎀 Tùy chỉnh theme toàn trang
+JAZZMIN_UI_TWEAKS = {
+    "theme": "flatly",  # nền sáng
+    "dark_mode_theme": None,
+    "navbar": "navbar-pink",  # thanh trên
+    "sidebar": "sidebar-light-pink",  # sidebar
+    "brand_colour": "navbar-pink",
+    "accent": "pink",
+    "navbar_fixed": True,
+    "sidebar_fixed": True,
+    "footer_fixed": False,
+    "sidebar_nav_compact_style": True,
+    "button_classes": {
+        "primary": "btn-pink",
+        "success": "btn-pink",
+        "info": "btn-pink",
+    },
+}

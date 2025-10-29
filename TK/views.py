@@ -107,4 +107,14 @@ def thongtinthucung(request):
         'form': form,
         'user': request.user,
     })
-# Create your views here.
+
+@login_required
+def xoa_tai_khoan(request):
+    if request.method == 'POST':
+        ly_do = request.POST.get('ly_do')
+        user = request.user
+        user.delete()
+        messages.success(request, "Tài khoản của bạn đã được xóa thành công!")
+        return redirect('dangxuat')  # đăng xuất sau khi khóa
+
+    return render(request, 'TK/xoa_tai_khoan.html', {'user': request.user})
