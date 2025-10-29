@@ -5,9 +5,7 @@ from .models import DichVu  # đổi tên model cho đúng
 admin.site.register(DichVu)
 
 
-from .models import DichVu
 
-admin.site.register(DichVu)
 
 
 # Register your models here.
