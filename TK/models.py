@@ -26,7 +26,7 @@ class NhanVien(models.Model):
     ngay_vao_lam = models.DateField()
 
     def __str__(self):
-        return f"{self.user.get_full_name()} - {self.chuc_vu}"
+        return self.ho_ten or (self.user.get_full_name() or self.user.username)
 
 
 class ThuCung(models.Model):
