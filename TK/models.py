@@ -29,16 +29,6 @@ class NhanVien(models.Model):
         return f"{self.user.get_full_name()} - {self.chuc_vu}"
 
 
-class QuanTriVien(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    ho_ten = models.CharField(max_length=100, blank=True)
-    quyen_han = models.CharField(max_length=100, default="Toàn quyền")
-    ngay_tao_quyen = models.DateField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Admin: {self.user.username}"
-
-
 class ThuCung(models.Model):
     khach_hang = models.ForeignKey(KhachHang, on_delete=models.CASCADE)
     ten_thucung = models.CharField(max_length=100)

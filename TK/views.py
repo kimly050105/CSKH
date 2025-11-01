@@ -4,6 +4,7 @@ from .forms import DangKyForm, KhachHangForm, ThuCungForm
 from .models import KhachHang, ThuCung
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
@@ -13,11 +14,14 @@ def dangky(request):
         form = DangKyForm(request.POST)
         if form.is_valid():
             user = form.save()  # Tạo tài khoản user
+            user.is_active=True
+            # Gán vào nhóm Khách hàng
+            khach_group, _ = Group.objects.get_or_create(name='Khách hàng')
+            user.groups.add(khach_group)
+            ho_ten = form.cleaned_data.get('ho_ten', user.username)
             # 👉 Tự động tạo bản ghi KhachHang
-            KhachHang.objects.create(user=user, ho_ten=user.username,
+            KhachHang.objects.create(user=user, ho_ten=ho_ten, email=user.email,)
                 # hoặc nếu form có field họ_tên thì thay user.username bằng form.cleaned_data['ho_ten']
-                email=user.email,
-            )
             messages.success(request, "Đăng ký thành công! Hãy đăng nhập.")
             return redirect('dangnhap')
         else:
@@ -34,7 +38,10 @@ def dangnhap(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            if user.is_superuser or user.is_staff:
+                return redirect('/admin/')
+            else:
+               return redirect('home')
         else:
             messages.error(request, "Sai tên đăng nhập hoặc mật khẩu!")
 
@@ -64,6 +71,10 @@ def dangxuat(request):
 def thongtintaikhoan(request):
     khach, created = KhachHang.objects.get_or_create(user=request.user)
 
+    if not khach.ho_ten:
+        khach.ho_ten = request.user.username
+        khach.save()
+
     # 🔹 Nếu khách mới tạo hoặc chưa có email, tự gán email từ tài khoản user
     if not khach.email:
         khach.email = request.user.email
@@ -83,27 +94,6 @@ def thongtintaikhoan(request):
         form = KhachHangForm(instance=khach)
 
     return render(request, 'TK/thongtintaikhoan.html', {
-        'form': form,
-        'user': request.user,
-    })
-
-@login_required
-def thongtinthucung(request):
-    khach_hang = KhachHang.objects.get(user=request.user)
-    thu_cung = ThuCung.objects.filter(khach_hang=khach_hang).first()
-
-    if request.method == 'POST':
-        form = ThuCungForm(request.POST, instance=thu_cung)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.khach_hang = khach_hang
-            obj.save()
-            messages.success(request, "Thông tin thú cưng đã được cập nhật thành công!")
-            return redirect('thongtinthucung')
-    else:
-        form = ThuCungForm(instance=thu_cung)
-
-    return render(request, 'TK/thongtinthucung.html', {
         'form': form,
         'user': request.user,
     })
