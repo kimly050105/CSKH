@@ -50,16 +50,25 @@
             <!-- 🔔 Nếu đã đăng nhập -->
             <div class="notify-box">
                 <span class="notify-icon">🔔</span>
+                <span class="badge">{{ so_thong_bao_chua_doc }}</span>
                 <div class="notify-content">
-                    {% for tb in thong_baos_moi %}
-                        <div class="notify-item">
-                            <strong>{{ tb.tieu_de }}</strong><br>
-                            <small>{{ tb.ngay_tao|date:"d/m/Y H:i" }}</small>
-                        </div>
-                    {% empty %}
-                        <p>Không có thông báo mới.</p>
-                    {% endfor %}
-                    <a href="{% url 'danh_sach_thong_bao' %}" class="view-all">Xem tất cả</a>
+                    <div class="notify-list">
+                        {% for tb in thong_baos_moi %}
+                            <a href="{% url 'TB:xem_thong_bao' tb.id %}"
+                               class="notify-item {% if not tb.da_doc %}chua-doc{% endif %}"
+                               style="display:block; text-decoration:none; color:#333; padding:8px 10px; border-radius:8px; margin-bottom:5px; transition:0.3s;">
+
+                                <div style="font-weight:600; color:#e75480;">
+                                    {% if not tb.da_doc %}🔔 {% endif %}{{ tb.tieu_de }}
+                                </div>
+                                <small style="color:#777;">{{ tb.ngay_tao|date:"d/m/Y H:i" }}</small>
+                            </a>
+                        {% empty %}
+                            <p style="text-align:center;">Không có thông báo mới.</p>
+                        {% endfor %}
+                    </div>
+
+                    <a href="{% url 'TB:trang_thong_bao' %}" class="view-all">Xem tất cả</a>
                 </div>
             </div>
 
@@ -86,7 +95,7 @@
             {% else %}
             <!-- 🔹 Nếu chưa đăng nhập -->
             <div class="notify-box">
-                <span class="notify-icon">🔔</span>
+                <span class="notify-icon">🔔<span class="notify-count">{{ thong_baos_moi|length }}</span></span>
                 <div class="notify-content">
                     <div style="text-align:center; padding:15px;">
                         <img src="{% static 'trangchu/notify-cat .png' %}" alt="Mèo dễ thương" class="notify-image">
@@ -112,7 +121,9 @@
         <nav>
             <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Trang chủ</a>
             <a href="{% url 'danh_sach_dich_vu' %}" class="{% if request.resolver_match.url_name == 'danh_sach_dich_vu' %}active{% endif %}">Dịch vụ</a>
-            <a href="#" class="{% if request.resolver_match.url_name == 'khuyen_mai' %}active{% endif %}">Khuyến mãi</a>
+            <a href="{% url 'TB:danh_sach_khuyen_mai' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'danh_sach_khuyen_mai' %}active{% endif %}">
+               Khuyến mãi</a>
             <a href="{% url 'lien_he' %}" class="{% if request.resolver_match.url_name == 'lien_he' %}active{% endif %}">Liên hệ</a>
 
         </nav>
