@@ -7,8 +7,7 @@ from TK.models import NhanVien
 
 
 class NhanVienAdmin(admin.ModelAdmin):
-    list_display = ('ho_ten', 'chuc_vu', 'email', 'so_dien_thoai','dia_chi', 'ngay_vao_lam')
-    list_filter =('chuc_vu','ngay_vao_lam')
+    list_display = ('ho_ten', 'email', 'so_dien_thoai','dia_chi', 'ngay_vao_lam')
     search_fields = ('ho_ten', 'so_dien_thoai')
     ordering = ('ngay_vao_lam',)
 class KhachHangAdmin(admin.ModelAdmin):
@@ -36,7 +35,6 @@ class CustomUserAdmin(UserAdmin):
                 defaults={
                     'ho_ten': obj.get_full_name() or obj.username,
                     'email': obj.email,
-                    'chuc_vu': '',
                     'so_dien_thoai': '',
                     'dia_chi': '',
                     'ngay_vao_lam': timezone.now().date(),
