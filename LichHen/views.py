@@ -14,14 +14,24 @@ from TK.models import KhachHang, ThuCung
 # 🧾 Hiển thị lịch hẹn sắp tới + nút thêm/sửa/xóa
 @login_required(login_url='/dangnhap/')
 def lich_hen_sap_toi(request):
-    # ✅ Tìm chính xác KhachHang theo user đang đăng nhập
+    #  Tìm chính xác KhachHang theo user đang đăng nhập
     khach_hang = KhachHang.objects.filter(user=request.user).first()
 
-    # ⚠️ Nếu không tìm thấy khách hàng tương ứng, tránh lỗi None
+    # Nếu không tìm thấy khách hàng tương ứng, tránh lỗi None
     if not khach_hang:
         messages.error(request, "Tài khoản này chưa có thông tin khách hàng.")
         return render(request, 'lichhen/lich_hen_sap_toi.html', {'lich_hens': []})
+    #  Cập nhật tự động: lịch đã qua thời gian thì chuyển sang "hoàn thành"
+    hien_tai = timezone.now()
+    lich_qua_ngay = LichHen.objects.filter(
+        khach_hang=khach_hang,
+        trang_thai='sap_toi',
+        thoi_gian__lt=hien_tai
+    )
 
+    for lich in lich_qua_ngay:
+        lich.trang_thai = 'hoan_thanh'
+        lich.save()
     # ✅ Lọc tất cả lịch hẹn thuộc khách hàng đó, trạng thái 'sắp tới'
     lich_hens = LichHen.objects.filter(
         khach_hang_id=khach_hang.id,
@@ -34,7 +44,7 @@ def lich_hen_sap_toi(request):
 # ➕ Thêm lịch hẹn mới
 @login_required(login_url='/dangnhap/')
 def tao_lich_hen(request):
-    # ✅ Xóa message cũ mỗi khi mở form
+    #  Xóa message cũ mỗi khi mở form
     storage = get_messages(request)
     storage.used = True
 
@@ -42,14 +52,18 @@ def tao_lich_hen(request):
     try:
         khach_hang = KhachHang.objects.get(user=user)
     except KhachHang.DoesNotExist:
-        messages.error(request, "Tài khoản này chưa có thông tin khách hàng.")
-        return redirect('home')
+        messages.error(request, "Vui lòng đăng nhập bằng tài khoản khách hàng hợp lệ.")
+        return redirect('dangnhap')
 
     if request.method == 'POST':
         form = LichHenForm(request.POST, khach_hang=khach_hang)
         if form.is_valid():
             thu_cung = form.cleaned_data.get('thu_cung')
             ten_moi = form.cleaned_data.get('ten_thu_cung_moi')
+            thoi_gian = form.cleaned_data.get('thoi_gian')
+            if thoi_gian < timezone.now():
+                messages.error(request, "Không thể đặt lịch ở thời gian trong quá khứ.")
+                return render(request, 'lichhen/tao_lich_hen.html', {'form': form})
 
             # 🐶 Nếu người dùng thêm thú cưng mới
             if not thu_cung and ten_moi:
@@ -113,6 +127,10 @@ def sua_lich_hen(request, id):
             lich_hen = form.save(commit=False)
             lich_hen.khach_hang = khach_hang
             lich_hen.save()
+            thoi_gian = form.cleaned_data.get('thoi_gian')
+            if thoi_gian < timezone.now():
+                messages.error(request, "Không thể thay đổi lịch hẹn sang thời gian trong quá khứ.")
+                return render(request, 'lichhen/sua_lich_hen.html', {'form': form, 'lich_hen': lich_hen})
 
             # 🧩 Cập nhật dịch vụ trong bảng trung gian
             from .models import DV_LichHen  # đảm bảo import model
