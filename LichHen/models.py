@@ -3,6 +3,7 @@ from django.utils import timezone
 from TK.models import KhachHang, ThuCung, NhanVien
 from DV.models import DichVu
 from django.core.validators import RegexValidator
+from TK.models import KhachHang, ThuCung
 
 
 class LichHen(models.Model):
@@ -43,6 +44,9 @@ class LichHen(models.Model):
     ghi_chu = models.TextField(blank=True, help_text="Ghi chú đặc biệt của khách hàng.")
     trang_thai = models.CharField(max_length=20, choices=TRANG_THAI_CHOICES, default='sap_toi')
     ly_do_huy = models.TextField(blank=True, null=True)
+
+    da_nhac = models.BooleanField(default=False, help_text="Đánh dấu nếu đã gửi thông báo nhắc lịch cho khách.")
+
     def __str__(self):
         return f"{self.khach_hang.ho_ten} - {self.thu_cung.ten_thucung}"
 class DV_LichHen(models.Model):

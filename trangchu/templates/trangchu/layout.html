@@ -59,7 +59,7 @@
                     {% empty %}
                         <p>Không có thông báo mới.</p>
                     {% endfor %}
-                    <a href="{% url 'danh_sach_thong_bao' %}" class="view-all">Xem tất cả</a>
+                    <a href="{% url 'TB:danh_sach_thong_bao' %}" class="view-all">Xem tất cả</a>
                 </div>
             </div>
 
@@ -71,16 +71,7 @@
                 </button>
 
                 <div class="dropdown-menu">
-                    <div class="submenu">
-                        <a href="#" class="submenu-toggle">
-                           <i class="fa fa-user-circle"></i> Tài khoản <i class="fa fa-caret-down"></i>
-                        </a>
-                    <div class="submenu-items">
-                           <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-id-card"></i> Thông tin cá nhân</a>
-                           <a href="{% url 'thongtinthucung' %}"><i class="fa fa-paw"></i> Thông tin thú cưng</a>
-                    </div>
-                </div>
-
+                    <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-star"></i> Tài khoản</a>
                     <a href="#"><i class="fa fa-star"></i> Tích điểm</a>
                     <a href="#"><i class="fa fa-ticket"></i> Mã ưu đãi</a>
                     <a href="{% url 'lich_hen_sap_toi' %}"><i class="fa fa-calendar"></i> Lịch hẹn</a>
@@ -119,7 +110,7 @@
         <nav>
             <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Trang chủ</a>
             <a href="{% url 'danh_sach_dich_vu' %}" class="{% if request.resolver_match.url_name == 'danh_sach_dich_vu' %}active{% endif %}">Dịch vụ</a>
-            <a href="#" class="{% if request.resolver_match.url_name == 'khuyen_mai' %}active{% endif %}">Khuyến mãi</a>
+            <a href="{% url 'TB:danh_sach_khuyen_mai' %}"class="nav-link {% if request.resolver_match.url_name == 'danh_sach_khuyen_mai' %}active{% endif %}">Khuyến mãi</a>
             <a href="{% url 'lien_he' %}" class="{% if request.resolver_match.url_name == 'lien_he' %}active{% endif %}">Liên hệ</a>
 
         </nav>

@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('TK.urls')),
     path('', include('trangchu.urls')),
-    path('thongbao/', include('TB.urls')),
+    path('thongbao/', include('TB.urls', namespace='TB')),
     path('dichvu/', include('DV.urls')),
     path('lich-hen/', include('LichHen.urls')),
     path('khieu-nai/', include('KhieunaiDanhgia.urls')),

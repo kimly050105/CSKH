@@ -22,13 +22,33 @@
     </div>
 
     <nav>
-      <a href="{% url 'home' %}">Trang chủ</a>
-      <div class="dropdown-content">
-        <a href="{% url 'lich_hen_sap_toi' %}">Lịch hẹn sắp tới</a>
-        <a href="{% url 'lich_su_lich_hen' %}">Lịch sử lịch hẹn</a>
-        <a href="{% url 'lich_da_huy' %}" class="active">Lịch đã hủy</a>
-      </div>
-    </nav>
+  <a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Trang chủ</a>
+
+  <div class="dropdown">
+    <a href="#">Lịch hẹn</a>
+    <div class="dropdown-content">
+      <a href="{% url 'lich_hen_sap_toi' %}" class="{% if 'lich-hen/sap-toi' in request.path %}active{% endif %}">
+        Lịch hẹn sắp tới
+      </a>
+      <a href="{% url 'lich_su_lich_hen' %}" class="{% if 'lich-hen/lich-su' in request.path %}active{% endif %}">
+        Lịch sử lịch hẹn
+      </a>
+      <a href="{% url 'lich_da_huy' %}" class="{% if 'lich-hen/da-huy' in request.path %}active{% endif %}">
+        Lịch đã hủy
+      </a>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <a href="#">Khiếu nại</a>
+    <div class="dropdown-content">
+      <a href="{% url 'danh_sach_khieu_nai' %}" class="{% if 'khieu-nai' in request.path %}active{% endif %}">
+        Lịch sử khiếu nại
+      </a>
+    </div>
+  </div>
+</nav>
+
   </aside>
 
   <!-- 🔸 Main content -->
