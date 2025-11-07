@@ -31,6 +31,14 @@ class KhieuNai(models.Model):
         default='Chờ xử lý'
     )
     ngay_gui = models.DateTimeField(auto_now_add=True)
+    nhan_vien_phu_trach = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="khieunai_phu_trach",
+        limit_choices_to={'is_staff': True}  # chỉ hiện nhân viên trong danh sách
+    )
 
     def __str__(self):
         return f"Khiếu nại #{self.id} - {self.nguoi_gui.username}"
