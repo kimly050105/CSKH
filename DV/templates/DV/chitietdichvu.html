@@ -1,463 +1,141 @@
+{% extends "base.html" %}
 {% load static %}
 {% load humanize %}
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ dich_vu.ten_dich_vu }} - Punky Spa</title>
-  <link rel="stylesheet" href="{% static 'trangchu/style.css' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff5f7;
-      margin: 0;
-      padding: 0;
-    }
 
-    /* 🌸 Tiêu đề */
-    .title-dv {
-      text-align: center;
-      color: #a61028;
-      font-size: 32px;
-      font-weight: 900;
-      text-transform: uppercase;
-      margin: 50px 0 30px;
-      letter-spacing: 1px;
-    }
+{% block title %}{{ dich_vu.ten_dich_vu }} - Punky Spa{% endblock %}
 
-    /* 🌸 Container chi tiết */
+{% block content %}
+<style>
+  body {
+    background-color: #fff5f7;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 🌸 Tiêu đề */
+  .title-dv {
+    text-align: center;
+    color: #a61028;
+    font-size: 32px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 50px 0 30px;
+    letter-spacing: 1px;
+  }
+
+  /* 🌸 Container chi tiết */
+  .dv-detail {
+    max-width: 1000px;
+    margin: 0 auto 80px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 50px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(255, 92, 141, 0.15);
+    padding: 40px 50px;
+  }
+
+  .dv-detail img {
+    width: 340px;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 25px;
+    border: 3px solid #ffd6de;
+    background: #fffafc;
+    box-shadow: 0 6px 16px rgba(255, 92, 141, 0.25);
+  }
+
+  .info { flex: 1; }
+
+  .info h2 {
+    font-size: 30px;
+    color: #a01940;
+    margin-bottom: 10px;
+  }
+
+  .gia {
+    font-size: 22px;
+    font-weight: bold;
+    color: #e94e77;
+    margin-bottom: 15px;
+  }
+
+  .mo-ta {
+    color: #444;
+    line-height: 1.6;
+    font-size: 16px;
+    margin-bottom: 30px;
+    text-align: justify;
+  }
+
+  /* 🌸 Nút đặt ngay */
+  .btn-datngay {
+    background: linear-gradient(135deg, #ff729f, #d6336c);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 10px rgba(255, 92, 141, 0.25);
+  }
+  .btn-datngay:hover {
+    background: linear-gradient(135deg, #ff8da1, #a01940);
+    transform: scale(1.05);
+  }
+
+  .btn-back {
+    display: inline-block;
+    margin-top: 12px;
+    color: #ff5c8d;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+  }
+  .btn-back:hover {
+    color: #a01940;
+    text-decoration: underline;
+  }
+
+  /* 🌸 Responsive */
+  @media (max-width: 992px) {
     .dv-detail {
-      max-width: 1000px;
-      margin: 0 auto 80px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 50px;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(255, 92, 141, 0.15);
-      padding: 40px 50px;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
-
     .dv-detail img {
-      width: 340px;
-      height: 340px;
-      object-fit: cover;
-      border-radius: 25px;
-      border: 3px solid #ffd6de;
-      background: #fffafc;
-      box-shadow: 0 6px 16px rgba(255, 92, 141, 0.25);
+      width: 300px;
+      height: 300px;
     }
-
-    .info { flex: 1; }
-
     .info h2 {
-      font-size: 30px;
-      color: #a01940;
-      margin-bottom: 10px;
+      font-size: 26px;
     }
+  }
 
-    .gia {
-      font-size: 22px;
-      font-weight: bold;
-      color: #e94e77;
-      margin-bottom: 15px;
-    }
+</style>
 
-    .mo-ta {
-      color: #444;
-      line-height: 1.6;
-      font-size: 16px;
-      margin-bottom: 30px;
-      text-align: justify;
-    }
+<!-- 🌸 Tiêu đề -->
+<h2 class="title-dv">Chi tiết dịch vụ</h2>
 
-    /* 🌸 Nút đặt ngay */
-    .btn-datngay {
-      background: linear-gradient(135deg, #ff729f, #d6336c);
-      color: #fff;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 10px rgba(255, 92, 141, 0.25);
-    }
-    .btn-datngay:hover {
-      background: linear-gradient(135deg, #ff8da1, #a01940);
-      transform: scale(1.05);
-    }
-    .btn-back {
-      display: inline-block;
-      margin-top: 12px;
-      color: #ff5c8d;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 15px;
-    }
-    .btn-back:hover {
-      color: #a01940;
-      text-decoration: underline;
-    }
+<!-- 🌸 Chi tiết dịch vụ -->
+<div class="dv-detail">
+  {% if dich_vu.hinh_anh %}
+    <img src="{% static 'DV/' %}{{ dich_vu.hinh_anh }}" alt="{{ dich_vu.ten_dich_vu }}">
+  {% else %}
+    <img src="{% static 'DV/noimage.png' %}" alt="Không có ảnh">
+  {% endif %}
 
-    /* 🌸 Floating icons */
-    .floating-icons {
-      position: fixed;
-      bottom: 30px;
-      right: 25px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      z-index: 1000;
-    }
-    .phone-icon, .chat-icon {
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      background-color: #ff5c8d;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 14px rgba(255, 92, 141, 0.35);
-      transition: transform 0.25s;
-    }
-    .phone-icon:hover, .chat-icon:hover { transform: scale(1.1); }
-    .phone-icon i { color: white; font-size: 22px; }
-    .chat-icon img { width: 30px; height: 30px; border-radius: 50%; }
-
-    /* 🌸 Chatbox */
-    .chatbox {
-      display: none;
-      position: fixed;
-      bottom: 100px;
-      right: 30px;
-      width: 320px;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 6px 16px rgba(255, 92, 141, 0.35);
-      overflow: hidden;
-      z-index: 1100;
-      animation: fadeIn 0.3s ease;
-    }
-    .chat-header {
-      display: flex;
-      align-items: center;
-      background: linear-gradient(135deg, #ffd6de, #ffb6c1);
-      padding: 10px 15px;
-      color: #a01940;
-      font-weight: 600;
-      box-shadow: 0 2px 6px rgba(255, 92, 141, 0.15);
-    }
-    .chat-header img {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-    .chat-header #closeChat { margin-left: auto; cursor: pointer; }
-    .chat-body {
-      padding: 12px;
-      height: 250px;
-      overflow-y: auto;
-      background: #fff8fa;
-    }
-    .message {
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 10px;
-      max-width: 80%;
-    }
-    .message.bot { background: #ffe6ec; }
-    .message.user {
-      background: #ffb6c1;
-      color: #fff;
-      margin-left: auto;
-    }
-    .chat-input-area {
-      display: flex;
-      border-top: 1px solid #ffd6de;
-    }
-    .chat-input-area input {
-      flex: 1;
-      border: none;
-      padding: 10px;
-      outline: none;
-    }
-    .chat-input-area button {
-      background: #ff5c8d;
-      border: none;
-      color: #fff;
-      padding: 10px 15px;
-      cursor: pointer;
-    }
-    .options {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    .options button {
-      background: #fff;
-      border: none;
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 25px;
-      cursor: pointer;
-      width: 80%;
-      box-shadow: 0 2px 6px rgba(255, 92, 141, 0.15);
-    }
-    .options button:hover {
-      background: #ffe6eb;
-      transform: scale(1.03);
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
-</head>
-
-<body>
-  <!-- 🌸 HEADER TRÊN CÙNG -->
-  <div class="topbar">
-    <div class="topbar-left">
-      <i class="fa fa-calendar"></i>
-      <strong>Giờ làm việc:</strong> Từ 09h00 đến 21h00
-    </div>
-
-    <div class="right">
-      {% if user.is_authenticated %}
-      <!-- 🔔 Nếu đã đăng nhập -->
-      <div class="notify-box">
-        <span class="notify-icon">🔔</span>
-        <div class="notify-content">
-          {% for tb in thong_baos_moi %}
-          <div class="notify-item">
-            <strong>{{ tb.tieu_de }}</strong><br>
-            <small>{{ tb.ngay_tao|date:"d/m/Y H:i" }}</small>
-          </div>
-          {% empty %}
-          <p>Không có thông báo mới.</p>
-          {% endfor %}
-          <a href="{% url 'TB:trang_thong_bao' %}" class="view-all">Xem tất cả</a>
-        </div>
-      </div>
-
-      <!-- 👤 MENU TÀI KHOẢN -->
-      <div class="user-menu">
-        <button class="user-btn">
-          <i class="fa fa-user"></i> {{ user.username }}
-          <i class="fa fa-caret-down"></i>
-        </button>
-
-        <div class="dropdown-menu">
-          <div class="submenu">
-            <a href="{% url 'thongtintaikhoan' %}"><i class="fa fa-star"></i> Tài khoản</a>
-          </div>
-
-          <a href="#"><i class="fa fa-star"></i> Tích điểm</a>
-          <a href="#"><i class="fa fa-ticket"></i> Mã ưu đãi</a>
-          <a href="{% url 'lich_hen_sap_toi' %}"><i class="fa fa-calendar"></i> Lịch hẹn</a>
-          <a href="{% url 'danh_sach_khieu_nai' %}"><i class="fa fa-comments"></i> Khiếu nại</a>
-          <a href="{% url 'dangxuat' %}"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
-          <a href="#"><i class="fa fa-trash"></i> Xóa tài khoản</a>
-        </div>
-      </div>
-
-      {% else %}
-      <!-- 🔹 Nếu chưa đăng nhập -->
-      <div class="notify-box">
-        <span class="notify-icon">🔔</span>
-        <div class="notify-content">
-          <div style="text-align:center; padding:15px;">
-            <img src="{% static 'trangchu/notify-cat .png' %}" alt="Mèo dễ thương" class="notify-image">
-            <p>Đăng nhập để xem thông báo</p>
-            <a href="{% url 'dangnhap' %}" class="btn">Đăng nhập</a>
-            <a href="{% url 'dangky' %}" class="btn">Đăng ký</a>
-          </div>
-        </div>
-      </div>
-      <a href="{% url 'dangnhap' %}">Đăng nhập</a> |
-      <a href="{% url 'dangky' %}">Đăng ký</a>
-      {% endif %}
-    </div>
-  </div> <!-- ✅ đóng topbar -->
-
-  <!-- 🌸 NAVBAR -->
-  <header class="navbar">
-    <div class="logo">
-      <img src="{% static 'trangchu/logo.png' %}" alt="Logo Punky Spa">
-      <h1><span class="pink">Punky</span> Spa</h1>
-    </div>
-    <nav>
-      <a href="{% url 'home' %}">Trang chủ</a>
-      <a href="{% url 'danh_sach_dich_vu' %}" class="active">Dịch vụ</a>
-      <a href="#">Khuyến mãi</a>
-    </nav>
-    <div class="search">
-      <form method="get" action="{% url 'danh_sach_dich_vu' %}">
-        <input type="text" name="q" placeholder="Tìm kiếm dịch vụ..." value="{{ request.GET.q }}">
-        <button type="submit">🔍</button>
-      </form>
-    </div>
-  </header>
-
-  <!-- 🌸 CHI TIẾT DỊCH VỤ -->
-  <h2 class="title-dv">Chi tiết dịch vụ</h2>
-
-  <div class="dv-detail">
-    {% if dich_vu.hinh_anh %}
-      <img src="{% static 'DV/' %}{{ dich_vu.hinh_anh }}" alt="{{ dich_vu.ten_dich_vu }}">
-    {% else %}
-      <img src="{% static 'DV/noimage.png' %}" alt="Không có ảnh">
-    {% endif %}
-    <div class="info">
-      <h2>{{ dich_vu.ten_dich_vu }}</h2>
-      <p class="gia">{{ dich_vu.gia|floatformat:0|intcomma }} VND</p>
-      <p class="mo-ta">{{ dich_vu.mo_ta }}</p>
-      <button class="btn-datngay" onclick="window.location.href='http://127.0.0.1:8000/lich-hen/tao-lich-hen/'">Đặt ngay</button>
-      <br>
-      <a href="{% url 'danh_sach_dich_vu' %}" class="btn-back">← Quay lại</a>
-    </div>
+  <div class="info">
+    <h2>{{ dich_vu.ten_dich_vu }}</h2>
+    <p class="gia">{{ dich_vu.gia|floatformat:0|intcomma }} VND</p>
+    <p class="mo-ta">{{ dich_vu.mo_ta }}</p>
+    <button class="btn-datngay" onclick="window.location.href='{% url 'them_lich_hen' %}'">Đặt ngay</button><br>
+    <a href="{% url 'danh_sach_dich_vu' %}" class="btn-back">← Quay lại</a>
   </div>
-
-  <!-- 🌸 FOOTER -->
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-column">
-        <h4>Liên lạc</h4>
-        <p>Hotline: 1900 6750</p>
-        <p>Địa chỉ: 627 Ngô Quyền, An Hải Bắc, Đà Nẵng</p>
-      </div>
-      <div class="footer-column">
-        <h4>Chính sách</h4>
-        <p>Chính sách bảo mật</p>
-        <p>Quy định sử dụng</p>
-      </div>
-      <div class="footer-column">
-        <h4>Tổng đài hỗ trợ</h4>
-        <p>Tư vấn dịch vụ: 1800 6750</p>
-        <p>Hỗ trợ sử dụng: 1900 6750</p>
-        <p>Email: punkyspa@gmail.vn</p>
-        <p>Từ 7h00 – 21h00 các ngày từ thứ 2 đến Chủ nhật.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- 🌸 Floating icons -->
-  <div class="floating-icons">
-    <a href="tel:19006750" class="phone-icon" title="Gọi ngay Punky Spa">
-      <i class="fa fa-phone"></i>
-    </a>
-    <div class="chat-icon" id="chatToggle">
-      <img src="{% static 'trangchu/logo.png' %}" alt="Chat Punky Spa">
-    </div>
-  </div>
-
-  <!-- 🌸 Chatbox -->
-  <div class="chatbox" id="chatBox">
-    <div class="chat-header">
-      <img src="{% static 'trangchu/logo.png' %}" alt="Logo">
-      <h4>Punky Spa hỗ trợ 🐾</h4>
-      <span id="closeChat">✖</span>
-    </div>
-    <div class="chat-body" id="chatBody">
-      <div class="message bot">
-        Xin chào 👋, chào mừng bạn đến với <b>Punky Spa</b>!<br>
-        Bạn cần được hỗ trợ về dịch vụ nào ạ?
-        <div class="options">
-          <button onclick="sendOption('Báo giá dịch vụ')">Báo giá dịch vụ</button>
-          <button onclick="sendOption('Hỏi đáp nhanh (FAQ)')">Hỏi đáp nhanh</button>
-          <button onclick="sendOption('Tư vấn trực tiếp')">Tư vấn trực tiếp</button>
-        </div>
-      </div>
-    </div>
-    <div class="chat-input-area">
-      <input type="text" id="chat-input" placeholder="Nhập tin nhắn của bạn...">
-      <button id="chat-send"><i class="fa fa-paper-plane"></i></button>
-    </div>
-  </div>
-
-  <!-- 🌸 JS -->
-  <script>
-    // Dropdown tài khoản
-    document.querySelectorAll('.user-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        const menu = btn.nextElementSibling;
-        document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
-        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-      });
-    });
-    document.addEventListener('click', () => {
-      document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
-    });
-
-    // 🌸 Chatbox logic
-    const chatToggle = document.getElementById("chatToggle");
-    const chatBox = document.getElementById("chatBox");
-    const closeChat = document.getElementById("closeChat");
-    const chatBody = document.getElementById("chatBody");
-    const chatInput = document.getElementById("chat-input");
-    const chatSend = document.getElementById("chat-send");
-
-    chatToggle.addEventListener("click", () => chatBox.style.display = "block");
-    closeChat.addEventListener("click", () => chatBox.style.display = "none");
-
-    chatSend.addEventListener("click", sendMessage);
-    chatInput.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
-
-    function sendMessage() {
-      const text = chatInput.value.trim();
-      if (!text) return;
-      appendMessage(text, "user");
-      chatInput.value = "";
-      setTimeout(() => appendMessage(getBotReply(text), "bot"), 700);
-    }
-
-    function appendMessage(content, sender) {
-      const msg = document.createElement("div");
-      msg.className = `message ${sender}`;
-      msg.innerHTML = content;
-      chatBody.appendChild(msg);
-      chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    function sendOption(option) {
-      appendMessage(option, "user");
-      setTimeout(() => appendMessage(autoReply(option), "bot"), 600);
-    }
-
-    function autoReply(option) {
-      if (option === "Báo giá dịch vụ") {
-        return "Bạn muốn xem báo giá cho dịch vụ nào?<div class='options'>\
-          <button onclick='sendOption(\"Tắm rửa\")'>Tắm rửa</button>\
-          <button onclick='sendOption(\"Cắt tỉa lông\")'>Cắt tỉa lông</button>\
-          <button onclick='sendOption(\"Nhuộm lông\")'>Nhuộm lông</button>\
-          <button onclick='sendOption(\"Tiêm phòng\")'>Tiêm phòng</button>\
-          <button onclick='sendOption(\"Triệt sản\")'>Triệt sản</button></div>";
-      }
-      if (option === "Hỏi đáp nhanh (FAQ)") {
-        return "Bạn có thể hỏi tôi những câu như:<br>👉 Có nhận spa cho mèo không?<br>👉 Tắm cho chó giá bao nhiêu?<br>👉 Có nhận khách ngoài giờ không?";
-      }
-      if (option === "Tư vấn trực tiếp") {
-        return "Bạn có thể gọi ngay <b>1900 6750</b> để được nhân viên hỗ trợ 📞";
-      }
-      return "Cảm ơn bạn đã quan tâm đến Punky Spa 💖";
-    }
-
-    function getBotReply(text) {
-      text = text.toLowerCase();
-      if (text.includes("tắm") && text.includes("giá")) return "Tắm rửa có giá từ <b>150.000đ - 300.000đ</b> 🐶🐱";
-      if (text.includes("mèo")) return "Dạ có ạ 💕 Punky Spa phục vụ cả chó và mèo 😺";
-      if (text.includes("ngoài giờ")) return "Spa mở cửa 9h00 - 21h00. Ngoài giờ bạn có thể đặt lịch trước nhé 💕";
-      if (text.includes("cắt") || text.includes("lông")) return "Cắt tỉa lông giá khoảng <b>200.000đ - 400.000đ</b> 🐩";
-      return "Cảm ơn bạn đã liên hệ 💗! Shop sẽ phản hồi sớm nhất nhé!";
-    }
-  </script>
-</body>
-</html>
+</div>
+{% endblock %}
