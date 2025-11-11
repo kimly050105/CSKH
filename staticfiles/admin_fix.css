@@ -223,12 +223,25 @@ footer.main-footer {
   border-top-right-radius: 8px !important;
   border-bottom-right-radius: 8px !important;
 }
-/* 🌸 Ép tất cả tiêu đề bảng về cùng kiểu, kể cả field ảo như Dịch vụ */
-#changelist-form table thead th {
-    background-color: #fff5f7 !important;
-    color: #4a0e1a !important;
-    font-weight: 600 !important;
-    font-style: normal !important;
-    text-transform: none !important;
-    border-bottom: 2px solid #f8a5c2 !important;
+/* 🌸 ================================ */
+/* 🌸 FIX CỘT "DỊCH VỤ" KHÁC MÀU NỀN */
+/* 🌸 ================================ */
+
+/* Ghi đè mọi kiểu màu nền có thể bị Jazzmin áp vào */
+tr td.field-hien_thi_dich_vu,
+tr:nth-child(odd) td.field-hien_thi_dich_vu,
+tr:nth-child(even) td.field-hien_thi_dich_vu {
+  background-color: #fff !important; /* màu đồng bộ */
+  color: #4a0e1a !important; /* cùng màu chữ */
+}
+
+/* Giữ hiệu ứng hover pastel */
+tr:hover td.field-hien_thi_dich_vu {
+  background-color: #ffe0eb !important;
+  transition: background-color 0.25s ease-in-out;
+}
+
+/* (tùy chọn) chỉnh border-bottom cho gọn */
+td.field-hien_thi_dich_vu {
+  border-bottom: 1px solid #f8a5c2 !important;
 }
