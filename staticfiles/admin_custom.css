@@ -1,6 +1,23 @@
 /* 🌸 ============================= */
 /* 🌸 Punky Spa Admin — Pink Theme */
 /* 🌸 ============================= */
+@layer override {
+  .app-list .model .actions {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+  }
+
+  .app-list .model .actions a {
+    background-color: #f497b6 !important;
+    border-radius: 8px !important;
+    padding: 5px 12px !important;
+    margin-left: 8px !important;
+    display: inline-flex !important;
+    color: #fff !important;
+  }
+}
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
 /* 🌸 Navbar pastel hồng */
 .navbar-pink {
@@ -60,7 +77,7 @@ body, .content-wrapper {
   border-top-right-radius: 10px !important;
 }
 
-/* 🌸 Table – loại bỏ nền xanh */
+/* 🌸 Table */
 table {
   border-collapse: collapse !important;
   width: 100%;
@@ -118,27 +135,7 @@ a:hover {
   border-radius: 6px !important;
 }
 
-/* 🌸 Icon cho Account và See Profile */
-.dropdown-menu .dropdown-header::before {
-  content: "\f2bd";
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900;
-  margin-right: 8px;
-  color: #4a0e1a;
-}
-.dropdown-menu .dropdown-item:last-child::before {
-  content: "\f2c1";
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900;
-  margin-right: 8px;
-  color: #4a0e1a;
-}
-.dropdown-menu .dropdown-item:hover::before,
-.dropdown-menu .dropdown-header:hover::before {
-  color: #fff !important;
-}
-
-/* 🌸 Fix Log out – chỉ 1 icon */
+/* 🌸 Fix Log out */
 .dropdown-menu a[href*="logout"]::before {
   content: none !important;
   display: none !important;
@@ -149,7 +146,7 @@ a:hover {
   margin-right: 8px !important;
 }
 
-/* 🌸 Input form */
+/* 🌸 Input */
 input, select, textarea {
   border: 1.5px solid #f8a5c2 !important;
   border-radius: 6px !important;
@@ -174,34 +171,6 @@ input:focus, select:focus, textarea:focus {
   color: #fff !important;
 }
 
-/* 🌸 Fix nút Add / Change bị dính */
-.module .model ul {
-  display: flex !important;
-  gap: 10px !important; /* Tạo khoảng cách thật */
-  flex-wrap: wrap !important;
-  padding-left: 0 !important;
-  margin-top: 5px !important;
-}
-.module .model ul li {
-  list-style: none !important;
-}
-.module .model ul li a {
-  display: inline-block !important;
-  min-width: 70px !important;
-  text-align: center !important;
-  border-radius: 8px !important;
-  padding: 5px 12px !important;
-  font-weight: 600 !important;
-  background-color: #f497b6 !important;
-  color: #fff !important;
-  transition: all 0.25s ease-in-out !important;
-}
-.module .model ul li a:hover {
-  background-color: #f8a5c2 !important;
-  box-shadow: 0 2px 6px rgba(244, 151, 182, 0.35) !important;
-  color: #fff !important;
-}
-
 /* 🌸 Breadcrumb & tiêu đề */
 .breadcrumb-item a {
   color: #f497b6 !important;
@@ -220,103 +189,45 @@ footer.main-footer {
   font-weight: 500 !important;
   border-top: 1px solid #f8a5c2 !important;
 }
-/* 🌸 --- FIX CHẶT: Tách nút Add / Change trong Jazzmin --- */
-.module .model ul,
-.module .object-tools,
-div.object-tools {
+/* 🌸 FIX CHÍNH XÁC lỗi nút Add & Change dính nhau trong Jazzmin (Bootstrap .btn-group) */
+.btn-group.float-right {
   display: flex !important;
+  gap: 10px !important; /* 🔹 Tạo khoảng cách rõ ràng giữa Add / Change */
   justify-content: flex-end !important;
   align-items: center !important;
-  flex-wrap: wrap !important;
-  gap: 10px !important; /* tạo khoảng cách thật */
-  margin-right: 6px !important;
-  width: fit-content !important;
 }
 
-/* 🌸 Bắt cả li nếu Jazzmin render nút trong <li> */
-.module .model ul li,
-div.object-tools li {
-  display: inline-flex !important;
-  margin-right: 8px !important;
-}
-
-/* 🌸 Nút Add và Change */
-.module .addlink,
-.module .changelink,
-div.object-tools a,
-div.object-tools li a {
-  display: inline-block !important;
-  padding: 6px 14px !important;
-  border-radius: 8px !important;
+.btn-group.float-right .btn {
+  border-radius: 8px !important; /* 🔹 Bo góc đẹp */
+  margin: 0 !important; /* 🔹 Reset margin gốc Bootstrap */
+  padding: 5px 14px !important; /* 🔹 Kích thước nhỏ vừa */
+  font-size: 13px !important;
   font-weight: 600 !important;
-  font-size: 14px !important;
   background-color: #f497b6 !important;
   color: #fff !important;
-  text-decoration: none !important;
   border: none !important;
-  min-width: 70px !important;
-  text-align: center !important;
   transition: all 0.25s ease-in-out !important;
 }
 
-/* 🌸 Hover */
-.module .addlink:hover,
-.module .changelink:hover,
-div.object-tools a:hover {
+.btn-group.float-right .btn:hover {
   background-color: #f8a5c2 !important;
   box-shadow: 0 2px 6px rgba(244, 151, 182, 0.35) !important;
   transform: translateY(-1px);
 }
 
-/* 🌸 Nếu vẫn bị dính, ép width nhỏ lại */
-.module .model ul li a,
-div.object-tools li a {
-  margin-right: 8px !important;
-}
-
-/* 🌸 Dự phòng: ép bỏ white-space nếu Jazzmin giữ inline-flex */
-.module .object-tools,
-div.object-tools {
-  white-space: normal !important;
-}
-/* 🌸 Giải pháp nhẹ: co vùng chứa Add / Change để nhìn tách */
-.module .model,
-.module .app-auth,
-.module .app-tk {
-  max-width: 600px !important;
-}
-
-.module .object-tools,
-.module .model ul {
-  display: flex !important;
-  justify-content: space-between !important;
-  width: 140px !important; /* ép khung hẹp để nút không dính */
-  margin-left: auto !important;
-}
-/* 🌸 Fix khoảng cách giữa nút Add / Change */
-.module .model .object-tools a,
-.module .object-tools a {
-  display: inline-block !important;
-  margin: 0 6px !important;        /* tạo khoảng cách ngang */
-  padding: 5px 12px !important;
+/* 🌸 Gỡ override của Bootstrap khiến nút dính nhau */
+.btn-group > .btn:not(:last-child):not(.dropdown-toggle),
+.btn-group > .btn:not(:first-child) {
   border-radius: 8px !important;
-  background-color: #f497b6 !important;
-  color: #fff !important;
-  font-weight: 600 !important;
-  transition: all 0.25s ease-in-out !important;
+  margin-right: 8px !important; /* ✅ khoảng cách thực sự giữa Add và Change */
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+}
+/* 🌸 FIX CHỮ "DỊCH VỤ" KHÁC MÀU HOẶC KIỂU FONT */
+th.column-hien_thi_dich_vu {
+    font-weight: 600 !important;    /* đồng bộ độ đậm */
+    color: #4a0e1a !important;      /* màu chữ pastel nâu đỏ như các cột khác */
+    font-style: normal !important;  /* bỏ nghiêng nếu có */
+    text-transform: none !important; /* giữ nguyên chữ in thường */
 }
 
-.module .model .object-tools a:first-child {
-  margin-right: 8px !important;   /* tách rõ ràng */
-}
-
-.module .model .object-tools a:hover,
-.module .object-tools a:hover {
-  background-color: #f8a5c2 !important;
-  color: #fff !important;
-}
-
-/* 🌸 Gỡ margin âm mà Jazzmin gán mặc định */
-.object-tools a + a {
-  margin-left: 8px !important;
-}

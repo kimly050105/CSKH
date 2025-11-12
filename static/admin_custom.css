@@ -223,3 +223,12 @@ footer.main-footer {
   border-top-right-radius: 8px !important;
   border-bottom-right-radius: 8px !important;
 }
+/* 🌸 Ép tất cả tiêu đề bảng về cùng kiểu, kể cả field ảo như Dịch vụ */
+#changelist-form table thead th {
+    background-color: #fff5f7 !important;
+    color: #4a0e1a !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+    text-transform: none !important;
+    border-bottom: 2px solid #f8a5c2 !important;
+}

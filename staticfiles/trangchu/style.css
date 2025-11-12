@@ -1,4 +1,4 @@
-body { background-color: yellow; }
+
 
 /* 🌸 Cài đặt tổng thể */
 body {
@@ -153,13 +153,43 @@ nav a:hover {
     display: block;
     object-fit: cover;
 }
-
-/* 🌸 Phần Giới thiệu */
-.intro {
-    background-color: #fff5f7; /* nền hồng nhạt toàn vùng */
-    padding: 50px 0;
-    text-align: center;
+/* 🌸 Hiệu ứng nổi nhẹ cho banner */
+.banner-full {
+  position: relative;
+  overflow: hidden;
 }
+
+.banner-full img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+/* Khi rê chuột vào banner */
+.banner-full:hover img {
+  transform: scale(1.03); /* phóng nhẹ 3% */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.05); /* sáng hơn nhẹ */
+}
+
+
+
+
+/* 🌸 Phần Giới thiệu dính sát banner */
+.intro {
+  background-color: #fff5f7;
+  padding: 15px 0 45px; /* 🌸 giảm thêm khoảng trống phía trên */
+  margin-top: -70px;    /* 🌸 kéo lên sát banner hơn (tăng từ -40px lên -70px) */
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  border-radius: 25px 25px 0 0;
+  box-shadow: 0 -3px 8px rgba(255, 92, 141, 0.08);
+}
+
+
 
 /* 🌸 Tiêu đề Giới thiệu có nền hồng */
 .intro h2 {
@@ -211,6 +241,8 @@ nav a:hover {
         height: auto;
     }
 }
+
+
 
 /* 🌸 FOOTER Chuẩn 3 cột nền hồng */
 .footer {
@@ -648,7 +680,17 @@ nav a:hover {
     .notify-box:hover .notify-content {
         display: block;
     }
-
+    /* 🎨 Tùy chỉnh thanh cuộn */
+    .notify-list::-webkit-scrollbar {
+      width: 8px;
+    }
+    .notify-list::-webkit-scrollbar-thumb {
+      background-color: #ffb6c1; /* hồng nhẹ */
+      border-radius: 5px;
+    }
+    .notify-list::-webkit-scrollbar-thumb:hover {
+      background-color: #ff91a4;
+    }
     .notify-item {
         border-bottom: 1px solid #eee;
         padding: 6px;
@@ -670,6 +712,7 @@ nav a:hover {
     .view-all:hover {
         text-decoration: underline;
     }
+
 
 
 /* 🌸 Nút gọi và chat nổi */
@@ -877,3 +920,181 @@ nav a:hover {
 .chat-input button:hover {
   background-color: #d94c66;
 }
+
+/* 🌸 Bổ sung cho chat-body để khung tin nhắn tự dãn chiều cao đẹp hơn */
+.chat-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 60px; /* tránh bị che bởi ô nhập */
+}
+
+/* 🌸 Tin nhắn người dùng (căn phải) */
+.message.user {
+  background-color: #f06277;
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+  text-align: right;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+/* 🌸 Tin nhắn bot (căn trái) */
+.message.bot {
+  background-color: #ffeef2;
+  color: #333;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+/* 🌸 Làm phần input gửi chat cân đối hơn */
+.chat-input-area {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #eee;
+  background: #fff;
+  padding: 8px 10px;
+}
+
+.chat-input-area input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: #f7f7f7;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.chat-input-area button {
+  background-color: #f06277;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.chat-input-area button:hover {
+  background-color: #d6336c;
+}
+
+    .notify-image {
+      width: 90px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      background-color: #ffe6ec; /* nền hồng pastel nhẹ */
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(255, 92, 141, 0.2);
+    }
+
+<<<<<<< HEAD
+/* 🌸 Submenu trong menu người dùng */
+.submenu {
+  position: relative;
+}
+
+.submenu-items {
+  display: none;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  margin-top: 5px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.submenu-items a {
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid #f2f2f2;
+  background-color: #fff;
+}
+
+.submenu-items a:hover {
+  background: #ffe6ec;
+  color: #a01940;
+}
+
+.submenu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.submenu-toggle i.fa-caret-down {
+  transition: transform 0.3s ease;
+}
+
+.submenu-toggle.active i.fa-caret-down {
+  transform: rotate(180deg);
+}
+
+/* Hiện submenu khi thêm class 'show' */
+.submenu-items.show {
+  display: flex !important;
+}
+
+/* 🌸 Hiệu ứng chân mèo rơi */
+.paw-fall {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* để không chặn click */
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.paw-item {
+  position: absolute;
+  top: -50px;
+  animation: paw-fall linear forwards;
+}
+
+@keyframes paw-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* static/TB/style.css */
+.thongbao-container {
+  width: 70%;
+  margin: 40px auto;
+  background: #fffafc;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(255,92,141,0.3);
+}
+.thongbao-item {
+  border-left: 4px solid #ff5c8d;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+.chua-doc {
+  background-color: #fff0f3;
+  border-left: 4px solid #ff7aa5;
+}
+
+.notify-item:hover {
+  background-color: #ffe6eb;
+  transform: translateX(2px);
+}
+=======
+>>>>>>> origin/main
+

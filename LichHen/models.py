@@ -46,7 +46,6 @@ class LichHen(models.Model):
     ly_do_huy = models.TextField(blank=True, null=True)
 
     da_nhac = models.BooleanField(default=False, help_text="Đánh dấu nếu đã gửi thông báo nhắc lịch cho khách.")
-
     def __str__(self):
         return f"{self.khach_hang.ho_ten} - {self.thu_cung.ten_thucung}"
 class DV_LichHen(models.Model):
