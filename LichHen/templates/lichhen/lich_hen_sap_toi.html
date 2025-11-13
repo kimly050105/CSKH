@@ -1,179 +1,26 @@
+{% extends 'base_lhkn.html' %}
 {% load static %}
 {% load humanize %}
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <title>Lịch hẹn sắp tới - Punky Spa</title>
-  <!-- 🌸 Liên kết file CSS -->
-  <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    /* 🌸 Chỉ giữ lại style cho phần main-content và table */
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff5f7;
-      margin: 0;
-      padding: 0;
-    }
 
-    .container {
-      display: flex;
-      min-height: 100vh;
-    }
+{% block title %}Lịch hẹn sắp tới - Punky Spa{% endblock %}
 
-    /* 🌸 Nội dung chính */
-    .main-content {
-      flex: 1;
-      padding: 40px;
-      position: relative;
-    }
+{% block content %}
+<div class="content-wrapper">
 
-    .main-content h2 {
-      color: #ff5c8d;
-      text-align: center;
-      margin-bottom: 30px;
-      text-transform: uppercase;
-    }
+  <h2 class="page-title">LỊCH HẸN SẮP TỚI</h2>
 
-    .messages {
-      position: absolute;
-      top: 20px;
-      right: 40px;
-      z-index: 10;
-    }
+  <a href="{% url 'them_lich_hen' %}" class="btn-add">Thêm lịch hẹn +</a>
 
-    .messages .msg {
-      padding: 10px 15px;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      color: white;
-      animation: fadeOut 4s forwards;
-    }
-
-    .messages .success { background-color: #4CAF50; }
-    .messages .error { background-color: #f44336; }
-    .messages .warning { background-color: #ff9800; }
-    .messages .info { background-color: #2196F3; }
-
-    @keyframes fadeOut {
-      0% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { opacity: 0; display: none; }
-    }
-
-    .btn-add {
-      display: inline-block;
-      background-color: #ff5c8d;
-      color: white;
-      padding: 8px 15px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      float: right;
-      margin-bottom: 20px;
-      transition: 0.2s;
-    }
-
-    .btn-add:hover { background-color: #ff7da6; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    th, td {
-      padding: 12px 15px;
-      text-align: center;
-    }
-
-    thead {
-      background-color: #ffb6c1;
-      color: #333;
-    }
-
-    tbody tr:nth-child(even) { background-color: #fff0f5; }
-    tbody tr:hover { background-color: #ffe4ed; }
-
-    .action-icons i {
-      cursor: pointer;
-      margin: 0 5px;
-      font-size: 18px;
-      color: #a61028;
-      transition: 0.2s;
-    }
-
-    .action-icons i:hover { color: #ff5c8d; }
-
-    .no-data {
-      text-align: center;
-      color: #777;
-      padding: 20px;
-    }
-  </style>
-</head>
-
-<body>
-<div class="container">
-  <!-- 🔹 Sidebar: chỉnh giống 2 trang còn lại -->
-  <aside class="sidebar">
-    <div class="logo">
-      <img src="{% static 'trangchu/logo.png' %}" alt="Punky Spa">
-      <h2><span class="pink">Punky</span> Spa</h2>
-    </div>
-
-    <div class="user-info">
-      <i class="fa fa-user"></i> {{ request.user.username }}
-    </div>
-
-    <nav>
-  <a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Trang chủ</a>
-
-  <div class="dropdown">
-    <a href="#">Lịch hẹn</a>
-    <div class="dropdown-content">
-      <a href="{% url 'lich_hen_sap_toi' %}" class="{% if 'lich-hen/sap-toi' in request.path %}active{% endif %}">
-        Lịch hẹn sắp tới
-      </a>
-      <a href="{% url 'lich_su_lich_hen' %}" class="{% if 'lich-hen/lich-su' in request.path %}active{% endif %}">
-        Lịch sử lịch hẹn
-      </a>
-      <a href="{% url 'lich_da_huy' %}" class="{% if 'lich-hen/da-huy' in request.path %}active{% endif %}">
-        Lịch đã hủy
-      </a>
-    </div>
+  {% if messages %}
+  <div class="messages" id="messages">
+    {% for message in messages %}
+      <div class="msg {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
   </div>
+  {% endif %}
 
-  <div class="dropdown">
-    <a href="#">Khiếu nại</a>
-    <div class="dropdown-content">
-      <a href="{% url 'danh_sach_khieu_nai' %}" class="{% if 'khieu-nai' in request.path %}active{% endif %}">
-        Lịch sử khiếu nại
-      </a>
-    </div>
-  </div>
-</nav>
-
-  </aside>
-
-  <!-- 🔸 Phần nội dung chính (giữ nguyên y như bản đẹp của bạn) -->
-  <div class="main-content">
-    <h2>Lịch hẹn sắp tới</h2>
-    <a href="{% url 'them_lich_hen' %}" class="btn-add">Thêm lịch hẹn +</a>
-
-    {% if messages %}
-    <div class="messages" id="messages">
-      {% for message in messages %}
-        <div class="msg {{ message.tags }}">{{ message }}</div>
-      {% endfor %}
-    </div>
-    {% endif %}
-
-    <table>
+  <div class="table-container">
+    <table class="schedule-table">
       <thead>
         <tr>
           <th>Thời gian</th>
@@ -188,6 +35,7 @@
           <th>Thao tác</th>
         </tr>
       </thead>
+
       <tbody>
         {% for lich in lich_hens %}
         <tr>
@@ -197,29 +45,43 @@
           <td>{{ lich.thu_cung.ten_thucung }}</td>
           <td>{{ lich.thu_cung.loai }}</td>
           <td>{{ lich.thu_cung.can_nang }}</td>
+
           <td>
             {% for dv in lich.dv_lichhen_set.all %}
               {{ dv.dich_vu.ten_dich_vu }}{% if not forloop.last %}, {% endif %}
-            {% empty %}-{% endfor %}
+            {% empty %}
+              <em>-</em>
+            {% endfor %}
           </td>
+
           <td>{% if lich.nhan_vien %}{{ lich.nhan_vien.ho_ten }}{% else %}-{% endif %}</td>
+
           <td>{{ lich.ghi_chu|default:"-" }}</td>
+
           <td class="action-icons">
-            <a href="{% url 'sua_lich_hen' lich.id %}" title="Chỉnh sửa lịch hẹn"><i class="fa fa-pencil"></i></a>
-            <a href="{% url 'xoa_lich_hen' lich.id %}" title="Hủy lịch hẹn" style="text-decoration:none;color:#a61028;">
-              <i class="fa fa-trash"></i>
-            </a>
-          </td>
+
+    <a href="{% url 'sua_lich_hen' lich.id %}" class="edit-icon" title="Chỉnh sửa">
+        <i class="fa-solid fa-pen"></i>
+    </a>
+
+    <a href="{% url 'xoa_lich_hen' lich.id %}" class="delete-icon" title="Xóa">
+        <i class="fa-solid fa-trash"></i>
+    </a>
+
+</td>
+
         </tr>
         {% empty %}
-        <tr><td colspan="10" class="no-data">Hiện tại bạn chưa có lịch hẹn nào.</td></tr>
+        <tr>
+          <td colspan="10" class="empty-text">Hiện tại bạn chưa có lịch hẹn nào.</td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
 
-<!-- 🌸 Script tự ẩn message -->
+<!-- auto hide message -->
 <script>
   setTimeout(function() {
     const msg = document.getElementById("messages");
@@ -231,5 +93,4 @@
   }, 4000);
 </script>
 
-</body>
-</html>
+{% endblock %}

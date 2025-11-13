@@ -1,63 +1,13 @@
+{% extends 'base_lhkn.html' %}
+{% load static %}
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <title>Lịch sử lịch hẹn - Punky Spa</title>
-    {% load static %}
-  <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+{% block title %}Lịch sử lịch hẹn - Punky Spa{% endblock %}
 
-<body>
-<div class="container">
-  <!-- 🔹 Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">
-      <img src="{% static 'trangchu/logo.png' %}" alt="Punky Spa">
-      <h2><span class="pink">Punky</span> Spa</h2>
-    </div>
+{% block content %}
+<div class="content-wrapper">
+  <h2 class="page-title">LỊCH SỬ LỊCH HẸN</h2>
 
-    <div class="user-info">
-      <i class="fa fa-user"></i>{{ request.user.username }}
-    </div>
-
-    <nav>
-  <a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Trang chủ</a>
-
-  <div class="dropdown">
-    <a href="#">Lịch hẹn</a>
-    <div class="dropdown-content">
-      <a href="{% url 'lich_hen_sap_toi' %}" class="{% if 'lich-hen/sap-toi' in request.path %}active{% endif %}">
-        Lịch hẹn sắp tới
-      </a>
-      <a href="{% url 'lich_su_lich_hen' %}" class="{% if 'lich-hen/lich-su' in request.path %}active{% endif %}">
-        Lịch sử lịch hẹn
-      </a>
-      <a href="{% url 'lich_da_huy' %}" class="{% if 'lich-hen/da-huy' in request.path %}active{% endif %}">
-        Lịch đã hủy
-      </a>
-    </div>
-  </div>
-
-  <div class="dropdown">
-    <a href="#">Khiếu nại</a>
-    <div class="dropdown-content">
-      <a href="{% url 'danh_sach_khieu_nai' %}" class="{% if 'khieu-nai' in request.path %}active{% endif %}">
-        Lịch sử khiếu nại
-      </a>
-    </div>
-  </div>
-</nav>
-
-  </aside>
-
-  <!-- 🔸 Main content -->
-  <div class="main-content">
-    <div class="header-row">
-      <h2>Lịch sử lịch hẹn</h2>
-    </div>
-
+  <div class="table-container">
     <table class="schedule-table">
       <thead>
         <tr>
@@ -72,6 +22,7 @@
           <th>Khiếu nại</th>
         </tr>
       </thead>
+
       <tbody>
         {% for lh in lich_hens %}
         <tr>
@@ -80,17 +31,37 @@
           <td>{{ lh.khach_hang.so_dien_thoai }}</td>
           <td>{{ lh.thu_cung.ten_thucung }}</td>
           <td>{{ lh.thu_cung.loai }}</td>
-          <td>{{ lh.dich_vu }}</td>
-          <td>{{ lh.nhan_vien.user.get_full_name }}</td>
-          <td><a href="{% url 'tao_danh_gia' lh.id  %}" class="action-link">Đánh giá</a></td>
-          <td><a href="{% url 'tao_khieu_nai' lh.id %}" class="action-link">Khiếu nại</a></td>
+
+          <td>
+            {% for dv_lh in lh.dv_lichhen_set.all %}
+              {{ dv_lh.dich_vu.ten_dich_vu }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+              <em>Không có</em>
+            {% endfor %}
+          </td>
+
+          <td>
+            {% if lh.nhan_vien %}
+              {{ lh.nhan_vien.user.get_full_name }}
+            {% else %}
+              <em>Chưa phân công</em>
+            {% endif %}
+          </td>
+
+          <td>
+            <a href="{% url 'tao_danh_gia' lh.id %}" class="action-link">Đánh giá</a>
+          </td>
+          <td>
+            <a href="{% url 'tao_khieu_nai' lh.id %}" class="action-link">Khiếu nại</a>
+          </td>
         </tr>
         {% empty %}
-        <tr><td colspan="9">Không có lịch hẹn hoàn thành.</td></tr>
+        <tr>
+          <td colspan="9" class="empty-text">Không có lịch hẹn hoàn thành.</td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
-</body>
-</html>
+{% endblock %}

@@ -193,3 +193,37 @@ nav a:hover,
   color: #ff5c8d;              /* đổi hồng khi hover */
   text-decoration: underline;  /* thêm gạch dưới nhẹ khi rê chuột */
 }
+.btn-add {
+    background-color: #ff5c8d;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    float: right;
+    margin-bottom: 15px;
+    transition: 0.25s ease;
+}
+
+.btn-add:hover {
+    background-color: #ff7aa7;
+}
+/* Icon thao tác */
+.action-icons a {
+    margin: 0 6px;
+    font-size: 18px;
+    color: #d31c48;      /* 🔥 MÀU CHUNG CHO CẢ 2 ICON */
+    transition: 0.25s;
+}
+
+.action-icons a:hover {
+    color: #ff5c8d;      /* 🔥 Màu hồng nhạt khi hover */
+}
+
+/* Xóa bỏ màu riêng của từng icon */
+.edit-icon i,
+.delete-icon i {
+    color: inherit;      /* 🔥 Lấy màu chung từ .action-icons a */
+}
+

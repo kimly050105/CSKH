@@ -1,114 +1,47 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <title>Lịch hẹn đã hủy - Punky Spa</title>
-    {% load static %}
-  <link rel="stylesheet" href="{% static 'lichhen/style.css' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+{% extends "base_lhkn.html" %}
+{% load static %}
 
-<body>
-<div class="container">
-  <!-- 🔹 Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">
-      <img src="{% static 'trangchu/logo.png' %}" alt="Punky Spa">
-      <h2><span class="pink">Punky</span> Spa</h2>
-    </div>
+{% block title %}Lịch hẹn đã hủy - Punky Spa{% endblock %}
 
-    <div class="user-info">
-      <i class="fa fa-user"></i>{{ request.user.username }}
-    </div>
+{% block content %}
+<h2 style="color:#ff5c8d;">Lịch hẹn đã hủy</h2>
 
-    <nav>
-  <a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Trang chủ</a>
+<table class="schedule-table">
+  <thead>
+    <tr>
+      <th>Thời gian</th>
+      <th>Tên khách hàng</th>
+      <th>SĐT</th>
+      <th>Tên thú cưng</th>
+      <th>Loài</th>
+      <th>Dịch vụ</th>
+      <th>Nhân viên</th>
+      <th>Lý do hủy</th>
+    </tr>
+  </thead>
 
-  <div class="dropdown">
-    <a href="#">Lịch hẹn</a>
-    <div class="dropdown-content">
-      <a href="{% url 'lich_hen_sap_toi' %}" class="{% if 'lich-hen/sap-toi' in request.path %}active{% endif %}">
-        Lịch hẹn sắp tới
-      </a>
-      <a href="{% url 'lich_su_lich_hen' %}" class="{% if 'lich-hen/lich-su' in request.path %}active{% endif %}">
-        Lịch sử lịch hẹn
-      </a>
-      <a href="{% url 'lich_da_huy' %}" class="{% if 'lich-hen/da-huy' in request.path %}active{% endif %}">
-        Lịch đã hủy
-      </a>
-    </div>
-  </div>
+  <tbody>
+    {% for lh in lich_hens %}
+    <tr>
+      <td>{{ lh.thoi_gian|date:"H:i d/m/Y" }}</td>
+      <td>{{ lh.khach_hang.ho_ten }}</td>
+      <td>{{ lh.so_dien_thoai }}</td>
+      <td>{{ lh.thu_cung.ten_thucung }}</td>
+      <td>{{ lh.thu_cung.loai }}</td>
 
-  <div class="dropdown">
-    <a href="#">Khiếu nại</a>
-    <div class="dropdown-content">
-      <a href="{% url 'danh_sach_khieu_nai' %}" class="{% if 'khieu-nai' in request.path %}active{% endif %}">
-        Lịch sử khiếu nại
-      </a>
-    </div>
-  </div>
-</nav>
-
-  </aside>
-
-  <!-- 🔸 Main content -->
-  <div class="main-content">
-    <div class="header-row">
-      <h2 style="color:#ff5c8d;"> Lịch hẹn đã hủy</h2>
-    </div>
-
-    <table class="schedule-table">
-      <thead>
-        <tr>
-          <th>Thời gian</th>
-          <th>Tên khách hàng</th>
-          <th>SĐT</th>
-          <th>Tên thú cưng</th>
-          <th>Loài</th>
-          <th>Dịch vụ</th>
-          <th>Nhân viên</th>
-          <th>Lý do hủy</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {# ✅ Dùng đúng biến 'lich_hens' như view trả về, không phải 'lich_hen' #}
-        {% for lh in lich_hens %}
-        <tr>
-          <!-- 🕒 Thời gian hiển thị theo định dạng giờ - ngày/tháng/năm -->
-          <td>{{ lh.thoi_gian|date:"H:i d/m/Y" }}</td>
-
-          <!-- 👤 Tên khách hàng -->
-          <td>{{ lh.khach_hang.ho_ten }}</td>
-
-          <!-- ☎️ Số điện thoại (thuộc model LichHen, không phải KhachHang) -->
-          <td>{{ lh.so_dien_thoai }}</td>
-
-          <!-- 🐾 Tên & loài thú cưng -->
-          <td>{{ lh.thu_cung.ten_thucung }}</td>
-          <td>{{ lh.thu_cung.loai }}</td>
-
-          <!-- 💅 Dịch vụ sử dụng (qua bảng trung gian DV_LichHen) -->
-          <td>
-            {% for dv in lh.dv_lichhen_set.all %}
-              {{ dv.dich_vu.ten_dich_vu }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-          </td>
-
-          <!-- 👩‍💼 Nhân viên phụ trách (nếu có) -->
-          <td>{{ lh.nhan_vien.user.get_full_name|default:"-" }}</td>
-
-          <!-- 📝 Ghi chú hoặc lý do hủy -->
-          <td>{{ lh.ly_do_huy|default:"Không có" }}</td>
-        </tr>
-
-        {% empty %}
-        <!-- ⚠️ Hiện thông báo nếu danh sách rỗng -->
-        <tr><td colspan="8">Không có lịch hẹn bị hủy.</td></tr>
+      <td>
+        {% for dv in lh.dv_lichhen_set.all %}
+          {{ dv.dich_vu.ten_dich_vu }}{% if not forloop.last %}, {% endif %}
         {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
-</body>
-</html>
+      </td>
+
+      <td>{{ lh.nhan_vien.user.get_full_name|default:"-" }}</td>
+      <td>{{ lh.ly_do_huy|default:"Không có" }}</td>
+    </tr>
+
+    {% empty %}
+    <tr><td colspan="8">Không có lịch hẹn bị hủy.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
