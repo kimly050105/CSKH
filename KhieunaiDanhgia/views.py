@@ -10,6 +10,20 @@ from .models import KhieuNai
 @login_required
 def tao_danh_gia(request, lich_hen_id):
     lich_hen = get_object_or_404(LichHen, id=lich_hen_id)
+
+    # 🔒 Kiểm tra xem người dùng đã đánh giá lịch hẹn này chưa
+    da_danh_gia = lich_hen.danh_gia_list.filter(nguoi_dung=request.user).first()
+
+    if da_danh_gia:
+        # ❌ Đã đánh giá → không cho sửa, chỉ hiển thị form dạng "read-only"
+        form = DanhGiaForm(instance=da_danh_gia)
+        return render(request, 'KhieunaiDanhgia/danhgia.html', {
+            'form': form,
+            'lich_hen': lich_hen,
+            'da_danh_gia': True
+        })
+
+    # 🆕 Nếu chưa đánh giá → xử lý gửi bình thường
     if request.method == 'POST':
         form = DanhGiaForm(request.POST)
         if form.is_valid():
@@ -21,13 +35,32 @@ def tao_danh_gia(request, lich_hen_id):
             return redirect('lich_su_lich_hen')
     else:
         form = DanhGiaForm()
-    return render(request, 'KhieunaiDanhgia/danhgia.html', {'form': form, 'lich_hen': lich_hen})
+
+    return render(request, 'KhieunaiDanhgia/danhgia.html', {
+        'form': form,
+        'lich_hen': lich_hen,
+        'da_danh_gia': False
+    })
 
 
 # 💗 Gửi KHIẾU NẠI
 @login_required
 def tao_khieu_nai(request, lich_hen_id):
     lich_hen = get_object_or_404(LichHen, id=lich_hen_id)
+
+    # 🔒 Kiểm tra đã khiếu nại chưa
+    da_khieu_nai = lich_hen.khieu_nai_list.filter(nguoi_gui=request.user).first()
+
+    if da_khieu_nai:
+        # ❌ Đã gửi → không cho sửa
+        form = KhieuNaiForm(instance=da_khieu_nai)
+        return render(request, 'KhieunaiDanhgia/khieunai.html', {
+            'form': form,
+            'lich_hen': lich_hen,
+            'da_khieu_nai': True
+        })
+
+    # 🆕 Chưa gửi → xử lý POST bình thường
     if request.method == 'POST':
         form = KhieuNaiForm(request.POST, request.FILES)
         if form.is_valid():
@@ -35,13 +68,16 @@ def tao_khieu_nai(request, lich_hen_id):
             khieu_nai.lich_hen = lich_hen
             khieu_nai.nguoi_gui = request.user
             khieu_nai.save()
-            # ✅ Thông báo thành công
             messages.success(request, "🎉 Gửi khiếu nại thành công! Chúng tôi sẽ phản hồi sớm nhất.")
-            # 🔁 Chuyển hướng đến trang lịch sử khiếu nại
             return redirect('danh_sach_khieu_nai')
     else:
         form = KhieuNaiForm()
-    return render(request, 'KhieunaiDanhgia/khieunai.html', {'form': form, 'lich_hen': lich_hen})
+
+    return render(request, 'KhieunaiDanhgia/khieunai.html', {
+        'form': form,
+        'lich_hen': lich_hen,
+        'da_khieu_nai': False
+    })
 
 
 # 🧾 DANH SÁCH KHIẾU NẠI
@@ -54,4 +90,6 @@ def danh_sach_khieu_nai(request):
         # Nếu là khách hàng → chỉ xem của chính họ
         khieu_nai_list = KhieuNai.objects.filter(nguoi_gui=request.user).order_by('-id')
 
-    return render(request, 'KhieunaiDanhgia/danhsachkhieunai.html', {'khieu_nai_list': khieu_nai_list})
+    return render(request, 'KhieunaiDanhgia/danhsachkhieunai.html', {
+        'khieu_nai_list': khieu_nai_list
+    })

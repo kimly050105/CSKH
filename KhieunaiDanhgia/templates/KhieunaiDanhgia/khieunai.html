@@ -15,6 +15,7 @@
     }
 
     .form-box {
+      position: relative;
       width: 420px;
       background: white;
       padding: 35px 40px;
@@ -23,13 +24,30 @@
       text-align: center;
     }
 
+    /* Nút thoát */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: #ff5c8d;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .close-btn:hover {
+      color: #a01940;
+      transform: scale(1.2);
+    }
+
     h2 {
       color: #a01940;
       margin-bottom: 25px;
       font-size: 22px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
     }
 
     label {
@@ -51,7 +69,6 @@
       font-size: 14px;
       resize: none;
     }
-
     textarea {
       height: 80px;
     }
@@ -64,11 +81,6 @@
       font-style: italic;
     }
 
-    .preview {
-      margin-top: 10px;
-      text-align: center;
-    }
-
     .preview img, .preview video {
       max-width: 100%;
       border-radius: 10px;
@@ -76,40 +88,6 @@
       box-shadow: 0 2px 8px rgba(255, 92, 141, 0.25);
     }
 
-    .btn-group {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 25px;
-    }
-
-    .btn {
-      border: none;
-      border-radius: 8px;
-      padding: 10px 25px;
-      font-weight: 600;
-      cursor: pointer;
-      width: 45%;
-      transition: 0.3s;
-      font-size: 15px;
-    }
-
-    .btn-cancel {
-      background: #ffd6de;
-      color: #a01940;
-    }
-
-    .btn-cancel:hover {
-      background: #ffb6c1;
-    }
-
-    .btn-save {
-      background: #ff5c8d;
-      color: white;
-    }
-
-    .btn-save:hover {
-      background: #e84c7e;
-    }
     .btn-group {
       display: flex;
       justify-content: center;
@@ -148,66 +126,95 @@
     .btn-save:hover {
       background: #e84c7e;
     }
-
   </style>
 </head>
+
 <body>
+
   <div class="form-box">
+
+    <!-- ❌ Nút thoát -->
+    <button class="close-btn" onclick="window.location.href='{% url 'lich_su_lich_hen' %}'">&times;</button>
+
     <h2>ĐƠN KHIẾU NẠI</h2>
+
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
 
       <!-- Nội dung khiếu nại -->
       <label for="noi_dung">Nội dung khiếu nại:</label>
-      <textarea id="noi_dung" name="noi_dung" placeholder="Hãy nêu rõ vấn đề bạn gặp phải khi sử dụng dịch vụ..."></textarea>
+      <textarea id="noi_dung" name="noi_dung"
+        {% if da_khieu_nai %} readonly disabled {% endif %}
+      >{{ form.initial.noi_dung }}</textarea>
 
-      <!-- Hình ảnh / video minh chứng -->
+      <!-- Minh chứng -->
       <label for="hinh_anh">Minh chứng (ảnh hoặc video):</label>
-      <input type="file" id="hinh_anh" name="minh_chung" accept="image/*,video/*" multiple>
-      <p class="note">📎 Bạn có thể tải lên ảnh và (hoặc) video minh chứng</p>
+      <input type="file" id="hinh_anh" name="minh_chung" accept="image/*,video/*"
+        {% if da_khieu_nai %} disabled {% endif %}>
+      <p class="note">📎 Bạn có thể tải lên ảnh hoặc video minh chứng</p>
 
-      <div class="preview" id="preview"></div>
+      <!-- Preview file -->
+      <div class="preview" id="preview">
+        {% if form.initial.minh_chung %}
+          {% if form.initial.minh_chung.url|slice:"-4:" in ".jpg.jpeg.png"%}
+            <img src="{{ form.initial.minh_chung.url }}">
+          {% else %}
+            <video src="{{ form.initial.minh_chung.url }}" controls></video>
+          {% endif %}
+        {% endif %}
+      </div>
 
-      <!-- Yêu cầu / mong muốn -->
+      <!-- Yêu cầu -->
       <label for="yeu_cau">Yêu cầu / mong muốn:</label>
-      <textarea id="yeu_cau" name="yeu_cau" placeholder="Bạn mong muốn chúng tôi hỗ trợ hoặc khắc phục ra sao?"></textarea>
+      <textarea id="yeu_cau" name="yeu_cau"
+        {% if da_khieu_nai %} readonly disabled {% endif %}
+      >{{ form.initial.yeu_cau }}</textarea>
 
-    <div class="btn-group">
-      <!-- 🔙 Nút HỦY: quay lại trang trước (thường là lịch sử lịch hẹn) -->
-      <button type="button" class="btn btn-cancel" onclick="window.location.href='/lich-hen/lich-su/'">
-        <i class="fa-solid fa-xmark"></i> HỦY
-      </button>
+      <!-- Nút -->
+      <div class="btn-group">
 
-      <!-- 💾 Nút LƯU: gửi đơn khiếu nại -->
-      <button type="submit" class="btn btn-save">
-        <i class="fa-solid fa-paper-plane"></i> GỬI KHIẾU NẠI
-      </button>
-    </div>
+        <!-- Nút hủy -->
+        <button type="button" class="btn btn-cancel"
+          onclick="window.location.href='{% url 'lich_su_lich_hen' %}'">
+          <i class="fa-solid fa-xmark"></i> HỦY
+        </button>
+
+        <!-- Nút gửi — chỉ hiện nếu CHƯA gửi -->
+        {% if not da_khieu_nai %}
+        <button type="submit" class="btn btn-save">
+          <i class="fa-solid fa-paper-plane"></i> GỬI KHIẾU NẠI
+        </button>
+        {% endif %}
+      </div>
 
     </form>
   </div>
 
+  <!-- Preview file realtime khi upload -->
+  {% if not da_khieu_nai %}
   <script>
     const fileInput = document.getElementById('hinh_anh');
     const preview = document.getElementById('preview');
 
     fileInput.addEventListener('change', () => {
       preview.innerHTML = '';
-      const files = fileInput.files;
-      for (const file of files) {
-        const url = URL.createObjectURL(file);
-        if (file.type.startsWith('image/')) {
-          const img = document.createElement('img');
-          img.src = url;
-          preview.appendChild(img);
-        } else if (file.type.startsWith('video/')) {
-          const video = document.createElement('video');
-          video.src = url;
-          video.controls = true;
-          preview.appendChild(video);
-        }
+      const file = fileInput.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+
+      if (file.type.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.src = url;
+        preview.appendChild(img);
+      } else if (file.type.startsWith('video/')) {
+        const video = document.createElement('video');
+        video.src = url;
+        video.controls = true;
+        preview.appendChild(video);
       }
     });
   </script>
+  {% endif %}
+
 </body>
 </html>

@@ -100,28 +100,64 @@
 <body>
   <div class="form-box">
 
-    <!-- ❌ Nút thoát về Lịch sử lịch hẹn -->
+    <!-- ❌ Nút thoát -->
     <button class="close-btn" onclick="window.location.href='{% url 'lich_su_lich_hen' %}'">&times;</button>
 
     <h2>ĐÁNH GIÁ DỊCH VỤ</h2>
     <form method="post" action="">
       {% csrf_token %}
 
-      <!-- Mức độ hài lòng -->
+      <!-- ⭐ Mức độ hài lòng -->
       <div class="rating-group">
         <p style="font-weight: 600; color: #333;">Mức độ hài lòng:</p>
-        <div class="rating-item"><input type="radio" name="diem" value="1" id="r1"> <label for="r1">1 - Rất không hài lòng</label></div>
-        <div class="rating-item"><input type="radio" name="diem" value="2" id="r2"> <label for="r2">2 - Không hài lòng</label></div>
-        <div class="rating-item"><input type="radio" name="diem" value="3" id="r3"> <label for="r3">3 - Bình thường</label></div>
-        <div class="rating-item"><input type="radio" name="diem" value="4" id="r4"> <label for="r4">4 - Hài lòng</label></div>
-        <div class="rating-item"><input type="radio" name="diem" value="5" id="r5"> <label for="r5">5 - Rất hài lòng</label></div>
+
+        <div class="rating-item">
+          <input type="radio" name="diem" value="1" id="r1"
+                 {% if form.initial.diem == 1 %} checked {% endif %}
+                 {% if da_danh_gia %} disabled {% endif %}>
+          <label for="r1">1 - Rất không hài lòng</label>
+        </div>
+
+        <div class="rating-item">
+          <input type="radio" name="diem" value="2" id="r2"
+                 {% if form.initial.diem == 2 %} checked {% endif %}
+                 {% if da_danh_gia %} disabled {% endif %}>
+          <label for="r2">2 - Không hài lòng</label>
+        </div>
+
+        <div class="rating-item">
+          <input type="radio" name="diem" value="3" id="r3"
+                 {% if form.initial.diem == 3 %} checked {% endif %}
+                 {% if da_danh_gia %} disabled {% endif %}>
+          <label for="r3">3 - Bình thường</label>
+        </div>
+
+        <div class="rating-item">
+          <input type="radio" name="diem" value="4" id="r4"
+                 {% if form.initial.diem == 4 %} checked {% endif %}
+                 {% if da_danh_gia %} disabled {% endif %}>
+          <label for="r4">4 - Hài lòng</label>
+        </div>
+
+        <div class="rating-item">
+          <input type="radio" name="diem" value="5" id="r5"
+                 {% if form.initial.diem == 5 %} checked {% endif %}
+                 {% if da_danh_gia %} disabled {% endif %}>
+          <label for="r5">5 - Rất hài lòng</label>
+        </div>
 
       </div>
 
       <!-- Nhận xét -->
       <label for="nhan_xet" style="font-weight: 600; color: #333;">Nhận xét:</label>
-      <textarea name="nhan_xet" id="nhan_xet" placeholder="Chia sẻ cảm nhận của bạn..."></textarea>
-      <button type="submit" class="submit-btn">GỬI ĐÁNH GIÁ</button>
+      <textarea name="nhan_xet" id="nhan_xet"
+        {% if da_danh_gia %} readonly disabled {% endif %}
+      >{{ form.initial.nhan_xet }}</textarea>
+
+      <!-- Nút Gửi chỉ hiện nếu chưa đánh giá -->
+      {% if not da_danh_gia %}
+        <button type="submit" class="submit-btn">GỬI ĐÁNH GIÁ</button>
+      {% endif %}
     </form>
   </div>
 </body>
