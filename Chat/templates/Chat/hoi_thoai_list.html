@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách hội thoại | Punky Spa</title>
+  <link rel="stylesheet" href="{% static 'Giaodien/style.css' %}">
+  <style>
+    body {
+      background-color: #ffeef6;
+      font-family: 'Poppins', sans-serif;
+    }
+    h2 {
+      color: #ff4f93;
+      text-align: center;
+      margin-top: 30px;
+    }
+    .chat-list {
+      width: 60%;
+      margin: 30px auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    .chat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      border-bottom: 1px solid #f3d8e3;
+      transition: background 0.3s;
+    }
+    .chat-item:hover {
+      background-color: #fff3f8;
+    }
+    .chat-item a {
+      text-decoration: none;
+      color: #ff4f93;
+      font-weight: 600;
+    }
+    .chat-item span {
+      color: gray;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <h2>💬 Danh sách hội thoại khách hàng</h2>
+
+  <div class="chat-list">
+    {% for c in hoi_thoai %}
+      <div class="chat-item">
+        <a href="{% url 'chi_tiet_hoi_thoai' c.id_khachhang__id %}">
+          🐾 {{ c.id_khachhang__ho_ten|default:"(Ẩn danh)" }}
+        </a>
+        <span>Xem chi tiết ➜</span>
+      </div>
+    {% empty %}
+      <p style="text-align:center;color:gray;">Chưa có khách hàng nào nhắn tin 💬</p>
+    {% endfor %}
+  </div>
+</body>
+</html>
